@@ -1,0 +1,17 @@
+{% block title %} Add {% endblock %}
+
+{% block main %}
+<form action="{% url 'add_wage' %}" method="post">
+{% csrf_token %}
+<table class ="table">
+<thead class="thead-dark">
+{{ form.as_table }}
+
+</table>
+<input type="submit"/>
+</form>
+
+<li><a href= >Confirmation</a></li>
+<li><a href= "{% url 'index' %}">Return menu</a></li>
+
+{% endblock %} 

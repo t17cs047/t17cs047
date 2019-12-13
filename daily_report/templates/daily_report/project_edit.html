@@ -1,0 +1,15 @@
+{% block title %} Edit {% endblock %}
+
+{% block main %}
+<form action="{% url 'edit' %}" method="post">
+{% csrf_token %}
+<table>
+{{ form_id.as_table }}
+{{ form.as_table }}
+</table>
+<input type="submit"/>
+</form>
+
+<li><a href= "{% url 'index' %}">Return menu</a></li>
+
+{% endblock %}

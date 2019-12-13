@@ -1,0 +1,10 @@
+{% block title %} Delete {% endblock %}
+
+{% block main %}
+<form action="{% url 'delete' %}" method="post">
+{% csrf_token %}
+{{ form_id }}
+<input type="submit"/>
+</form>
+<li><a href="{% url 'index' %}">Return</a></li>
+{% endblock %}

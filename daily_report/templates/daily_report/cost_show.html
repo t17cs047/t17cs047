@@ -1,0 +1,15 @@
+{% block title %} Cost {% endblock %}
+
+{% block main %}
+<form action="{% url 'show_cost' %}" method="post">
+{% csrf_token %}
+<table>
+{{ form_id.as_table }}
+{{ form.as_table }}
+</table>
+<input type="submit"/>
+</form>
+
+<li><a href= "{% url 'index' %}">Return</a></li>
+
+{% endblock %}
