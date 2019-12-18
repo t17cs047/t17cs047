@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from daily_report.views import WageAddView, CostView, ProjectList,ProjectDeleteViewWithParameter, ProjectAddView, ProjectEditView, ProjectEditViewWithParameter, ProjectDeleteView
 
 appname = 'daily_report'
 urlpatterns = [
@@ -7,4 +8,12 @@ urlpatterns = [
         path('login/', views.MyLoginView.as_view(), name="login"),
         path('logout/', views.MyLogoutView.as_view(), name="logout"),
         path('index/',views.IndexView.as_view(), name="index"),
+        
+        path('list', ProjectList.as_view(),name='list'),
+        path('add', views.ProjectAddView.as_view(), name='add'),
+        path('edit/<int:pk>', ProjectEditViewWithParameter.as_view(), name='edit_para'),
+        path('delete/<int:pk>', ProjectDeleteViewWithParameter.as_view(), name='delete_para'),
+        path('add_wage', WageAddView.as_view(), name='add_wage'),
+        path('show_cost', CostView.as_view(), name='show_cost'),
+        #path('add/', views.project_create, name='add'),
     ]
