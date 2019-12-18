@@ -104,6 +104,7 @@ class ProjectAddView(LoginRequiredMixin,FormView):
             #return super().form_valid(form)
             return render(self.request, 'daily_report/project_show.html', {'form':form})
         if self.request.POST.get('next', '') == 'create':
+            form.save()
             return super().form_valid(form)
         if self.request.POST.get('next', '') == 'back':
             return render(self.request, 'daily_report/project_add.html', {'form':form})
