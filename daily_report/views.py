@@ -9,16 +9,19 @@ from . import forms
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
+from django.contrib import messages
 # Create your views here.
 @login_required
 def add_daily_report(request):
     form = DailyReportCreateForm(request.POST or None)
     context = {'form': form}
+    count = 0
     if request.method == 'POST' and form.is_valid():
         post = form.save(commit=False)
         post.user = request.user
         formset = ActivityFormset(request.POST, files=request.FILES, instance=post) 
-        if formset.is_valid():
+        if formset.is_valid() and formset.has_changed():
+            print("valid")
             post.save()
             formset.save()
             return redirect('index')
@@ -26,6 +29,7 @@ def add_daily_report(request):
         else:
             print("else")
             context['formset'] = formset
+            messages.warning(request, "complete correctly!")
 
     else:
         print("else2")        
