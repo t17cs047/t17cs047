@@ -40,8 +40,8 @@ class Activity(models.Model):
     class Meta:
         db_table = "activity"
     
-    start_time = models.DateTimeField(verbose_name = "日付", default = datetime.now)
-    end_time = models.DateTimeField(verbose_name = "日付", default = datetime.now)    
+    start_time = models.TimeField(verbose_name = "時間", default = datetime.now)
+    end_time = models.TimeField(verbose_name = "時間", default = datetime.now)    
     daily_report = models.ForeignKey(DailyReport,verbose_name='project', on_delete = models.PROTECT)
     project = models.ForeignKey(Project, on_delete = models.PROTECT)
     memo = models.CharField(max_length = 100)

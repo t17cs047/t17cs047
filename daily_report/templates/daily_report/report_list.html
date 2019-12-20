@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %} レポートリスト{% endblock %}
+
+{% block main %}
+<table id ="myTable">
+  <thead class="thead-dark">
+    <tr>
+      <th>#</th>
+      <th>名前</th>
+      <th>個数</th>
+      <th>期日</th>
+       <th>済み?</th>
+       <th>ショップ</th>
+      <th>変更</th>
+      <th>削除</th>
+    </tr>
+  </thead>
+  <tbody>
+{% for report in object_list%}
+  <tr>
+   <td><a href = {% url 'activity_list' report.id %}>{{ report.date }}</td>
+   <td>{{ report.user }}</td>
+   </td>
+  </tr>
+{% endfor%}
+</tbody>
+</table>
+{% endblock%} 
