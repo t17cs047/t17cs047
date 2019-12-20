@@ -1,6 +1,8 @@
 from django import forms
 from .models import Activity, DailyReport
 from django.contrib.auth import forms as auth_forms
+from daily_report.models import Employee
+from django.contrib.auth.forms import UserCreationForm
 
 class DailyReportCreateForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
@@ -20,3 +22,17 @@ class LoginForm(auth_forms.AuthenticationForm):
         super().__init__(*args, **kw)
         for field in self.fields.values():
             field.widget.attrs['placeholder'] = field.label
+            
+            
+            
+
+class UserCreateForm(UserCreationForm):
+    pass
+
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Employee
+        fields = (
+            "name", "status", 
+        )

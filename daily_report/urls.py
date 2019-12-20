@@ -10,5 +10,6 @@ urlpatterns = [
         path('report_list/',views.ListReportView.as_view(), name="report_list"),
         path('activity_list/<int:pk>',views.ActivityListView.as_view(), name="activity_list"),
         path('report_edit/<int:pk>', views.ReportUpdateView.as_view() , name = "report_edit"),
+        path('register/', views.register_user, name = "register"),
         
     ]

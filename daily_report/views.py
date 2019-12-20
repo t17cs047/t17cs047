@@ -13,6 +13,7 @@ from django.views.generic import ListView
 from django.contrib import messages
 from django.shortcuts import get_object_or_404
 from django.db import transaction
+from .forms import ProfileForm, UserCreateForm
 # Create your views here.
 @login_required
 def add_daily_report(request):
@@ -79,9 +80,6 @@ class ReportMixin(object):
         # インスタンスの取得
         invoice = form.save(commit=False)
         formset.instance = invoice
-        details = formset.save(commit=False)
-
-        sub_total = 0
 
         # DB更新
         with transaction.atomic():
@@ -155,6 +153,30 @@ class ReportUpdateView(LoginRequiredMixin, ReportMixin, FormsetMixin, UpdateView
     model = DailyReport
     form_class = DailyReportCreateForm
     formset_class = ActivityFormset
+    
+    
+    
+def register_user(request):
+    user_form = UserCreateForm(request.POST or None)
+    profile_form = ProfileForm(request.POST or None)
+    if request.method == "POST" and user_form.is_valid() and profile_form.is_valid():
+
+        # Userモデルの処理。ログインできるようis_activeをTrueにし保存
+        user = user_form.save(commit=False)
+        user.is_active = True
+        user.save()
+
+        # Profileモデルの処理。↑のUserモデルと紐づけましょう。
+        profile = profile_form.save(commit=False)
+        profile.user = user
+        profile.save()
+        return redirect("index")
+
+    context = {
+        "user_form": user_form,
+        "profile_form": profile_form,
+    }
+    return render(request, 'daily_report/user_create.html', context)    
 """12/20"""
 
 
