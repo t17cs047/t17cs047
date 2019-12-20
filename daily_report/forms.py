@@ -12,7 +12,7 @@ class DailyReportCreateForm(forms.ModelForm):
         model = DailyReport
         fields = ("date",)        
 ActivityFormset = forms.inlineformset_factory(DailyReport, Activity, fields = '__all__', widgets = {'start_time' : forms.TimeInput(format='%H:%M'), 'end_time' : forms.TimeInput(format='%H:%M')},
-    extra = 1, max_num = 5, can_delete= False
+    extra = 1, max_num = 1, can_delete= False
     )
 
 class LoginForm(auth_forms.AuthenticationForm):

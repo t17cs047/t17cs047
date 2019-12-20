@@ -1,0 +1,57 @@
+
+<form method="post" action="{% url 'report_edit' dailyreport.id %}" >{% csrf_token %}
+	{{form.as_p}}
+{% if messages %}
+	<ul class="messages">
+		{% for message in messages %}
+			<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+		{% endfor %}
+	</ul>
+{% endif %}
+<div id="form_set">
+		{{ formset.management_form }}
+		{% for activity_form in formset %}
+            <table class='no_error'>
+            {{ activity_form.as_table }}
+            <hr>
+            </table>
+       {% endfor %}
+</div>
+<hr>
+<input type="button" value="Add More" id="add_more">
+<div id="empty_form" style="display:none">
+<hr>
+<table class='no_error'>
+	 {{ formset.empty_form.as_table }}
+</table>
+</div>  
+	
+	
+	 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/timedropper/1.0/timedropper.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/timedropper/1.0/timedropper.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script>
+        $('#add_more').click(function() {
+             var form_idx = $('#id_activity_set-TOTAL_FORMS').val();
+		      $('#form_set').append($('#empty_form').html().replace(/__prefix__/g, form_idx));
+             $('#id_activity_set-TOTAL_FORMS').val(parseInt(form_idx) + 1);
+             $('[id $= "time" ]').timeDropper({
+              format: "H:mm",
+              setCurrentTime: false,
+          });
+           });
+      </script>
+			<input type="submit"/>
+          </form>
+          <a href="{% url 'index' %}">index</a>
+                  
+ <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/timedropper/1.0/timedropper.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/timedropper/1.0/timedropper.min.js"></script>
+    <script>
+      $(function () {
+          $('[id $= "time" ]').timeDropper({
+              format: "H:mm",
+              setCurrentTime: false,
+          });
+      });
+  </script>

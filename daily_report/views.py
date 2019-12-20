@@ -12,6 +12,7 @@ from django.contrib.auth.models import User
 from django.views.generic import ListView
 from django.contrib import messages
 from django.shortcuts import get_object_or_404
+from django.db import transaction
 # Create your views here.
 @login_required
 def add_daily_report(request):
@@ -63,3 +64,97 @@ class ActivityListView(LoginRequiredMixin, ListView):
         report = get_object_or_404(DailyReport, pk=self.kwargs['pk'])
         return Activity.objects.filter(daily_report = report)
     
+    
+    
+"""12/20"""
+
+class ReportMixin(object):
+    def form_valid(self, form, formset):
+
+        # formset.saveでインスタンスを取得できるように、既存データに変更が無くても更新対象となるようにする
+        for detail_form in formset.forms:
+            if detail_form.cleaned_data:
+                detail_form.has_changed = lambda: True
+
+        # インスタンスの取得
+        invoice = form.save(commit=False)
+        formset.instance = invoice
+        details = formset.save(commit=False)
+
+        sub_total = 0
+
+        # DB更新
+        with transaction.atomic():
+            invoice.save()
+            formset.instance = invoice
+            formset.save()
+
+        # 処理後は詳細ページを表示
+        print("valid1")
+        return redirect("report_list")
+
+
+
+class FormsetMixin(object):
+    object = None
+
+    def get(self, request, *args, **kwargs):
+        if getattr(self, 'is_update_view', False):
+            self.object = self.get_object()
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        formset_class = self.get_formset_class()
+        formset = self.get_formset(formset_class)
+        return self.render_to_response(self.get_context_data(form=form, formset=formset))
+
+    def post(self, request, *args, **kwargs):
+        if getattr(self, 'is_update_view', False):
+            self.object = self.get_object()
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        formset_class = self.get_formset_class()
+        formset = self.get_formset(formset_class)
+        if form.is_valid() and formset.is_valid():
+            return self.form_valid(form, formset)
+        else:
+            return self.form_invalid(form, formset)
+
+    def get_formset_class(self):
+        return self.formset_class
+
+    def get_formset(self, formset_class):
+        return formset_class(**self.get_formset_kwargs())
+
+    def get_formset_kwargs(self):
+        kwargs = {
+            'instance': self.object
+        }
+        if self.request.method in ('POST', 'PUT'):
+            kwargs.update({
+                'data': self.request.POST,
+                'files': self.request.FILES,
+            })
+        return kwargs
+
+    def form_valid(self, form, formset):
+        self.object = form.save()
+        formset.instance = self.object
+        formset.save()
+
+        return redirect(self.object.get_absolute_url())
+
+    def form_invalid(self, form, formset):
+        return self.render_to_response(self.get_context_data(form=form, formset=formset))
+
+
+
+
+class ReportUpdateView(LoginRequiredMixin, ReportMixin, FormsetMixin, UpdateView):
+    is_update_view = True
+    template_name = 'daily_report/report_edit.html'
+    model = DailyReport
+    form_class = DailyReportCreateForm
+    formset_class = ActivityFormset
+"""12/20"""
+
+
