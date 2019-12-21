@@ -70,9 +70,9 @@ class ActivityListView(LoginRequiredMixin, ListView):
         report = get_object_or_404(DailyReport, pk=self.kwargs['pk'])
         return Activity.objects.filter(daily_report = report)
     
-class IndexView(LoginRequiredMixin, TemplateView):
+'''class IndexView(LoginRequiredMixin, TemplateView):
     template_name = "daily_report/index.html"
-    
+'''    
     
 class ProjectList(LoginRequiredMixin, ListView):
     model = Project
@@ -87,26 +87,6 @@ class ProjectList(LoginRequiredMixin, ListView):
         context['form'] = ProjectBuy()
         return context
     
-'''def project_create(request):
-    template_name = 'daily_report/project_add.html'
-    ctx = {}
-    if request.method == 'GET':
-        ctx['form'] = ProjectForm()
-        return render(request, template_name, ctx)
-    
-    if request.method == 'POST':
-        project_form = ProjectForm(request.POST)
-        if project_form.is_valid():
-            #project_form.save()
-            project = Project()
-            cleaned_data = project_form.cleaned_data
-            project.name = cleaned_data['name']
-            project.save()   
-            return redirect(reverse_lazy('list'))
-        else:
-            ctx['form'] = project_form
-            return render(request, template_name, ctx)
-'''
 
 class ProjectAddView(LoginRequiredMixin,FormView):  
     model = Project
@@ -116,8 +96,6 @@ class ProjectAddView(LoginRequiredMixin,FormView):
     
     def form_valid(self, form):
         if self.request.POST.get('next', '') == 'confirm':
-            #form.save()
-            #return super().form_valid(form)
             return render(self.request, 'daily_report/project_show.html', {'form':form})
         if self.request.POST.get('next', '') == 'create':
             form.save()
@@ -125,66 +103,27 @@ class ProjectAddView(LoginRequiredMixin,FormView):
         if self.request.POST.get('next', '') == 'back':
             return render(self.request, 'daily_report/project_add.html', {'form':form})
         
-def project_create(request):
-    template_name = 'daily_report/project_add.html'
-    ctx = {}
-    if request.method == 'GET':
-        ctx['form'] = ProjectForm()
-        return render(request, template_name, ctx)
-    
-    if request.method == 'POST':
-        project_form = ProjectForm(request.POST)
-        if project_form.is_valid():
-            project_form.save()
-            return redirect(reverse_lazy('list'))
-        else:
-            ctx['form'] = project_form
-            return render(request, template_name, ctx)
-    
-    '''def form_valid(self, form):
-        if self.request.POST.get('next', '') == 'confirm':
-            return render(self.request, 'daily_report/project_show.html', {'form':form})
-        if self.request.POST.get('next', '') == 'create':
-            return render(self.request, 'daily_report/project_list.html', {'form':form})
-        if self.request.POST.get('next', '') == 'back':
-            return render(self.request, 'daily_report/project_add.html', {'form':form})
-    '''
-class ProjectConfirm(LoginRequiredMixin, CreateView):
-    model = Project
-    fields = ('name', 'order_amount', 'budget',
-              'outsourcing_budget', 'start_date',
-              'end_date', 'client', 'outsourcing_cost', 'cost')
-    template_name = 'daily_report/project_add.html'  
-    success_url = 'list/'
-    
-
     
 class ProjectEditView(LoginRequiredMixin, CreateView):
     model = Project    
-    fields = ('name', 'order_amount', 'budget',
-              'outsourcing_budget', 'start_date',
-              'end_date', 'client', 'outsourcing_cost', 'cost')
+    form_class = ProjectForm
     template_name = 'daily_report/project_edit.html'   
     success_url ='../list'
     
 class ProjectEditViewWithParameter(LoginRequiredMixin, UpdateView):
     model = Project    
-    fields = ('name', 'order_amount', 'budget',
-              'outsourcing_budget', 'start_date',
-              'end_date', 'client', 'outsourcing_cost', 'cost')
+    form_class = ProjectForm
     template_name = 'daily_report/project_edit.html'   
     success_url = '../list'
     
 class ProjectDeleteView(LoginRequiredMixin, TemplateView):
     model = Project    
-    fields = ('name', 'order_amount', 'budget',
-              'outsourcing_budget', 'start_date',
-              'end_date', 'client', 'outsourcing_cost', 'cost')
+    form_class = ProjectForm
     template_name = 'daily_report/project_delete.html'   
     success_url = '../list'
     
 class ProjectDeleteViewWithParameter(LoginRequiredMixin,DeleteView):
-    model = Project    
+    model = Project 
     template_name = 'daily_report/project_delete.html'   
     success_url = '../list'
     

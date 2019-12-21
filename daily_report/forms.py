@@ -1,5 +1,5 @@
 from django import forms
-from .models import Activity, DailyReport, Project
+from .models import Activity, DailyReport, Project, Employee
 from django.contrib.auth import forms as auth_forms
 
 class DailyReportCreateForm(forms.ModelForm):
@@ -28,10 +28,20 @@ class ProjectBuy(forms.Form):
 class ProjectIdForm(forms.Form):
     project_id = forms.IntegerField(label='ID')
 
-class ProjectForm(forms.ModelForm):
+class ProjectForm(forms.ModelForm):       
     class Meta:
         model = Project
-        fields = ['name', 'order_amount', 'budget',
+        fields = ['name', 'employee', 'order_amount', 'budget',
               'outsourcing_budget', 'start_date',
               'end_date', 'client', 'outsourcing_cost', 'cost']
+        
+        '''exclude = ('employee',)
+        
+EmployeeInlineFormSet = forms.inlineformset_factory(
+    Project, Project.employee.through, fields='__all__', can_delete=False
+)'''
    
+class EmployeeForm(forms.ModelForm):       
+    class Meta:
+        model = Employee
+        fields = ['name', 'status','daily_report']
