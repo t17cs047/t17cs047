@@ -12,7 +12,7 @@ from django.contrib.auth.models import User
 from django.views.generic import ListView
 from django.contrib import messages
 
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.shortcuts import get_object_or_404, redirect
@@ -104,17 +104,36 @@ class ProjectAddView(LoginRequiredMixin,FormView):
             return render(self.request, 'daily_report/project_add.html', {'form':form})
         
     
-class ProjectEditView(LoginRequiredMixin, CreateView):
+class ProjectEditView(LoginRequiredMixin, UpdateView):
     model = Project    
     form_class = ProjectForm
     template_name = 'daily_report/project_edit.html'   
-    success_url ='../list'
+    success_url =reverse_lazy('list')
+    
+    def form_valid(self, form):
+        if self.request.POST.get('next', '') == 'create':
+            form.save()
+            return super().form_valid(form)
+        if self.request.POST.get('next', '') == 'back':
+            return render(self.request, 'daily_report/project_edit.html', {'form':form})
+        
+    
     
 class ProjectEditViewWithParameter(LoginRequiredMixin, UpdateView):
     model = Project    
     form_class = ProjectForm
-    template_name = 'daily_report/project_edit.html'   
-    success_url = '../list'
+    template_name = 'daily_report/project_edit.html'
+    success_url = reverse_lazy('list')
+    
+    '''def form_valid(self, form):
+        if self.request.POST.get('next', '') == 'confirm':
+            return render(self.request, 'daily_report/project_edit_confirm.html', {'form':form})
+        if self.request.POST.get('next', '') == 'create':
+            form.save()
+            return super().form_valid(form)
+        if self.request.POST.get('next', '') == 'back':
+            return render(self.request, 'daily_report/project_edit.html', {'form':form})
+      '''  
     
 class ProjectDeleteView(LoginRequiredMixin, TemplateView):
     model = Project    
@@ -126,6 +145,11 @@ class ProjectDeleteViewWithParameter(LoginRequiredMixin,DeleteView):
     model = Project 
     template_name = 'daily_report/project_delete.html'   
     success_url = '../list'
+    
+class ProjectDetailViewWithParameter(LoginRequiredMixin, DetailView):
+    model = Project    
+    template_name = 'daily_report/project_detail.html'
+    
     
 class WageAddView(LoginRequiredMixin, CreateView):
     model = Status
