@@ -20,6 +20,19 @@ class DailyReport(models.Model):
     date = models.DateField(verbose_name = "日付", default = datetime.now)
     user = models.ForeignKey(User, on_delete=models.CASCADE)        
 
+class Employee(models.Model):
+    class Meta:
+        db_table = "employee"
+    
+    name = models.CharField(max_length = 100)
+    status = models.ForeignKey(Status, on_delete = models.PROTECT )
+    #daily_report = models.ForeignKey(DailyReport, on_delete = models.PROTECT) いらない？
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
+
+
 class Project(models.Model):
     class Meta:
         db_table = "project"
@@ -32,6 +45,7 @@ class Project(models.Model):
     client = models.CharField(max_length = 30)
     outsourcing_cost = models.IntegerField() 
     cost = models.IntegerField()
+    member = models.ManyToManyField(Employee)
       
     
     def __str__(self):
@@ -46,19 +60,6 @@ class Activity(models.Model):
     daily_report = models.ForeignKey(DailyReport,verbose_name='project', on_delete = models.PROTECT)
     project = models.ForeignKey(Project, on_delete = models.PROTECT)
     memo = models.CharField(max_length = 100)
-
-class Employee(models.Model):
-    class Meta:
-        db_table = "employee"
-    
-    name = models.CharField(max_length = 100)
-    status = models.ForeignKey(Status, on_delete = models.PROTECT )
-    project = models.ManyToManyField(Project)
-    #daily_report = models.ForeignKey(DailyReport, on_delete = models.PROTECT) いらない？
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.name
 
 class SumTime():
     class Meta:

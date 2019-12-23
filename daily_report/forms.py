@@ -1,5 +1,5 @@
 from django import forms
-from .models import Activity, DailyReport
+from .models import Activity, DailyReport, Project
 from django.contrib.auth import forms as auth_forms
 from daily_report.models import Employee
 from django.contrib.auth.forms import UserCreationForm
@@ -12,8 +12,10 @@ class DailyReportCreateForm(forms.ModelForm):
             
     class Meta:
         model = DailyReport
-        fields = ("date",)        
-ActivityFormset = forms.inlineformset_factory(DailyReport, Activity, fields = '__all__', widgets = {'start_time' : forms.TimeInput(format='%H:%M'), 'end_time' : forms.TimeInput(format='%H:%M')},
+        fields = ("date",)
+        
+       
+ActivityFormset = forms.inlineformset_factory(DailyReport, Activity, fields = '__all__', widgets = {'start_time' : forms.TimeInput(format='%H:%M'), 'end_time' : forms.TimeInput(format='%H:%M') },
     extra = 1, max_num = 1, can_delete= False
     )
 

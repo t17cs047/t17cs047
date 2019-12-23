@@ -3,10 +3,11 @@ from .forms import DailyReportCreateForm, ActivityFormset
 from .models import Status, Employee, Project, Activity, DailyReport
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.views import LoginView, LogoutView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import TemplateView
 from . import forms
 from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.views.generic import ListView
@@ -19,10 +20,16 @@ from .forms import ProfileForm, UserCreateForm
 def add_daily_report(request):
     form = DailyReportCreateForm(request.POST or None)
     context = {'form': form}
+    print("call1")
+
+   # for project in Project.objects.all():
+       # if(project.member.user == request.user):
     if request.method == 'POST' and form.is_valid():
         post = form.save(commit=False)
         post.user = request.user
-        formset = ActivityFormset(request.POST, files=request.FILES, instance=post) 
+        employee = Employee.objects.get(user = request.user)   
+        formset = ActivityFormset(request.POST, instance=post)
+        
         if formset.is_valid() and formset.has_changed():
             print("valid")
             post.save()
@@ -32,12 +39,17 @@ def add_daily_report(request):
         else:
             print("else")
             context['formset'] = formset
+            for form in context['formset']:
+                form.fields['project'].queryset =  Project.objects.filter(member = employee)
             messages.warning(request, "fill in the forms correctly!")
 
     else:
-        print("else2")        
+        employee = Employee.objects.get(user = request.user)    
         context['formset'] = ActivityFormset()
-
+        for form in context['formset']:
+            form.fields['project'].queryset =  Project.objects.filter(member = employee)
+        print(Project.objects.filter(member = employee)) 
+        
     return render(request, 'daily_report/daily_report.html', context)
 
 
@@ -68,6 +80,16 @@ class ActivityListView(LoginRequiredMixin, ListView):
     
     
 """12/20"""
+
+class OnlyYouMixin(UserPassesTestMixin):
+    raise_exception = True
+
+    def test_func(self):
+        user = self.request.user
+        return user.pk == user.is_superuser
+
+
+
 
 class ReportMixin(object):
     def form_valid(self, form, formset):
@@ -155,7 +177,7 @@ class ReportUpdateView(LoginRequiredMixin, ReportMixin, FormsetMixin, UpdateView
     formset_class = ActivityFormset
     
     
-    
+@staff_member_required    
 def register_user(request):
     user_form = UserCreateForm(request.POST or None)
     profile_form = ProfileForm(request.POST or None)
