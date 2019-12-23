@@ -28,18 +28,16 @@ class ProjectBuy(forms.Form):
 class ProjectIdForm(forms.Form):
     project_id = forms.IntegerField(label='ID')
 
-class ProjectForm(forms.ModelForm):       
+class ProjectForm(forms.ModelForm):
+    
+    employee = forms.ModelMultipleChoiceField(label='Employee', queryset=Employee.objects.all(), widget=forms.CheckboxSelectMultiple)
+    
     class Meta:
         model = Project
-        fields = ['name', 'employee', 'order_amount', 'budget',
+        fields = ['name', 'order_amount', 'budget',
               'outsourcing_budget', 'start_date',
               'end_date', 'client', 'outsourcing_cost', 'cost']
         
-        '''exclude = ('employee',)
-        
-EmployeeInlineFormSet = forms.inlineformset_factory(
-    Project, Project.employee.through, fields='__all__', can_delete=False
-)'''
    
 class EmployeeForm(forms.ModelForm):       
     class Meta:
