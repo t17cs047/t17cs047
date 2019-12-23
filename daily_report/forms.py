@@ -24,9 +24,6 @@ class LoginForm(auth_forms.AuthenticationForm):
         super().__init__(*args, **kw)
         for field in self.fields.values():
             field.widget.attrs['placeholder'] = field.label
-            
-            
-            
 
 class UserCreateForm(UserCreationForm):
     pass
@@ -38,3 +35,18 @@ class ProfileForm(forms.ModelForm):
         fields = (
             "name", "status", 
         )
+
+class ProjectBuy(forms.Form):
+    project_id = forms.IntegerField(label='ID')
+    #project_status=forms.ChoiceField(label='STATUS',widgets=forms.Select,choices=())
+    
+class ProjectIdForm(forms.Form):
+    project_id = forms.IntegerField(label='ID')
+
+class ProjectForm(forms.ModelForm):
+    class Meta:
+        model = Project
+        fields = ['name', 'order_amount', 'budget',
+              'outsourcing_budget', 'start_date',
+              'end_date', 'client', 'outsourcing_cost', 'cost']
+
