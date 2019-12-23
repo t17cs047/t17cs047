@@ -1,6 +1,8 @@
 from django import forms
 from .models import Activity, DailyReport, Project, Employee
 from django.contrib.auth import forms as auth_forms
+from random import choice
+from django.db.models.query import QuerySet
 
 class DailyReportCreateForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
@@ -30,16 +32,20 @@ class ProjectIdForm(forms.Form):
 
 class ProjectForm(forms.ModelForm):
     
-    employee = forms.ModelMultipleChoiceField(label='Employee', queryset=Employee.objects.all(), widget=forms.CheckboxSelectMultiple)
+    employee = forms.ModelMultipleChoiceField(queryset = Employee.objects.all(),
+                                         required = False,
+                                         widget = forms.CheckboxSelectMultiple)
     
     class Meta:
         model = Project
         fields = ['name', 'order_amount', 'budget',
               'outsourcing_budget', 'start_date',
               'end_date', 'client', 'outsourcing_cost', 'cost']
-        
-   
-class EmployeeForm(forms.ModelForm):       
-    class Meta:
-        model = Employee
-        fields = ['name', 'status','daily_report']
+    
+'''class EmployeeForm(forms.Form):
+        employee = forms.MultipleChoiceField(label='Employee',
+                                            widget=forms.CheckboxSelectMultiple,
+                                            choices = lambda:[(employee.id,employee.name) for employee in Employee.objects.all()],
+                                            required = False)
+'''                                           
+                            

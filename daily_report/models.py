@@ -19,12 +19,24 @@ class DailyReport(models.Model):
     
     date = models.DateField(verbose_name = "日付", default = datetime.now)
     user = models.ForeignKey(User, on_delete=models.CASCADE)   
-        
+
+class Employee(models.Model):
+    class Meta:
+        db_table = "employee"
+    
+    name = models.CharField(max_length = 100)
+    status = models.ForeignKey(Status, on_delete = models.PROTECT )
+    #project = models.ManyToManyField(Project)
+    daily_report = models.ForeignKey(DailyReport, on_delete = models.PROTECT)
+    
+    def __str__(self):
+        return self.name 
+     
 class Project(models.Model):
     class Meta:
         db_table = "project"
     name = models.CharField(max_length = 30, unique = True)
-    #employee = models.ManyToManyField(Employee, verbose_name='Member', blank=True)
+    employee = models.ManyToManyField(Employee)
     order_amount = models.IntegerField()
     budget = models.IntegerField()
     outsourcing_budget = models.IntegerField()
@@ -48,17 +60,6 @@ class Activity(models.Model):
     project = models.ForeignKey(Project, on_delete = models.PROTECT)
     memo = models.CharField(max_length = 100)
     
-class Employee(models.Model):
-    class Meta:
-        db_table = "employee"
-    
-    name = models.CharField(max_length = 100)
-    status = models.ForeignKey(Status, on_delete = models.PROTECT )
-    project = models.ManyToManyField(Project)
-    daily_report = models.ForeignKey(DailyReport, on_delete = models.PROTECT)
-    
-    def __str__(self):
-        return self.name 
 
 class SumTime():
     class Meta:
