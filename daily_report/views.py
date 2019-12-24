@@ -86,9 +86,6 @@ class ActivityListView(LoginRequiredMixin, ListView):
         report = get_object_or_404(DailyReport, pk=self.kwargs['pk'])
         return Activity.objects.filter(daily_report = report)
     
-'''class IndexView(LoginRequiredMixin, TemplateView):
-
-    
 """12/20"""
 
 class OnlyYouMixin(UserPassesTestMixin):
@@ -214,7 +211,7 @@ def register_user(request):
 
 class IndexView(LoginRequiredMixin, TemplateView):
     template_name = "daily_report/index.html"
-'''    
+   
     
 class ProjectList(LoginRequiredMixin, ListView):
     model = Project
