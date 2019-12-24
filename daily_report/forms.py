@@ -42,10 +42,4 @@ class ProjectForm(forms.ModelForm):
               'outsourcing_budget', 'start_date',
               'end_date', 'client', 'outsourcing_cost', 'cost']
     
-'''class EmployeeForm(forms.Form):
-        employee = forms.MultipleChoiceField(label='Employee',
-                                            widget=forms.CheckboxSelectMultiple,
-                                            choices = lambda:[(employee.id,employee.name) for employee in Employee.objects.all()],
-                                            required = False)
-'''                                           
-                            
+                     

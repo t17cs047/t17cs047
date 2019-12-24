@@ -99,48 +99,19 @@ class ProjectAddView(LoginRequiredMixin,FormView):
             return render(self.request, 'daily_report/project_show.html', {'form':form})
         if self.request.POST.get('next', '') == 'create':
             form.save()
-            form.save_m2m()
+            #form.save_m2m()
             return super().form_valid(form)
         if self.request.POST.get('next', '') == 'back':
             return render(self.request, 'daily_report/project_add.html', {'form':form})
         
     
-class ProjectEditView(LoginRequiredMixin, UpdateView):
-    model = Project    
-    form_class = ProjectForm
-    template_name = 'daily_report/project_edit.html'   
-    success_url =reverse_lazy('list')
-    
-    def form_valid(self, form):
-        if self.request.POST.get('next', '') == 'create':
-            form.save()
-            return super().form_valid(form)
-        if self.request.POST.get('next', '') == 'back':
-            return render(self.request, 'daily_report/project_edit.html', {'form':form})
-        
-    
+ 
     
 class ProjectEditViewWithParameter(LoginRequiredMixin, UpdateView):
     model = Project    
     form_class = ProjectForm
     template_name = 'daily_report/project_edit.html'
     success_url = reverse_lazy('list')
-    
-''' def form_valid(self, form):
-        if self.request.POST.get('next', '') == 'confirm':
-            return render(self.request, 'daily_report/project_edit_confirm.html', {'form':form})
-        if self.request.POST.get('next', '') == 'create':
-            form.update
-            return super().form_valid(form)
-        if self.request.POST.get('next', '') == 'back':
-            return render(self.request, 'daily_report/project_edit.html', {'form':form})
-       ''' 
-    
-class ProjectDeleteView(LoginRequiredMixin, TemplateView):
-    model = Project    
-    form_class = ProjectForm
-    template_name = 'daily_report/project_delete.html'   
-    success_url = '../list'
     
 class ProjectDeleteViewWithParameter(LoginRequiredMixin,DeleteView):
     model = Project 
