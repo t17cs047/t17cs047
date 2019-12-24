@@ -52,15 +52,15 @@ def add_daily_report(request):
             print("else")
             context['formset'] = formset
             for form in context['formset']:
-                form.fields['project'].queryset =  Project.objects.filter(member = employee)
+                form.fields['project'].queryset =  Project.objects.filter(employee = employee)
             messages.warning(request, "fill in the forms correctly!")
 
     else:
         employee = Employee.objects.get(user = request.user)    
         context['formset'] = ActivityFormset()
         for form in context['formset']:
-            form.fields['project'].queryset =  Project.objects.filter(member = employee)
-        print(Project.objects.filter(member = employee)) 
+            form.fields['project'].queryset =  Project.objects.filter(employee = employee)
+        print(Project.objects.filter(employee = employee)) 
         
     return render(request, 'daily_report/daily_report.html', context)
 
@@ -86,7 +86,6 @@ class ActivityListView(LoginRequiredMixin, ListView):
         report = get_object_or_404(DailyReport, pk=self.kwargs['pk'])
         return Activity.objects.filter(daily_report = report)
     
-'''class IndexView(LoginRequiredMixin, TemplateView):
 
     
 """12/20"""
@@ -189,7 +188,7 @@ class ReportUpdateView(LoginRequiredMixin, ReportMixin, FormsetMixin, UpdateView
         context = super().get_context_data(**kwargs)
         employee = Employee.objects.get(user = self.request.user)
         for form in context['formset']:
-            form.fields['project'].queryset =  Project.objects.filter(member = employee)
+            form.fields['project'].queryset =  Project.objects.filter(employee = employee)
         return context
     
     
@@ -221,7 +220,7 @@ def register_user(request):
 
 class IndexView(LoginRequiredMixin, TemplateView):
     template_name = "daily_report/index.html"
-'''    
+   
     
 class ProjectList(LoginRequiredMixin, ListView):
     model = Project
