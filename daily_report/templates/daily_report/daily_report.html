@@ -73,8 +73,14 @@
   			var str2 = "id_activity_set-" + i + "-end_time";
   			start_array.push($('#' + str1).val());
   			end_array.push($('#' + str2).val());
+			if(start_array[i].charAt(1)==":")
+  				start_array[i]= '0' + start_array[i]; 
+  			if(end_array[i].charAt(1)==":")
+  				end_array[i]= '0' + end_array[i]; 
   			if(start_array[i] >= end_array[i]){
   				alert("the start_time is ahead of the end_time");
+  				console.log(start_array[i]);
+  				console.log(end_array[i]);
   				return false;
   			}
   		}
@@ -83,6 +89,7 @@
 			for( var  j = i + 1; j < num; j++){
 				if(start_array[i] <= end_array[j] && end_array[i] >= start_array[j]){
 					alert("overlap of the time");
+					
 					return false;
 				}else{
 					//do nothing
