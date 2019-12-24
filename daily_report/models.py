@@ -50,8 +50,6 @@ class Project(models.Model):
     client = models.CharField(max_length = 30)
     outsourcing_cost = models.IntegerField() 
     cost = models.IntegerField()
-    member = models.ManyToManyField(Employee)
-      
     
     def __str__(self):
         return self.name
