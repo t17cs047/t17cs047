@@ -85,9 +85,7 @@ class ActivityListView(LoginRequiredMixin, ListView):
     def get_queryset(self, **kwargs):
         report = get_object_or_404(DailyReport, pk=self.kwargs['pk'])
         return Activity.objects.filter(daily_report = report)
-    
 
-    
 """12/20"""
 
 class OnlyYouMixin(UserPassesTestMixin):
