@@ -175,6 +175,13 @@ class ReportUpdateView(LoginRequiredMixin, ReportMixin, FormsetMixin, UpdateView
     model = DailyReport
     form_class = DailyReportCreateForm
     formset_class = ActivityFormset
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        employee = Employee.objects.get(user = self.request.user)
+        for form in context['formset']:
+            form.fields['project'].queryset =  Project.objects.filter(member = employee)
+        return context
+    
     
     
 @staff_member_required    
