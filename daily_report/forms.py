@@ -1,8 +1,13 @@
 from django import forms
-from .models import Activity, DailyReport, Project
+from .models import Activity, DailyReport, Project, Employee
 from django.contrib.auth import forms as auth_forms
+
+from random import choice
+from django.db.models.query import QuerySet
+
 from daily_report.models import Employee
 from django.contrib.auth.forms import UserCreationForm
+
 
 class DailyReportCreateForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
@@ -44,9 +49,13 @@ class ProjectIdForm(forms.Form):
     project_id = forms.IntegerField(label='ID')
 
 class ProjectForm(forms.ModelForm):
+    
+    employee = forms.ModelMultipleChoiceField(queryset = Employee.objects.all(),
+                                         required = False,
+                                         widget = forms.CheckboxSelectMultiple)
+    
     class Meta:
         model = Project
         fields = ['name', 'order_amount', 'budget',
               'outsourcing_budget', 'start_date',
               'end_date', 'client', 'outsourcing_cost', 'cost']
-

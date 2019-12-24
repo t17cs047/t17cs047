@@ -1,7 +1,11 @@
 from django.db import models
 from datetime import datetime
 from django.contrib.auth.models import User
+
+from pip.cmdoptions import verbose
+
 from django.conf import settings
+
 # Create your models here.
 class Status(models.Model):
     class Meta:
@@ -18,7 +22,7 @@ class DailyReport(models.Model):
         db_table = "daily_report"
     
     date = models.DateField(verbose_name = "日付", default = datetime.now)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)        
+    user = models.ForeignKey(User, on_delete=models.CASCADE)   
 
 class Employee(models.Model):
     class Meta:
@@ -26,17 +30,18 @@ class Employee(models.Model):
     
     name = models.CharField(max_length = 100)
     status = models.ForeignKey(Status, on_delete = models.PROTECT )
+
     #daily_report = models.ForeignKey(DailyReport, on_delete = models.PROTECT) いらない？
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
 
-
 class Project(models.Model):
     class Meta:
         db_table = "project"
     name = models.CharField(max_length = 30, unique = True)
+    employee = models.ManyToManyField(Employee)
     order_amount = models.IntegerField()
     budget = models.IntegerField()
     outsourcing_budget = models.IntegerField()
