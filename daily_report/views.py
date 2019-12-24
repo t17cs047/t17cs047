@@ -52,15 +52,15 @@ def add_daily_report(request):
             print("else")
             context['formset'] = formset
             for form in context['formset']:
-                form.fields['project'].queryset =  Project.objects.filter(member = employee)
+                form.fields['project'].queryset =  Project.objects.filter(employee = employee)
             messages.warning(request, "fill in the forms correctly!")
 
     else:
         employee = Employee.objects.get(user = request.user)    
         context['formset'] = ActivityFormset()
         for form in context['formset']:
-            form.fields['project'].queryset =  Project.objects.filter(member = employee)
-        print(Project.objects.filter(member = employee)) 
+            form.fields['project'].queryset =  Project.objects.filter(employee = employee)
+        print(Project.objects.filter(employee = employee)) 
         
     return render(request, 'daily_report/daily_report.html', context)
 
@@ -85,7 +85,7 @@ class ActivityListView(LoginRequiredMixin, ListView):
     def get_queryset(self, **kwargs):
         report = get_object_or_404(DailyReport, pk=self.kwargs['pk'])
         return Activity.objects.filter(daily_report = report)
-    
+
 """12/20"""
 
 class OnlyYouMixin(UserPassesTestMixin):
@@ -182,6 +182,13 @@ class ReportUpdateView(LoginRequiredMixin, ReportMixin, FormsetMixin, UpdateView
     model = DailyReport
     form_class = DailyReportCreateForm
     formset_class = ActivityFormset
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        employee = Employee.objects.get(user = self.request.user)
+        for form in context['formset']:
+            form.fields['project'].queryset =  Project.objects.filter(employee = employee)
+        return context
+    
     
     
 @staff_member_required    

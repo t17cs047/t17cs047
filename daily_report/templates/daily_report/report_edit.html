@@ -33,12 +33,19 @@
     <script>
         $('#add_more').click(function() {
              var form_idx = $('#id_activity_set-TOTAL_FORMS').val();
+             var option = $('#id_activity_set-0-project').children().clone();
+             var str = "id_activity_set-" + form_idx + "-project";
 		      $('#form_set').append($('#empty_form').html().replace(/__prefix__/g, form_idx));
              $('#id_activity_set-TOTAL_FORMS').val(parseInt(form_idx) + 1);
              $('[id $= "time" ]').timeDropper({
               format: "H:mm",
               setCurrentTime: false,
           });
+          /*----add 12/23-----*/
+				var i = 0;
+				$('#' + str).children().remove();
+				$('#' + str).append(option);      
+			/*-----add 12/23----*/    
            });
       </script>
 			<input type="submit"/>
@@ -54,4 +61,41 @@
               setCurrentTime: false,
           });
       });
+  </script>
+  
+  
+  
+  
+  <script>
+  $('form').submit(function(){
+  		var num = $('#id_activity_set-TOTAL_FORMS').val();
+  		var start_array = [];
+  		var end_array = [];
+  		for( var i = 0; i < num ; i++){
+  			var str1 = "id_activity_set-" + i + "-start_time";
+  			var str2 = "id_activity_set-" + i + "-end_time";
+  			start_array.push($('#' + str1).val());
+  			end_array.push($('#' + str2).val());
+  			if(start_array[i].charAt(1)==":")
+  				start_array[i]= '0' + start_array[i]; 
+  			if(end_array[i].charAt(1)==":")
+  				end_array[i]= '0' + end_array[i]; 
+  			if(start_array[i] >= end_array[i]){
+  				alert("the start_time is ahead of the end_time");
+  				return false;
+  			}
+  		}
+  		console.log(num);
+		for(var i = 0; i < num - 1; i++ ){
+			for( var  j = i + 1; j < num; j++){
+				if(start_array[i] <= end_array[j] && end_array[i] >= start_array[j]){
+					alert("overlap of the time");
+					return false;
+				}else{
+					//do nothing
+				}
+			}
+		}
+		return true;
+  		});
   </script>
