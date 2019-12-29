@@ -10,6 +10,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.template.defaultfilters import default
 
 import datetime
+from setuptools.command.setopt import option_base
 
 
 class DailyReportCreateForm(forms.ModelForm):
@@ -92,9 +93,10 @@ class ProjectForm(forms.ModelForm):
             'start_date':DateInput(),
             'end_date':DateInput()
             }
-    def clean_date(self):
-            start_date = self.start_date.get('start_date')
-            end_date = self.end_date.get('end_date')
-            if end_date <= start_date:
-                raise forms.ValidationError('開始日が終了日より早いです')
-            return end_date
+    def clean(self):
+            clean_date = super(ProjectForm, self).clean()
+            start_date = clean_date.get('start_date')
+            end_date = clean_date.get('end_date')
+            if end_date < start_date:
+                raise forms.ValidationError('終了日が開始日より早いです')
+            return clean_date

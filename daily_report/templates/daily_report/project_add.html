@@ -6,9 +6,9 @@
 <form action="{% url 'add' %}" method="post">
  <table class ="table">
   <thead class="thead-dark">
-  {{ form.as_p }}
+  {{ form.as_table}}
   {% csrf_token %}
-  </table>
+   </table>	
   
   </table>
 <button type="submit" class="sell-submit" name="next" value="confirm">Confirm</button>
