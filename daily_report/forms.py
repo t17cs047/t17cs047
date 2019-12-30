@@ -35,6 +35,9 @@ class UserCreateForm(UserCreationForm):
 
 
 class ProfileForm(forms.ModelForm):
+    employee = forms.ModelMultipleChoiceField(queryset = Employee.objects.all(),
+                                         required = False,
+                                         widget = forms.CheckboxSelectMultiple)    
     class Meta:
         model = Employee
         fields = (
@@ -49,13 +52,9 @@ class ProjectIdForm(forms.Form):
     project_id = forms.IntegerField(label='ID')
 
 class ProjectForm(forms.ModelForm):
-    
     employee = forms.ModelMultipleChoiceField(queryset = Employee.objects.all(),
                                          required = False,
                                          widget = forms.CheckboxSelectMultiple)
-    
     class Meta:
         model = Project
-        fields = ['name', 'order_amount', 'budget',
-              'outsourcing_budget', 'start_date',
-              'end_date', 'client', 'outsourcing_cost', 'cost']
+        fields = '__all__'

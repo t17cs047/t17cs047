@@ -13,12 +13,13 @@
 		{% for activity_form in formset %}
             <table class='no_error'>
             {{ activity_form.as_table }}
-            <hr>
+            <hr id="section_line">
             </table>
        {% endfor %}
 </div>
 <hr>
 <input type="button" value="Add More" id="add_more">
+<input type="button" value="Decline" id="decline" >
 <div id="empty_form" style="display:none">
 <hr>
 <table class='no_error'>
@@ -28,7 +29,7 @@
 	
 	
 	 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/timedropper/1.0/timedropper.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/timedropper/1.0/timedropper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/timedropper/1.0/timedropper.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script>
         $('#add_more').click(function() {
@@ -49,6 +50,23 @@
 	
            });
       </script>
+
+    <script>
+        $('#decline').click(function() {
+             var form_idx = $('#id_activity_set-TOTAL_FORMS').val();
+             if(form_idx > 1){
+             		console.log(form_idx);
+             		var num = form_idx - 1;
+             		console.log(num);
+           	  	var str = $('.no_error').eq(form_idx);
+             		$('.no_error').eq(form_idx - 1).remove();
+             		$('hr').eq(form_idx - 1).remove();	      
+             		$('#id_activity_set-TOTAL_FORMS').val(parseInt(form_idx) - 1);
+             }
+           });
+      </script>
+
+
 			<input type="submit"/>
           </form>
           <a href="{% url 'index' %}">index</a>
