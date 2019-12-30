@@ -7,6 +7,10 @@ from django.db.models.query import QuerySet
 
 from daily_report.models import Employee
 from django.contrib.auth.forms import UserCreationForm
+from django.template.defaultfilters import default
+
+import datetime
+from setuptools.command.setopt import option_base
 
 
 class DailyReportCreateForm(forms.ModelForm):
@@ -47,15 +51,52 @@ class ProjectBuy(forms.Form):
     
 class ProjectIdForm(forms.Form):
     project_id = forms.IntegerField(label='ID')
+    
+class DateInput(forms.DateInput):
+    input_type = 'date'
 
 class ProjectForm(forms.ModelForm):
     
     employee = forms.ModelMultipleChoiceField(queryset = Employee.objects.all(),
+                                         label = 'メンバー社員',
                                          required = False,
                                          widget = forms.CheckboxSelectMultiple)
     
+    name = forms.CharField(
+        label='プロジェクト名',
+        widget = forms.TextInput()
+        )
+    order_amount = forms.IntegerField(
+        label= '受注金額',
+        )
+    budget = forms.IntegerField(
+        label= '予算',
+        )
+    outsourcing_budget = forms.IntegerField(
+        label= '外注費予算',
+        )
+    client = forms.CharField(
+        label='顧客名',
+        widget = forms.TextInput()
+        )
+    outsourcing_cost = forms.IntegerField(
+        label= '外注費',
+        )
+    cost = forms.IntegerField(
+        label= '原価',
+        )
+    
     class Meta:
         model = Project
-        fields = ['name', 'order_amount', 'budget',
-              'outsourcing_budget', 'start_date',
-              'end_date', 'client', 'outsourcing_cost', 'cost']
+        fields = '__all__'
+        widgets = {
+            'start_date':DateInput(),
+            'end_date':DateInput()
+            }
+    def clean(self):
+            clean_date = super(ProjectForm, self).clean()
+            start_date = clean_date.get('start_date')
+            end_date = clean_date.get('end_date')
+            if end_date < start_date:
+                raise forms.ValidationError('終了日が開始日より早いです')
+            return clean_date
