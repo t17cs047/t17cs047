@@ -12,13 +12,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.views.generic import ListView
 from django.contrib import messages
-
 from django.views.generic import DetailView
-
 from django.db import transaction
 from .forms import ProfileForm, UserCreateForm
-
-
 from django.views.generic import ListView
 
 from django.http import HttpResponseRedirect
@@ -26,6 +22,7 @@ from django.urls import reverse, reverse_lazy
 from django.shortcuts import get_object_or_404, redirect
 from daily_report.forms import Project, ProjectBuy, ProjectForm
 from . forms import ProjectForm
+
 
 # Create your views here.
 @login_required
@@ -49,7 +46,7 @@ def add_daily_report(request):
             return redirect('index')
         
         else:
-            print("else")
+            print("GET")
             context['formset'] = formset
             for form in context['formset']:
                 form.fields['project'].queryset =  Project.objects.filter(employee = employee)
@@ -64,7 +61,9 @@ def add_daily_report(request):
         
     return render(request, 'daily_report/daily_report.html', context)
 
-
+class ReportCreate(CreateView):
+    form_class = DailyReportCreateForm
+    formset_class = ActivityFormset
 
 class MyLoginView(LoginView):
     form_class = forms.LoginForm

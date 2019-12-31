@@ -20,6 +20,7 @@ class Status(models.Model):
 class DailyReport(models.Model):
     class Meta:
         db_table = "daily_report"
+        unique_together = ('date', 'user')
     
     date = models.DateField(verbose_name = "日付", default = datetime.now)
     user = models.ForeignKey(User, on_delete=models.CASCADE)   
