@@ -1,5 +1,6 @@
 
 <form method="post" action="{% url 'write' %}" >{% csrf_token %}
+<div id = forms>
 	{{form.as_p}}
 {% if messages %}
 	<ul class="messages">
@@ -10,25 +11,28 @@
 {% endif %}
 <div id="form_set">
 		{{ formset.management_form }}
+		{{ activityformset.management_form }}
 		{% for activity_form in formset %}
             <table class='no_error'>
-            {{ activity_form.as_table }}
-            <hr>
+            {{ activity_form}}
+            <hr id="section_line">
             </table>
        {% endfor %}
 </div>
 <hr>
+</div>
 <input type="button" value="Add More" id="add_more">
+<input type="button" value="Decline" id="decline" >
 <div id="empty_form" style="display:none">
 <hr>
 <table class='no_error'>
 	 {{ formset.empty_form.as_table }}
 </table>
 </div>  
-	
+	<div id = review_area></div>
 	
 	 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/timedropper/1.0/timedropper.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/timedropper/1.0/timedropper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/timedropper/1.0/timedropper.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script>
         $('#add_more').click(function() {
@@ -49,9 +53,124 @@
 	
            });
       </script>
-			<input type="submit"/>
+
+    <script>
+        $('#decline').click(function() {
+             var form_idx = $('#id_activity_set-TOTAL_FORMS').val();
+             if(form_idx > 1){
+             		console.log(form_idx);
+             		var num = form_idx - 1;
+             		console.log(num);
+           	  	var str = $('.no_error').eq(form_idx);
+             		$('.no_error').eq(form_idx - 1).remove();
+             		$('hr').eq(form_idx - 1).remove();	      
+             		$('#id_activity_set-TOTAL_FORMS').val(parseInt(form_idx) - 1);
+             }
+           });
+      </script>
+			<p hidden>are you sure?<p>
+			<input type="button" id="confirm" value="confirm" class="def">
+			<input type="button" id="revise" value=revise" hidden >
+			<input type="submit" id = "submit" hidden/>
           </form>
           <a href="{% url 'index' %}">index</a>
+          
+          
+<script>
+        $('#confirm').click(function() {
+        		console.log(confirm);
+        		var form_idx = $('#id_activity_set-TOTAL_FORMS').val();			
+				var num = $('#id_activity_set-TOTAL_FORMS').val();
+  				var start_array = [];
+  				var end_array = [];
+  				for( var i = 0; i < num ; i++){
+  				var str1 = "id_activity_set-" + i + "-start_time";
+  				var str2 = "id_activity_set-" + i + "-end_time";
+  				start_array.push($('#' + str1).val());
+  				end_array.push($('#' + str2).val());
+				if(start_array[i].charAt(1)==":")
+  					start_array[i]= '0' + start_array[i]; 
+  				if(end_array[i].charAt(1)==":")
+  					end_array[i]= '0' + end_array[i]; 
+  				if(start_array[i] >= end_array[i]){
+  					alert("the start_time is ahead of the end_time");
+  					console.log(start_array[i]);
+  					console.log(end_array[i]);
+  					return false;
+  				}
+  			}
+		for(var i = 0; i < num - 1; i++ ){
+			for( var  j = i + 1; j < num; j++){
+				if(start_array[i] <= end_array[j] && end_array[i] >= start_array[j]){
+					alert("overlap of the time");
+					
+					return false;
+				}else{
+					//do nothing
+				}
+			}
+		}
+		        /*----type1----
+        		$('[id $= "time" ]').prop("disabled",true);
+				$('[id $= "project" ]').prop("disabled",true);
+				$('[id $= "memo" ]').prop("disabled",true);
+				$('[id $= "date" ]').prop("disabled",true);
+				$(submit).show();
+				$('[id = revise]').show();
+				$('[id = add_more]').hide();
+				$('[id = decline]').hide();
+				$('[id = confirm]').hide();
+				//$('[id = forms]').hide();
+				----*/
+				
+				/*----type2----*/
+				$('p').show();
+				$('[id = add_more]').hide();
+				$('[id = decline]').hide();
+				$('[id = confirm]').hide();
+				$(submit).show();
+				$('[id = revise]').show();
+				str0 = $('#id_date').val();
+				var text = "date" + str0 +"br" +"<hr>";
+				$('[id = forms]').hide();
+				for(var i=0; i<form_idx; i++){
+					var str1 = "#id_activity_set-" + i + "-start_time";
+  					var str2 = "#id_activity_set-" + i + "-end_time";
+  					var str3 = "#id_activity_set-" + i + "-project";
+  					var str4 = "#id_activity_set-" + i + "-memo";
+  					str1 = $(str1).val();
+  					str2 = $(str2).val();
+  					str3 = $("option:selected",str3).text();
+  					str4 = $(str4).val(); 					
+  					text = text + "start time: " + str1 + "br" + "end time: " + str2 + "br" + "project: " + str3 + "br" + "memo:" + str4 + "<hr>";
+  					console.log(text);
+				}
+				$('[id="review_area"]').show();
+				console.log("call");
+				$('[id="review_area"]').empty();
+				$('[id="review_area"]').append(text.replace(/br/g, '<br>'));
+
+					
+				/*----type2----*/
+           });
+</script>
+          
+<script>
+        $('#revise').click(function() {
+        		$('p').hidden();
+        		$('[id = add_more]').show();
+				$('[id = decline]').show();
+				$('[id = confirm]').show();
+				$(submit).hide();
+				$('[id = revise]').hide();
+				$('[id="review_area"]').hide();
+				$('[id = forms]').show();
+        	}
+        	);
+</script>          
+          
+          
+          
                   
  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/timedropper/1.0/timedropper.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/timedropper/1.0/timedropper.min.js"></script>
@@ -64,38 +183,13 @@
       });
   </script>
   <script>
-  $('form').submit(function(){
-  		var num = $('#id_activity_set-TOTAL_FORMS').val();
-  		var start_array = [];
-  		var end_array = [];
-  		for( var i = 0; i < num ; i++){
-  			var str1 = "id_activity_set-" + i + "-start_time";
-  			var str2 = "id_activity_set-" + i + "-end_time";
-  			start_array.push($('#' + str1).val());
-  			end_array.push($('#' + str2).val());
-			if(start_array[i].charAt(1)==":")
-  				start_array[i]= '0' + start_array[i]; 
-  			if(end_array[i].charAt(1)==":")
-  				end_array[i]= '0' + end_array[i]; 
-  			if(start_array[i] >= end_array[i]){
-  				alert("the start_time is ahead of the end_time");
-  				console.log(start_array[i]);
-  				console.log(end_array[i]);
-  				return false;
-  			}
-  		}
-  		console.log(num);
-		for(var i = 0; i < num - 1; i++ ){
-			for( var  j = i + 1; j < num; j++){
-				if(start_array[i] <= end_array[j] && end_array[i] >= start_array[j]){
-					alert("overlap of the time");
-					
-					return false;
-				}else{
-					//do nothing
-				}
-			}
-		}
+  $('form').submit(function(){		
+		/*----type1----
+		       $('[id $= "time" ]').prop("disabled",false);
+				$('[id $= "project" ]').prop("disabled",false);
+				$('[id $= "memo" ]').prop("disabled",false);
+				$('[id $= "date" ]').prop("disabled",false);
+		-----*/
 		return true;
   		});
   </script>

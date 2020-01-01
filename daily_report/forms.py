@@ -39,6 +39,9 @@ class UserCreateForm(UserCreationForm):
 
 
 class ProfileForm(forms.ModelForm):
+    employee = forms.ModelMultipleChoiceField(queryset = Employee.objects.all(),
+                                         required = False,
+                                         widget = forms.CheckboxSelectMultiple)    
     class Meta:
         model = Employee
         fields = (
@@ -56,7 +59,6 @@ class DateInput(forms.DateInput):
     input_type = 'date'
 
 class ProjectForm(forms.ModelForm):
-    
     employee = forms.ModelMultipleChoiceField(queryset = Employee.objects.all(),
                                          label = 'メンバー社員',
                                          required = False,
@@ -100,3 +102,4 @@ class ProjectForm(forms.ModelForm):
             if end_date < start_date:
                 raise forms.ValidationError('終了日が開始日より早いです')
             return clean_date
+
