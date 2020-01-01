@@ -3,6 +3,7 @@
 {% block title %} 個別リスト{% endblock %}
 
 {% block main %}
+<p >if you want to delete all activities, please delete the daily report</p>
 <table id ="myTable">
   <thead class="thead-dark">
     <tr>
@@ -19,8 +20,23 @@
    <td>{{ activity.end_time}}</td>
    <td>{{ activity.project }}</td>
    <td>{{ activity.memo }}</td>
+   <td id=nums><a href="{% url 'delete_activity' activity.id %}">delete</a></td>
   </tr>
 {% endfor%}
 </tbody>
 </table>
-{% endblock%} 
+      
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>
+     jQuery(function(){
+          var num = $('[id = nums]').length;
+          if( num == 1){
+          		$('p').show();
+          		$('[id=nums]').hide();
+          	}else{
+          		$('[id=nums]').show();
+          		$('p').hide();
+          		}
+     });
+  </script>
+      {% endblock%} 

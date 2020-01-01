@@ -68,7 +68,7 @@
              }
            });
       </script>
-
+			<p hidden>are you sure?<p>
 			<input type="button" id="confirm" value="confirm" class="def">
 			<input type="button" id="revise" value=revise" hidden >
 			<input type="submit" id = "submit" hidden/>
@@ -110,7 +110,7 @@
 				}
 			}
 		}
-		        /*----tipe1----
+		        /*----type1----
         		$('[id $= "time" ]').prop("disabled",true);
 				$('[id $= "project" ]').prop("disabled",true);
 				$('[id $= "memo" ]').prop("disabled",true);
@@ -124,6 +124,7 @@
 				----*/
 				
 				/*----type2----*/
+				$('p').show();
 				$('[id = add_more]').hide();
 				$('[id = decline]').hide();
 				$('[id = confirm]').hide();
@@ -156,6 +157,7 @@
           
 <script>
         $('#revise').click(function() {
+        		$('p').hidden();
         		$('[id = add_more]').show();
 				$('[id = decline]').show();
 				$('[id = confirm]').show();

@@ -61,9 +61,15 @@ def add_daily_report(request):
         
     return render(request, 'daily_report/daily_report.html', context)
 
-class ReportCreate(CreateView):
-    form_class = DailyReportCreateForm
-    formset_class = ActivityFormset
+class ActivityDeleteView(DeleteView):
+    model = Activity
+    template_name = 'daily_report/activity_delete.html'
+    success_url = '../report_list'
+    
+class ReportDeleteView(DeleteView):
+    model = DailyReport
+    template_name = 'daily_report/report_delete.html'
+    success_url = '../report_list'    
 
 class MyLoginView(LoginView):
     form_class = forms.LoginForm
