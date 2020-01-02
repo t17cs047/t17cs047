@@ -16,7 +16,6 @@
 <dt>終了</dt><dd>{{ form.end_date.value }}</dd>
 <dt>クライアント</dt><dd>{{ form.client.value }}</dd>
 <dt>Outsourcing cost</dt><dd>{{ form.outsourcing_cost.value }}</dd>
-<dt>Cost</dt><dd>{{ form.cost.value }}</dd>
 </dl>
 <form action="{% url 'add' %}" method="post">
 						{% csrf_token %}
