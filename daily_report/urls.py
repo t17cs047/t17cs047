@@ -19,7 +19,13 @@ urlpatterns = [
         path('edit/<int:pk>', views.ProjectEditViewWithParameter.as_view(), name='edit_para'),
         path('delete/<int:pk>', ProjectDeleteViewWithParameter.as_view(), name='delete_para'),
         path('detail/<int:pk>', views.ProjectDetailViewWithParameter.as_view(), name='detail'),
+        
+        path('wage_edit/<int:pk>', views.WageEditViewWithParameter.as_view(), name='edit_para_wage'),
+        path('wage_delete/<int:pk>', views.WageDeleteViewWithParameter.as_view(), name='delete_para_wage'),
+        path('wage_detail/<int:pk>', views.WageDetailViewWithParameter.as_view(), name='detail_wage'),
         path('add_wage', WageAddView.as_view(), name='add_wage'),
+        path('wage_list', views.WageList.as_view(),name='list_wage'),
+        
         path('show_cost', CostView.as_view(), name='show_cost'),
   
     ]
