@@ -100,3 +100,6 @@ class ProjectForm(forms.ModelForm):
             if end_date < start_date:
                 raise forms.ValidationError('終了日が開始日より早いです')
             return clean_date
+        
+class StatusIdForm(forms.Form):
+    status_id = forms.IntegerField(label='ID')

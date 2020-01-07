@@ -3,7 +3,7 @@
 {% block title %} Edit {% endblock %}
 
 {% block main %}
-<form action="{% url 'detail' status.id %}" method="post">
+<form action="{% url 'wage_detail' status.id %}" method="post">
 {% csrf_token %}
 
 <body>
@@ -16,14 +16,12 @@
 			<td>{{status.name}}</td>
 		</th>
 		<tr>
-			<th>employee</th>
+			<th>wage</th>
 		</th>
 		<tr>
 			<td>{{status.wage}}</td>
 		</th>
-		<tr>
-			<th>order_amount</th>
-		</th>
+
 	
 			
 	</table>
