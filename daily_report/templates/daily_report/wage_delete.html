@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %} Delete {% endblock %}
+
+{% block main %}
+<form action="{% url 'delete_para_wage' status.id %}" method="post">
+{% csrf_token %}
+<dl>
+<dt>Do you want to delete this record? Check the table below. </dt>
+<dt></dt>
+<dt>ID</dt><dd>{{status.id}}</dd>
+<dt>status</dt><dd>{{ status.name }}</dd>
+</dl>
+<input type="submit" value = "delete"/>
+</form>
+<li><a href="{% url 'wage_list' %}">Return</a></li>
+
+{% endblock %}
