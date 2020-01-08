@@ -24,9 +24,9 @@
   <tr>
    <td scope="row">{{ status.id }}</td>
    <td><a href = {{status.status_url}} >{{ status }}</a></td>
-   <td><a href="{% url 'detail' status.id %}">Detail</a></td>
-   <td><a href="{% url 'edit_para_wage' status.id %}">変更</a></td>
-   <td><a href="{% url 'delete_para_wage' status.id %}">削除</a></td>
+   <td><a href="{% url 'wage_detail' status.id %}">Detail</a></td>
+   <td><a href="{% url 'wage_edit_para' status.id %}">変更</a></td>
+   <td><a href="{% url 'wage_delete_para' status.id %}">削除</a></td>
   </tr>
   {% endfor%}
 </tbody>

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %} Delete_Error {% endblock %}
+
+{% block main %}
+<form action="{% url 'project_delete_error'%}" method="post">
+{% csrf_token %}
+<dl>
+<dt>このプロジェクトは開始しているので削除できません</dt>
+
+</form>
+<li><a href="{% url 'list' %}">Return</a></li>
+
+{% endblock %}
