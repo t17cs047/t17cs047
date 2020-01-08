@@ -20,10 +20,19 @@ from django.views.generic import ListView
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.shortcuts import get_object_or_404, redirect
-from daily_report.forms import Project, ProjectBuy, ProjectForm
+
+from daily_report.forms import Project, ProjectBuy, ProjectForm, StatusIdForm
 from . forms import ProjectForm, ProjectIdForm
+
+from django.template.context_processors import request
+from django.db import models
+from django.contrib import messages
+from django.http.response import HttpResponseForbidden
+from django.urls.base import resolve
+
 from django.db import IntegrityError
 from decimal import Decimal, ROUND_HALF_UP
+
 
 # Create your views here.
 @login_required
@@ -32,8 +41,6 @@ def add_daily_report(request):
     context = {'form': form}
     print("call1")
 
-   # for project in Project.objects.all():
-       # if(project.member.user == request.user):
     if request.method == 'POST' and form.is_valid():
         post = form.save(commit=False)
         post.user = request.user
@@ -312,17 +319,89 @@ class ProjectDeleteViewWithParameter(LoginRequiredMixin,DeleteView):
     template_name = 'daily_report/project_delete.html'   
     success_url = '../list'
     
+    def delete(self, request, *args, **kwargs):
+        try:
+            return super(ProjectDeleteViewWithParameter, self).delete(
+                    request, *args, **kwargs
+                )
+        except models.ProtectedError as e:
+            return redirect('project_delete_error')
+        
+class ProjectDeleteErrorView(LoginRequiredMixin,TemplateView):
+    template_name = 'daily_report/project_delete_error.html'       
+
+    
 class ProjectDetailViewWithParameter(LoginRequiredMixin, DetailView):
     model = Project    
     template_name = 'daily_report/project_detail.html'
+    success_url = '../list'
     
     
+    
+class WageList(LoginRequiredMixin, ListView):
+    model = Status
+   
+    def post(self, request, *args, **kwargs):
+        status_id = self.request.POST.get('status_id')
+        status = get_object_or_404(Status, pk=status_id)
+        return HttpResponseRedirect(reverse('list_wage'))
+  
+    def get_context_data(self, **kwargs):
+       context = super().get_context_data(**kwargs)
+       context['form'] = StatusIdForm()
+       return context
+
+
 class WageAddView(LoginRequiredMixin, CreateView):
     model = Status
     fields = ('name', 'wage')
     template_name = 'daily_report/wage_add.html'
+    #form_class = forms.ProfileForm
+   # success_url = 'daily_report/wage_add.html'
+    
+    #form_class = ProjectForm
+    #template_name = 'daily_report/project_add.html'  
+    success_url = reverse_lazy('list_wage')
+    
+    def form_valid(self, form):
+        if self.request.POST.get('next', '') == 'confirm':
+            return render(self.request, 'daily_report/wage_show.html', {'form':form})
+        if self.request.POST.get('next', '') == 'create':
+            #form.save()
+            #form.save_m2m()
+            return super().form_valid(form)
+        if self.request.POST.get('next', '') == 'back':
+            return render(self.request, 'daily_report/wage_add.html', {'form':form})
+        
+        
+class WageEditViewWithParameter(LoginRequiredMixin, UpdateView):
+    model = Status  
+    fields = ('name', 'wage')
+    template_name = 'daily_report/wage_edit.html'
+    success_url = reverse_lazy('list_wage')
+    
+class WageDeleteViewWithParameter(LoginRequiredMixin,DeleteView):
+    model = Status
+    template_name = 'daily_report/wage_delete.html'   
+    success_url = '../list_wage'
+    
+    def delete(self, request, *args, **kwargs):
+        try:
+            return super(WageDeleteViewWithParameter, self).delete(
+                    request, *args, **kwargs
+                )
+        except models.ProtectedError as e:
+            return redirect('wage_delete_error')
+ 
+class WageDeleteErrorView(LoginRequiredMixin,TemplateView):
+    template_name = 'daily_report/wage_delete_error.html'       
+    
+    
+class WageDetailViewWithParameter(LoginRequiredMixin, DetailView):
+    model = Status  
+    template_name = 'daily_report/wage_detail.html'
+    
 
-    success_url = 'index/'
     
 class CostView(LoginRequiredMixin, ListView):
     model = Project

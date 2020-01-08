@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %} Edit {% endblock %}
+
+{% block main %}
+<form action="{% url 'wage_detail' status.id %}" method="post">
+{% csrf_token %}
+
+<body>
+	<h1>DetaileView</h1>
+	<table id ="myTable">
+		<tr>
+			<th>name</th>
+		</th>
+		<tr>
+			<td>{{status.name}}</td>
+		</th>
+		<tr>
+			<th>wage</th>
+		</th>
+		<tr>
+			<td>{{status.wage}}</td>
+		</th>
+
+	
+			
+	</table>
+</body>
+
+<li><a href= "{% url 'list_wage' %}">Return</a></li>
+
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %} Delete {% endblock %}
+
+{% block main %}
+<form action="{% url 'add_wage' %}" method="post">
+{% csrf_token %}
+<dl>
+<dt>内容を確認してください</dt>
+<dt></dt>
+<dt>名前</dt><dd>{{form.name.value }}</dd>
+<dt>Wage</dt><dd>{{ form.wage.value }}</dd>
+</dl>
+<form action="{% url 'add_wage' %}" method="post">
+						{% csrf_token %}
+   							{% for field in form %}
+                        {{field.as_hidden}}
+                    {% endfor %}
+<button type="submit" class="sell-submit" name="next" value="create">作成</button>
+<button type="submit" class="sell-submit" name="next" value="back">Return</button>
+</form>
+
+{% endblock %}

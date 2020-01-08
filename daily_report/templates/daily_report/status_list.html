@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %} 個別リスト{% endblock %}
+
+{% block main %}
+<form action="{% url 'list_wage'%}" method="post">
+{% csrf_token %}
+{{ form }}
+<input type="submit"/>
+</form>
+<table id ="myTable">
+  <thead class="thead-dark">
+    <tr>
+      <th>ID</th>
+      <th>shokui</th>
+      <th>tanka</th>
+      <th>Detail</th>
+      <th>変更</th>
+      <th>削除</th>
+    </tr>
+  </thead>
+  <tbody>
+{% for status in object_list%}
+  <tr>
+   <td scope="row">{{ status.id }}</td>
+   <td><a href = {{status.status_url}} >{{ status }}</a></td>
+   <td><a href="{% url 'wage_detail' status.id %}">Detail</a></td>
+   <td><a href="{% url 'wage_edit_para' status.id %}">変更</a></td>
+   <td><a href="{% url 'wage_delete_para' status.id %}">削除</a></td>
+  </tr>
+  {% endfor%}
+</tbody>
+</table>
+<ul>
+<li><a href="{% url 'add_wage' %}">追加</a></li>
+<li><a href="{% url 'index' %}">Return</a></li>
+</ul>
+{% endblock%} 
