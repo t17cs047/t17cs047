@@ -120,11 +120,13 @@ class ReportMixin(object):
         formset.instance = invoice
 
         # DB更新
-        with transaction.atomic():
-            invoice.save()
-            formset.instance = invoice
-            formset.save()
-
+        try:
+            with transaction.atomic():
+                invoice.save()
+                formset.instance = invoice
+                formset.save()
+        except:
+            return redirect("not_unique")
         # 処理後は詳細ページを表示
         print("valid1")
         return redirect("report_list")
