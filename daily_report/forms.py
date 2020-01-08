@@ -83,7 +83,10 @@ class ProjectForm(forms.ModelForm):
             if end_date < start_date:
                 raise forms.ValidationError('終了日が開始日より早いです')
             return clean_date
-
+        
+        
+class ProjectIDForm(forms.Form):
+    project_id = forms.ModelChoiceField(queryset = Project.objects.all(), label = "Project")
 
 class DailyReportCreateForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
@@ -94,11 +97,13 @@ class DailyReportCreateForm(forms.ModelForm):
     class Meta:
         model = DailyReport
         fields = ("date",)
-        widgets ={"date": DateInput()}          
+        widgets = {
+            'date':DateInput(),
+            }           
    
        
-ActivityFormset = forms.inlineformset_factory(DailyReport, Activity, fields = '__all__', widgets = {'start_time' : forms.TimeInput(format='%H:%M'), 'end_time' : forms.TimeInput(format='%H:%M') },
+ActivityFormset = forms.inlineformset_factory(DailyReport, Activity, fields = ('start_time','end_time','daily_report','project','memo'), widgets = {'start_time' : forms.TimeInput(format='%H:%M'), 'end_time' : forms.TimeInput(format='%H:%M')},
     extra = 1, max_num = 1, can_delete= True
     )
-
+#'start_time','end_time','daily_report','project','memo'
 
