@@ -1,10 +1,7 @@
 
 <form method="post" action="{% url 'write' %}" >{% csrf_token %}
-<div id = "comment" hidden>以下の内容で保存します</div>
-<div id = "forms">
-	<div id = date>
+<div id = forms>
 	{{form.as_p}}
-	</div>
 {% if messages %}
 	<ul class="messages">
 		{% for message in messages %}
@@ -33,14 +30,6 @@
 </table>
 </div>  
 	<div id = review_area></div>
-			<input type="button" id="confirm" value="confirm" class="def">
-			<input type="button" id="revise" value=revise" hidden >
-			<input type="submit" id = "submit" hidden/>
-          </form>
-          <a href="{% url 'index' %}">index</a>	
-	
-	
-	
 	
 	 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/timedropper/1.0/timedropper.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/timedropper/1.0/timedropper.min.js"></script>
@@ -79,6 +68,12 @@
              }
            });
       </script>
+			<p hidden>are you sure?<p>
+			<input type="button" id="confirm" value="confirm" class="def">
+			<input type="button" id="revise" value=revise" hidden >
+			<input type="submit" id = "submit" hidden/>
+          </form>
+          <a href="{% url 'index' %}">index</a>
           
           
 <script>
@@ -114,8 +109,22 @@
 					//do nothing
 				}
 			}
-		}				
+		}
+		        /*----type1----
+        		$('[id $= "time" ]').prop("disabled",true);
+				$('[id $= "project" ]').prop("disabled",true);
+				$('[id $= "memo" ]').prop("disabled",true);
+				$('[id $= "date" ]').prop("disabled",true);
+				$(submit).show();
+				$('[id = revise]').show();
+				$('[id = add_more]').hide();
+				$('[id = decline]').hide();
+				$('[id = confirm]').hide();
+				//$('[id = forms]').hide();
+				----*/
+				
 				/*----type2----*/
+				$('p').show();
 				$('[id = add_more]').hide();
 				$('[id = decline]').hide();
 				$('[id = confirm]').hide();
@@ -123,6 +132,7 @@
 				$('[id = revise]').show();
 				str0 = $('#id_date').val();
 				var text = "date" + str0 +"br" +"<hr>";
+				$('[id = forms]').hide();
 				for(var i=0; i<form_idx; i++){
 					var str1 = "#id_activity_set-" + i + "-start_time";
   					var str2 = "#id_activity_set-" + i + "-end_time";
@@ -139,9 +149,7 @@
 				console.log("call");
 				$('[id="review_area"]').empty();
 				$('[id="review_area"]').append(text.replace(/br/g, '<br>'));
-				$('[id = form_set]').hide();
-				$('[id = date]').hide();
-				$('[id = comment]').show();
+
 					
 				/*----type2----*/
            });
@@ -149,18 +157,19 @@
           
 <script>
         $('#revise').click(function() {
+        		$('p').hidden();
         		$('[id = add_more]').show();
 				$('[id = decline]').show();
 				$('[id = confirm]').show();
 				$(submit).hide();
 				$('[id = revise]').hide();
 				$('[id="review_area"]').hide();
-				$('[id = form_set]').show();
-				$('[id = date]').show();
-				$('[id = comment]').hide();
+				$('[id = forms]').show();
         	}
         	);
 </script>          
+          
+          
           
                   
  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/timedropper/1.0/timedropper.min.css">

@@ -1,6 +1,5 @@
 
 <form method="post" action="{% url 'report_edit' dailyreport.id %}" >{% csrf_token %}
-<div id = "comment" hidden>以下の内容で保存します</div>
 <div id = forms>
 	{{form.as_p}}
 {% if messages %}
@@ -69,6 +68,7 @@
              }
            });
       </script>
+			<p hidden>are you sure?<p>
 			<input type="button" id="confirm" value="confirm" class="def">
 			<input type="button" id="revise" value=revise" hidden >
 			<input type="submit" id = "submit" hidden/>
@@ -124,6 +124,7 @@
 				----*/
 				
 				/*----type2----*/
+				$('p').show();
 				$('[id = add_more]').hide();
 				$('[id = decline]').hide();
 				$('[id = confirm]').hide();
@@ -148,7 +149,7 @@
 				console.log("call");
 				$('[id="review_area"]').empty();
 				$('[id="review_area"]').append(text.replace(/br/g, '<br>'));
-				$('[id = comment]').show();
+
 					
 				/*----type2----*/
            });
@@ -156,6 +157,7 @@
           
 <script>
         $('#revise').click(function() {
+        		$('p').hide();
         		$('[id = add_more]').show();
 				$('[id = decline]').show();
 				$('[id = confirm]').show();
@@ -163,7 +165,6 @@
 				$('[id = revise]').hide();
 				$('[id="review_area"]').hide();
 				$('[id = forms]').show();
-				$('[id = comment]').hide();
         	}
         	);
 </script>          

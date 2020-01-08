@@ -63,8 +63,7 @@ class Activity(models.Model):
     daily_report = models.ForeignKey(DailyReport,verbose_name='project', on_delete = models.CASCADE)
     project = models.ForeignKey(Project, on_delete = models.PROTECT)
     memo = models.CharField(max_length = 100)
-    time = models.IntegerField(default = 0)
-    
+
 class SumTime():
     class Meta:
         db_table = "sum"
