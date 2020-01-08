@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %} Delete {% endblock %}
+
+{% block main %}
+<form action="{% url 'delete_activity' activity.id %}" method="post">
+{% csrf_token %}
+<dl>
+<dt>Do you want to delete this record? Check the table below. </dt>
+<dt></dt>
+<dt>start_time</dt><dd>{{ activity.start_time }}</dd>
+<dt>end_time</dt><dd>{{ activity.end_time }}</dd>
+<dt>project</dt><dd>{{ activity.project }}</dd>
+<dt>memo</dt><dd>{{ activity.memo }}</dd>
+</dl>
+<input type="submit" value = "delete"/>
+</form>
+
+{% endblock %}
+

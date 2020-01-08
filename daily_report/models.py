@@ -20,6 +20,7 @@ class Status(models.Model):
 class DailyReport(models.Model):
     class Meta:
         db_table = "daily_report"
+        unique_together = ('date', 'user')
     
     date = models.DateField(verbose_name = "日付", default = datetime.now)
     user = models.ForeignKey(User, on_delete=models.CASCADE)   
@@ -49,7 +50,6 @@ class Project(models.Model):
     end_date = models.DateField(verbose_name = "日付", default = datetime.now)
     client = models.CharField(max_length = 30)
     outsourcing_cost = models.IntegerField() 
-    cost = models.IntegerField()
     
     def __str__(self):
         return self.name
@@ -58,9 +58,9 @@ class Activity(models.Model):
     class Meta:
         db_table = "activity"
     
-    start_time = models.TimeField(verbose_name = "時間", default = datetime.now)
+    start_time = models.TimeField(verbose_name = "start時間", default = datetime.now)
     end_time = models.TimeField(verbose_name = "時間", default = datetime.now)    
-    daily_report = models.ForeignKey(DailyReport,verbose_name='project', on_delete = models.PROTECT)
+    daily_report = models.ForeignKey(DailyReport,verbose_name='project', on_delete = models.CASCADE)
     project = models.ForeignKey(Project, on_delete = models.PROTECT)
     memo = models.CharField(max_length = 100)
 
