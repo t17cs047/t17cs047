@@ -21,7 +21,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.shortcuts import get_object_or_404, redirect
 from daily_report.forms import Project, ProjectBuy, ProjectForm
-from . forms import ProjectForm, ProjectIDForm
+from . forms import ProjectForm, ProjectIdForm
 from django.db import IntegrityError
 from decimal import Decimal, ROUND_HALF_UP
 
@@ -82,7 +82,7 @@ class AggregateView(TemplateView):
         project_id = self.request.POST.get('project_id')
         project = Project.objects.get(pk=project_id)
         context = super().get_context_data(**kwargs)        
-        context['form_id'] = ProjectIDForm()        
+        context['form_id'] = ProjectIdForm()        
         sum = 0;
         employees = project.employee.all()
         for employee in employees:
@@ -97,7 +97,7 @@ class AggregateView(TemplateView):
         return self.render_to_response(context)
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['form_id'] = ProjectIDForm()
+        context['form_id'] = ProjectIdForm()
         return context
     
 class ReportDeleteView(DeleteView):
