@@ -282,12 +282,57 @@ class ProjectDetailViewWithParameter(LoginRequiredMixin, DetailView):
     template_name = 'daily_report/project_detail.html'
     
     
+    
+
 class WageAddView(LoginRequiredMixin, CreateView):
     model = Status
     fields = ('name', 'wage')
     template_name = 'daily_report/wage_add.html'
-
-    success_url = 'index/'
+    #form_class = forms.ProfileForm
+   # success_url = 'daily_report/wage_add.html'
+    
+    #form_class = ProjectForm
+    #template_name = 'daily_report/project_add.html'  
+    success_url = reverse_lazy('index')
+    
+    def form_valid(self, form):
+        if self.request.POST.get('next', '') == 'confirm':
+            return render(self.request, 'daily_report/wage_show.html', {'form':form})
+        if self.request.POST.get('next', '') == 'create':
+            form.save()
+            #form.save_m2m()
+            return super().form_valid(form)
+        if self.request.POST.get('next', '') == 'back':
+            return render(self.request, 'daily_report/wage_add.html', {'form':form})
+        
+        
+class WageEditViewWithParameter(LoginRequiredMixin, UpdateView):
+    model = Status  
+    fields = ('name', 'wage')
+    template_name = 'daily_report/wage_edit.html'
+    success_url = reverse_lazy('list')
+    
+class WageDeleteViewWithParameter(LoginRequiredMixin,DeleteView):
+    model = Status
+    template_name = 'daily_report/wage_delete.html'   
+    success_url = '../list'
+    
+class WageDetailViewWithParameter(LoginRequiredMixin, DetailView):
+    model = Status  
+    template_name = 'daily_report/wage_detail.html'
+    
+class WageList(LoginRequiredMixin, ListView):
+    model = Status
+   
+    def post(self, request, *args, **kwargs):
+        status_id = self.request.POST.get('status_id')
+        status = get_object_or_404(Status, pk=status_id)
+        return HttpResponseRedirect(reverse('list_wage'))
+  
+    #def get_context_data(self, **kwargs):
+    #    context = super().get_context_data(**kwargs)
+    #    context['form'] = ProjectBuy()
+    #    return context
     
 class CostView(LoginRequiredMixin, ListView):
     model = Project
