@@ -93,6 +93,7 @@ class ProjectForm(forms.ModelForm):
             'start_date':DateInput(),
             'end_date':DateInput()
             }
+        
     def clean(self):
             clean_date = super(ProjectForm, self).clean()
             start_date = clean_date.get('start_date')

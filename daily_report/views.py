@@ -26,6 +26,11 @@ from django.urls import reverse, reverse_lazy
 from django.shortcuts import get_object_or_404, redirect
 from daily_report.forms import Project, ProjectBuy, ProjectForm, StatusIdForm
 from . forms import ProjectForm
+from django.template.context_processors import request
+from django.db import models
+from django.contrib import messages
+from django.http.response import HttpResponseForbidden
+from django.urls.base import resolve
 
 # Create your views here.
 @login_required
@@ -264,9 +269,22 @@ class ProjectDeleteViewWithParameter(LoginRequiredMixin,DeleteView):
     template_name = 'daily_report/project_delete.html'   
     success_url = '../list'
     
+    def delete(self, request, *args, **kwargs):
+        try:
+            return super(ProjectDeleteViewWithParameter, self).delete(
+                    request, *args, **kwargs
+                )
+        except models.ProtectedError as e:
+            return redirect('project_delete_error')
+        
+class ProjectDeleteErrorView(LoginRequiredMixin,TemplateView):
+    template_name = 'daily_report/project_delete_error.html'       
+
+    
 class ProjectDetailViewWithParameter(LoginRequiredMixin, DetailView):
     model = Project    
     template_name = 'daily_report/project_detail.html'
+    success_url = '../list'
     
     
     
@@ -316,6 +334,18 @@ class WageDeleteViewWithParameter(LoginRequiredMixin,DeleteView):
     model = Status
     template_name = 'daily_report/wage_delete.html'   
     success_url = '../list_wage'
+    
+    def delete(self, request, *args, **kwargs):
+        try:
+            return super(WageDeleteViewWithParameter, self).delete(
+                    request, *args, **kwargs
+                )
+        except models.ProtectedError as e:
+            return redirect('wage_delete_error')
+ 
+class WageDeleteErrorView(LoginRequiredMixin,TemplateView):
+    template_name = 'daily_report/wage_delete_error.html'       
+    
     
 class WageDetailViewWithParameter(LoginRequiredMixin, DetailView):
     model = Status  
