@@ -22,6 +22,7 @@ from django.urls import reverse, reverse_lazy
 from django.shortcuts import get_object_or_404, redirect
 from daily_report.forms import Project, ProjectBuy, ProjectForm
 from . forms import ProjectForm
+from django.db import IntegrityError
 
 
 # Create your views here.
@@ -40,10 +41,13 @@ def add_daily_report(request):
         formset = ActivityFormset(request.POST, instance=post)
         
         if formset.is_valid() and formset.has_changed():
-            print("valid")
-            post.save()
-            formset.save()
-            return redirect('index')
+            try:
+                print("valid")
+                post.save()
+                formset.save()
+                return redirect('index')
+            except IntegrityError:
+                return redirect("not_unique")
         
         else:
             print("GET")
@@ -116,11 +120,13 @@ class ReportMixin(object):
         formset.instance = invoice
 
         # DB更新
-        with transaction.atomic():
-            invoice.save()
-            formset.instance = invoice
-            formset.save()
-
+        try:
+            with transaction.atomic():
+                invoice.save()
+                formset.instance = invoice
+                formset.save()
+        except:
+            return redirect("not_unique")
         # 処理後は詳細ページを表示
         print("valid1")
         return redirect("report_list")
@@ -223,7 +229,9 @@ def register_user(request):
 
 class IndexView(LoginRequiredMixin, TemplateView):
     template_name = "daily_report/index.html"
-   
+
+class NotUniqueView(LoginRequiredMixin, TemplateView):
+    template_name = "daily_report/not_unique.html"
     
 class ProjectList(LoginRequiredMixin, ListView):
     model = Project
