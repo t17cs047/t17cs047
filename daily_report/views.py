@@ -32,8 +32,6 @@ def add_daily_report(request):
     context = {'form': form}
     print("call1")
 
-   # for project in Project.objects.all():
-       # if(project.member.user == request.user):
     if request.method == 'POST' and form.is_valid():
         post = form.save(commit=False)
         post.user = request.user
