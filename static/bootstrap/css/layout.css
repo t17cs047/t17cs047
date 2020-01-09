@@ -1,0 +1,72 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+button{
+  background:none;
+  border:0;
+  cursor: pointer;
+}
+
+form{
+  display: inline-block;
+}
+
+<!--- Project List --->
+	
+.title {
+    font-family: 'fantasy', fantasy;
+}
+
+table.list {
+	width: 100%;
+	border-collapse: collapse;
+	border-right: 1px solid #8fd2ed;
+}
+
+table.list th{
+	padding: 10px;
+	background-color: #cee7ff;
+	border-left: 5px solid #8fd2ed; 
+	border-top: 1px solid #fff;
+}
+
+table.list td{
+	padding: 10px;
+	background-color: #fff;
+	border: 1px solid #999;
+}
+
+<!--- Project List --->
+
+<!--- Project Add Edit Deteil Delete --->
+table.another {
+	width: 100%;
+	border-collapse: separate;
+	border-spacing: 0px;
+	border-top: 1px solid #ccc;
+	border-left: 1px solid #ccc;
+}
+
+table.another th{
+	width:25%;
+	padding:10px;
+	text-align: left;
+	vertical-align: top;
+	color: #444;
+	background-color: #cee7ff;
+	border-left: 3px double #999;
+	border-top: 1px solid #fff;
+	border-right: 1px solid #8fd2ed;
+	border-bottom: 1px solid #ccc;
+}
+
+table.another td{
+	width:75%;
+	padding:10px;
+	background-color: #fafafa;
+	border-right: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+}
+

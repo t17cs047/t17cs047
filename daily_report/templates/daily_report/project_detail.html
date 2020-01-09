@@ -3,63 +3,52 @@
 {% block title %} Edit {% endblock %}
 
 {% block main %}
+
+<div class="title">
+  <h1>Project Detail</h1>
+</div>
+
 <form action="{% url 'detail' project.id %}" method="post">
 {% csrf_token %}
 
-<body>
-	<h1>DetaileView</h1>
-	<table id ="myTable">
+	<table class = "another">
+		<tbody>
 		<tr>
 			<th>name</th>
-		</th>
-		<tr>
 			<td>{{project.name}}</td>
-		</th>
+		</tr>
 		<tr>
 			<th>employee</th>
-		</th>
-		<tr>
 			<td>{{project.employee}}</td>
-		</th>
+		</tr>
 		<tr>
 			<th>order_amount</th>
-		</th>
-		<tr>
 			<td>{{project.order_amount}}</td>
-		</th>
+		</tr>
 		<tr>
 			<th>budget</th>
-		</th>
-		<tr>
 			<td>{{project.budget}}</td>
-		</th>
+		</tr>
 		<tr>
 			<th>outsourcing_budget</th>
-		</th>
+			<td>{{project.outcoursing_budget}}</td>
+			
+		</tr>
 		<tr>
 			<th>date</th>
-		</th>
-		<tr>
 			<td>{{project.start_date}}<p>~</p>{{project.end_date}}</td>
-		</th>
-		<tr>
-			<td>{{project.outcoursing_budget}}</td>
-		</th>
+		</tr>
 		<tr>
 			<th>client</th>
-		</th>
-		<tr>
 			<td>{{project.client}}</td>
 		</th>
 		<tr>
 			<th>outsourcing_cost</th>
-		</th>
-		<tr>
 			<td>{{project.outsourcing_cost}}</td>
-		</th>
-			
+		</tr>
+		</tbody>
 	</table>
-</body>
+
 
 <li><a href= "{% url 'list' %}">Return</a></li>
 
