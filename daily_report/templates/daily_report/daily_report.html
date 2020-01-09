@@ -88,33 +88,44 @@
 				var num = $('#id_activity_set-TOTAL_FORMS').val();
   				var start_array = [];
   				var end_array = [];
+  				var all_del = true;
   				for( var i = 0; i < num ; i++){
-  				var str1 = "id_activity_set-" + i + "-start_time";
-  				var str2 = "id_activity_set-" + i + "-end_time";
-  				start_array.push($('#' + str1).val());
-  				end_array.push($('#' + str2).val());
-				if(start_array[i].charAt(1)==":")
-  					start_array[i]= '0' + start_array[i]; 
-  				if(end_array[i].charAt(1)==":")
-  					end_array[i]= '0' + end_array[i]; 
-  				if(start_array[i] >= end_array[i]){
-  					alert("the start_time is ahead of the end_time");
-  					console.log(start_array[i]);
-  					console.log(end_array[i]);
-  					return false;
+  					var str1 = "id_activity_set-" + i + "-start_time";
+  					var str2 = "id_activity_set-" + i + "-end_time";
+  					var str3 = "id_activity_set-" + i + "-DELETE";
+  					
+  					start_array.push($('#' + str1).val());
+  					end_array.push($('#' + str2).val());
+					if(start_array[i].charAt(1)==":")
+  						start_array[i]= '0' + start_array[i]; 
+  					if(end_array[i].charAt(1)==":")
+  						end_array[i]= '0' + end_array[i]; 
+  					if(start_array[i] >= end_array[i]){
+  						alert("the start_time is ahead of the end_time");
+  						console.log(start_array[i]);
+  						console.log(end_array[i]);
+  						return false;
+  					}
+  					console.log($('#' + str3).prop('checked'));
+  					if(! $('#' + str3).prop('checked') ){  						
+  						all_del = false;
+  						}
   				}
-  			}
-		for(var i = 0; i < num - 1; i++ ){
-			for( var  j = i + 1; j < num; j++){
-				if(start_array[i] <= end_array[j] && end_array[i] >= start_array[j]){
-					alert("overlap of the time");
-					
-					return false;
-				}else{
-					//do nothing
-				}
-			}
-		}				
+  				
+  				if(all_del){
+  					alert("there is no report to register");
+  					return false;
+				}  				
+				for(var i = 0; i < num - 1; i++ ){
+					for( var  j = i + 1; j < num; j++){
+						if(start_array[i] <= end_array[j] && end_array[i] >= start_array[j]){
+							alert("overlap of the time");					
+							return false;
+						}else{
+							//do nothing
+						}
+					}		
+				}				
 				/*----type2----*/
 				$('[id = add_more]').hide();
 				$('[id = decline]').hide();
@@ -128,11 +139,13 @@
   					var str2 = "#id_activity_set-" + i + "-end_time";
   					var str3 = "#id_activity_set-" + i + "-project";
   					var str4 = "#id_activity_set-" + i + "-memo";
+  					var str5 = "#id_activity_set-" + i + "-DELETE";
   					str1 = $(str1).val();
   					str2 = $(str2).val();
   					str3 = $("option:selected",str3).text();
-  					str4 = $(str4).val(); 					
-  					text = text + "start time: " + str1 + "br" + "end time: " + str2 + "br" + "project: " + str3 + "br" + "memo:" + str4 + "<hr>";
+  					str4 = $(str4).val();
+  					if(! $(str5).prop('checked') ) 					
+  						text = text + "start time: " + str1 + "br" + "end time: " + str2 + "br" + "project: " + str3 + "br" + "memo:" + str4 + "<hr>";
   					console.log(text);
 				}
 				$('[id="review_area"]').show();
@@ -142,7 +155,7 @@
 				$('[id = form_set]').hide();
 				$('[id = date]').hide();
 				$('[id = comment]').show();
-					
+				
 				/*----type2----*/
            });
 </script>

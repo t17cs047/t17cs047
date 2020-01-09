@@ -22,7 +22,7 @@ from django.urls import reverse, reverse_lazy
 from django.shortcuts import get_object_or_404, redirect
 
 from daily_report.forms import Project, ProjectBuy, ProjectForm, StatusIdForm
-from . forms import ProjectForm, ProjectIdForm
+from . forms import ProjectForm, ProjectIDForm
 
 from django.template.context_processors import request
 from django.db import models
@@ -89,7 +89,7 @@ class AggregateView(TemplateView):
         project_id = self.request.POST.get('project_id')
         project = Project.objects.get(pk=project_id)
         context = super().get_context_data(**kwargs)        
-        context['form_id'] = ProjectIdForm()        
+        context['form_id'] = ProjectIDForm()        
         sum = 0;
         employees = project.employee.all()
         for employee in employees:
@@ -104,7 +104,7 @@ class AggregateView(TemplateView):
         return self.render_to_response(context)
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['form_id'] = ProjectIdForm()
+        context['form_id'] = ProjectIDForm()
         return context
     
 class ReportDeleteView(DeleteView):
@@ -340,7 +340,7 @@ class ProjectDetailViewWithParameter(LoginRequiredMixin, DetailView):
     
 class WageList(LoginRequiredMixin, ListView):
     model = Status
-   
+    template_name = "status_list.html"  
     def post(self, request, *args, **kwargs):
         status_id = self.request.POST.get('status_id')
         status = get_object_or_404(Status, pk=status_id)
