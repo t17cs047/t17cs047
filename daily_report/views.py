@@ -302,8 +302,7 @@ class ProjectDetailViewWithParameter(LoginRequiredMixin, DetailView):
     template_name = 'daily_report/project_detail.html'
     success_url = '../list'
     
-    
-    
+           
 class WageList(LoginRequiredMixin, ListView):
     model = Status
    
