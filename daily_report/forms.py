@@ -1,5 +1,5 @@
 from django import forms
-from .models import Activity, DailyReport, Project, Employee
+from .models import Activity, DailyReport, Project, Employee,Status
 from django.contrib.auth import forms as auth_forms
 
 from random import choice
@@ -89,6 +89,21 @@ class ProjectForm(forms.ModelForm):
 class StatusIdForm(forms.Form):
     status_id = forms.IntegerField(label='ID')
 
+
+class StatusForm(forms.ModelForm):
+    name = forms.CharField(
+        label='職位名',
+        )
+    wage = forms.IntegerField(
+        label= '単価',
+        )
+    
+    class Meta:
+        model = Status
+        fields = '__all__'
+            
+   
+    
 
 
 class DailyReportCreateForm(forms.ModelForm):
