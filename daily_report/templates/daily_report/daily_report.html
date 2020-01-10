@@ -24,8 +24,8 @@
 </div>
 <hr>
 </div>
-<input type="button" value="Add More" id="add_more">
-<input type="button" value="Decline" id="decline" >
+<input type="button" value="行を追加する" id="add_more">
+<input type="button" value="行を一行削除する" id="decline" >
 <div id="empty_form" style="display:none">
 <hr>
 <table class='no_error'>
@@ -79,7 +79,12 @@
              }
            });
       </script>
-          
+			<p hidden>are you sure?<p>
+			<input type="button" id="confirm" value="confirm" class="def">
+			<input type="button" id="revise" value=revise" hidden >
+			<input type="submit" id = "submit" hidden/>
+          </form>
+          <a href="{% url 'index' %}">メニューに戻る</a>
           
 <script>
         $('#confirm').click(function() {
