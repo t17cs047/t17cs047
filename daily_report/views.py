@@ -21,7 +21,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.shortcuts import get_object_or_404, redirect
 from daily_report.forms import Project, ProjectBuy, ProjectForm, StatusIdForm,StatusForm
-from . forms import ProjectForm
+from . forms import ProjectForm, ProjectIDForm
 
 from django.template.context_processors import request
 from django.db import models
@@ -30,7 +30,7 @@ from django.http.response import HttpResponseForbidden
 from django.urls.base import resolve
 
 from django.db import IntegrityError
-
+from decimal import Decimal, ROUND_HALF_UP
 
 
 # Create your views here.
@@ -40,8 +40,6 @@ def add_daily_report(request):
     context = {'form': form}
     print("call1")
 
-   # for project in Project.objects.all():
-       # if(project.member.user == request.user):
     if request.method == 'POST' and form.is_valid():
         post = form.save(commit=False)
         post.user = request.user
@@ -51,8 +49,13 @@ def add_daily_report(request):
         if formset.is_valid() and formset.has_changed():
             try:
                 print("valid")
-                post.save()
-                formset.save()
+                post.save() 
+                detail = formset.save(commit = False)
+                for inform in detail:
+                    stime = inform.start_time.hour * 60 + inform.start_time.minute
+                    etime = inform.end_time.hour * 60 + inform.end_time.minute
+                    inform.time = etime - stime
+                formset.save()                
                 return redirect('index')
             except IntegrityError:
                 return redirect("not_unique")
@@ -77,6 +80,31 @@ class ActivityDeleteView(DeleteView):
     model = Activity
     template_name = 'daily_report/activity_delete.html'
     success_url = '../report_list'
+    
+class AggregateView(TemplateView):
+    model = Activity
+    template_name = 'daily_report/show_cost.html'
+    def post(self, request, *args, **kwargs):
+        project_id = self.request.POST.get('project_id')
+        project = Project.objects.get(pk=project_id)
+        context = super().get_context_data(**kwargs)        
+        context['form_id'] = ProjectIDForm()        
+        sum = 0;
+        employees = project.employee.all()
+        for employee in employees:
+            daily_reports = DailyReport.objects.filter(user = employee.user, date__lte = project.end_date)
+            for daily_report in daily_reports:
+                activities = Activity.objects.filter(daily_report = daily_report)
+                for activity in activities:
+                    sum = sum + activity.time * employee.status.wage / 60
+        aggr = Decimal(str(sum))
+        calc = aggr.quantize(Decimal('0'), rounding = ROUND_HALF_UP)
+        context['sum'] = calc
+        return self.render_to_response(context)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form_id'] = ProjectIDForm()
+        return context
     
 class ReportDeleteView(DeleteView):
     model = DailyReport
@@ -132,6 +160,11 @@ class ReportMixin(object):
             with transaction.atomic():
                 invoice.save()
                 formset.instance = invoice
+                detail = formset.save(commit = False)
+                for inform in detail:
+                    stime = inform.start_time.hour * 60 + inform.start_time.minute
+                    etime = inform.end_time.hour * 60 + inform.end_time.minute
+                    inform.time = etime - stime
                 formset.save()
         except:
             return redirect("not_unique")
@@ -305,7 +338,7 @@ class ProjectDetailViewWithParameter(LoginRequiredMixin, DetailView):
            
 class WageList(LoginRequiredMixin, ListView):
     model = Status
-   
+    template_name = "status_list.html"  
     def post(self, request, *args, **kwargs):
         status_id = self.request.POST.get('status_id')
         status = get_object_or_404(Status, pk=status_id)

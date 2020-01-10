@@ -1,7 +1,10 @@
 
 <form method="post" action="{% url 'write' %}" >{% csrf_token %}
-<div id = forms>
+<div id = "comment" hidden>以下の内容で保存します</div>
+<div id = "forms">
+	<div id = date>
 	{{form.as_p}}
+	</div>
 {% if messages %}
 	<ul class="messages">
 		{% for message in messages %}
@@ -30,6 +33,14 @@
 </table>
 </div>  
 	<div id = review_area></div>
+			<input type="button" id="confirm" value="confirm" class="def">
+			<input type="button" id="revise" value=revise" hidden >
+			<input type="submit" id = "submit" hidden/>
+          </form>
+          <a href="{% url 'index' %}">index</a>	
+	
+	
+	
 	
 	 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/timedropper/1.0/timedropper.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/timedropper/1.0/timedropper.min.js"></script>
@@ -75,7 +86,6 @@
           </form>
           <a href="{% url 'index' %}">メニューに戻る</a>
           
-          
 <script>
         $('#confirm').click(function() {
         		console.log(confirm);
@@ -83,48 +93,45 @@
 				var num = $('#id_activity_set-TOTAL_FORMS').val();
   				var start_array = [];
   				var end_array = [];
+  				var all_del = true;
   				for( var i = 0; i < num ; i++){
-  				var str1 = "id_activity_set-" + i + "-start_time";
-  				var str2 = "id_activity_set-" + i + "-end_time";
-  				start_array.push($('#' + str1).val());
-  				end_array.push($('#' + str2).val());
-				if(start_array[i].charAt(1)==":")
-  					start_array[i]= '0' + start_array[i]; 
-  				if(end_array[i].charAt(1)==":")
-  					end_array[i]= '0' + end_array[i]; 
-  				if(start_array[i] >= end_array[i]){
-  					alert("the start_time is ahead of the end_time");
-  					console.log(start_array[i]);
-  					console.log(end_array[i]);
-  					return false;
+  					var str1 = "id_activity_set-" + i + "-start_time";
+  					var str2 = "id_activity_set-" + i + "-end_time";
+  					var str3 = "id_activity_set-" + i + "-DELETE";
+  					
+  					start_array.push($('#' + str1).val());
+  					end_array.push($('#' + str2).val());
+					if(start_array[i].charAt(1)==":")
+  						start_array[i]= '0' + start_array[i]; 
+  					if(end_array[i].charAt(1)==":")
+  						end_array[i]= '0' + end_array[i]; 
+  					if(start_array[i] >= end_array[i]){
+  						alert("the start_time is ahead of the end_time");
+  						console.log(start_array[i]);
+  						console.log(end_array[i]);
+  						return false;
+  					}
+  					console.log($('#' + str3).prop('checked'));
+  					if(! $('#' + str3).prop('checked') ){  						
+  						all_del = false;
+  						}
   				}
-  			}
-		for(var i = 0; i < num - 1; i++ ){
-			for( var  j = i + 1; j < num; j++){
-				if(start_array[i] <= end_array[j] && end_array[i] >= start_array[j]){
-					alert("overlap of the time");
-					
-					return false;
-				}else{
-					//do nothing
-				}
-			}
-		}
-		        /*----type1----
-        		$('[id $= "time" ]').prop("disabled",true);
-				$('[id $= "project" ]').prop("disabled",true);
-				$('[id $= "memo" ]').prop("disabled",true);
-				$('[id $= "date" ]').prop("disabled",true);
-				$(submit).show();
-				$('[id = revise]').show();
-				$('[id = add_more]').hide();
-				$('[id = decline]').hide();
-				$('[id = confirm]').hide();
-				//$('[id = forms]').hide();
-				----*/
-				
+  				
+  				if(all_del){
+  					alert("there is no report to register");
+  					return false;
+				}  				
+				for(var i = 0; i < num - 1; i++ ){
+					for( var  j = i + 1; j < num; j++){
+						if(start_array[i] <= end_array[j] && end_array[i] >= start_array[j]){
+							alert("overlap of the time");					
+							return false;
+						}else{
+							//do nothing
+						}
+					}		
+				}				
 				/*----type2----*/
-				$('p').show();
 				$('[id = add_more]').hide();
 				$('[id = decline]').hide();
 				$('[id = confirm]').hide();
@@ -132,44 +139,46 @@
 				$('[id = revise]').show();
 				str0 = $('#id_date').val();
 				var text = "date" + str0 +"br" +"<hr>";
-				$('[id = forms]').hide();
 				for(var i=0; i<form_idx; i++){
 					var str1 = "#id_activity_set-" + i + "-start_time";
   					var str2 = "#id_activity_set-" + i + "-end_time";
   					var str3 = "#id_activity_set-" + i + "-project";
   					var str4 = "#id_activity_set-" + i + "-memo";
+  					var str5 = "#id_activity_set-" + i + "-DELETE";
   					str1 = $(str1).val();
   					str2 = $(str2).val();
   					str3 = $("option:selected",str3).text();
-  					str4 = $(str4).val(); 					
-  					text = text + "start time: " + str1 + "br" + "end time: " + str2 + "br" + "project: " + str3 + "br" + "memo:" + str4 + "<hr>";
+  					str4 = $(str4).val();
+  					if(! $(str5).prop('checked') ) 					
+  						text = text + "start time: " + str1 + "br" + "end time: " + str2 + "br" + "project: " + str3 + "br" + "memo:" + str4 + "<hr>";
   					console.log(text);
 				}
 				$('[id="review_area"]').show();
 				console.log("call");
 				$('[id="review_area"]').empty();
 				$('[id="review_area"]').append(text.replace(/br/g, '<br>'));
-
-					
+				$('[id = form_set]').hide();
+				$('[id = date]').hide();
+				$('[id = comment]').show();
+				
 				/*----type2----*/
            });
 </script>
           
 <script>
         $('#revise').click(function() {
-        		$('p').hidden();
         		$('[id = add_more]').show();
 				$('[id = decline]').show();
 				$('[id = confirm]').show();
 				$(submit).hide();
 				$('[id = revise]').hide();
 				$('[id="review_area"]').hide();
-				$('[id = forms]').show();
+				$('[id = form_set]').show();
+				$('[id = date]').show();
+				$('[id = comment]').hide();
         	}
         	);
 </script>          
-          
-          
           
                   
  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/timedropper/1.0/timedropper.min.css">

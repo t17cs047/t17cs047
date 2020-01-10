@@ -3,13 +3,20 @@
 {% block title %} 個別リスト{% endblock %}
 
 {% block main %}
+
+<div class="title">
+  <h1>Project List</h1>
+</div>
+
 <form action="{% url 'list'%}" method="post">
 {% csrf_token %}
 {{ form }}
 <input type="submit"/>
 </form>
-<table id ="myTable">
-  <thead class="thead-dark">
+
+<table class ="list">
+
+  <thead>
     <tr>
       <th>ID</th>
       <th>名前</th>
@@ -18,7 +25,9 @@
       <th>削除</th>
     </tr>
   </thead>
+  
   <tbody>
+
 {% for project in object_list%}
   <tr>
    <td scope="row">{{ project.id }}</td>
@@ -29,9 +38,13 @@
   </tr>
   {% endfor%}
 </tbody>
+
 </table>
+
 <ul>
 <li><a href="{% url 'add' %}">追加</a></li>
 <li><a href="{% url 'index' %}">メニューに戻る</a></li>
 </ul>
+
+
 {% endblock%} 

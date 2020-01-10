@@ -1,19 +1,36 @@
+{% load static %}
 <html>
+
 <head>
     <meta charset="utf-8" />
     <title>index</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
+
 <body>
-<p>Top Page</p>
 
-<a href="{% url 'report_list' %}">過去の日報を確認する</a>
-<li><a href="{% url 'write' %}">日報を書く</a></li>
-<li><a href="{% url 'list' %}">プロジェクトリスト</a></li>
-<li><a href="{% url 'show_cost' %}">原価を確認する</a></li>
-<li><a href="{% url 'list_wage' %}">職位リスト</a></li>
-<a href="{% url 'logout' %}">logout</a>
-<a href="{% url 'register' %}">社員を登録する</a>
+	{% block extrahead %}
+      <link href="{% static 'index.css' %}" rel="stylesheet">
+    {% endblock %}
 
+	<div class="title">
+	  <h1>メニュー画面</h1>
+	</div>
+	
+	<div class="cp_navi">
+	<div id="cp_sidenav" class="sidenav">
+
+	<a href="{% url 'report_list' %}" id="past_report">日報一覧</a>
+	<a href="{% url 'write' %}" id="report">日報</a>
+	<a href="{% url 'list' %}" id="project_list">プロジェクト一覧</a>
+	<a href="{% url 'show_cost' %}" id="show_cost">原価表示</a>
+	<a href="{% url 'list_wage' %}" id="wage_setting">単価設定</a>
+	
+	</div>
+	</div>
+	
+	<a href="{% url 'logout' %}" >logout</a>
+	<a href="{% url 'register' %}">register</a>
+	
 </body>
 </html>

@@ -3,12 +3,16 @@
 {% block title %} Add {% endblock %}
 
 {% block main %}
+
+<div class="title">
+  <h1>Project Add</h1>
+</div>
+
 <form action="{% url 'add' %}" method="post">
- <table class ="table">
-  <thead class="thead-dark">
+ <table class = "another">
   {{ form.as_table}}
   {% csrf_token %}
-   </table>	
+ </table>	
   
   </table>
 <button type="submit" class="sell-submit" name="next" value="confirm">確認画面へ</button>
