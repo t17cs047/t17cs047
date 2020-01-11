@@ -1,4 +1,3 @@
-
 {% load static %}
 <html>
 
@@ -8,30 +7,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
-<body>
-
 	{% block extrahead %}
       <link href="{% static 'index.css' %}" rel="stylesheet">
     {% endblock %}
+<body>
 
-	<div class="title">
-	  <h1>メニュー画面</h1>
-	</div>
-	
-	<div class="cp_navi">
-	<div id="cp_sidenav" class="sidenav">
+<nav>
+	<ul>
+		<li class=”current”>	
+		<li><a href="{% url 'report_list' %}">日報一覧</a></li>
+		<li><a href="{% url 'write' %}">日報登録</a></li>
+		<li><a href="{% url 'list' %}">プロジェクト一覧</a></li>
+		<li><a href="{% url 'show_cost' %}">Cost</a></li>
+		<li><a href="{% url 'list_wage' %}">単価設定</a></li>
+		<li><a href="{% url 'register' %}">社員の登録</a></li>
+		<li><a href="{% url 'logout' %}">ログアウト</a></li>
+	</ul>
+</nav>
 
-	<a href="{% url 'report_list' %}" id="past_report">日報一覧</a>
-	<a href="{% url 'write' %}" id="report">日報</a>
-	<a href="{% url 'list' %}" id="project_list">プロジェクト一覧</a>
-	<a href="{% url 'show_cost' %}" id="show_cost">原価表示</a>
-	<a href="{% url 'list_wage' %}" id="wage_setting">単価設定</a>
+	<h1>メニュー画面</h1>
 	
-	</div>
-	</div>
-	
-	<a href="{% url 'logout' %}" >ログアウト</a>
-	<a href="{% url 'register' %}">社員の登録</a>
-	
+<div class="cp_navi">
+<div id="cp_sidenav" class="sidenav">
+	<a href="{% url 'report_list' %}" id="report_list">日報一覧</a>
+	<a href="{% url 'write' %}" id="write">日報登録</a>
+	<a href="{% url 'list' %}"id="list">プロジェクト一覧</a>
+	<a href="{% url 'show_cost' %}"id="show_cost">Cost</a>
+	<a href="{% url 'list_wage' %}"id="list_wage">単価設定</a>
+	<a href="{% url 'register' %}"id="register">社員の登録</a>
+</div>
+</div>
+
 </body>
 </html>
