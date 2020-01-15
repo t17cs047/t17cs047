@@ -9,10 +9,7 @@
 </div>
 
 <form action="{% url 'list'%}" method="post">
-{% csrf_token %}
-{{ form }}
-<input type="submit"/>
-</form>
+
 
 <table class ="list">
 
@@ -41,10 +38,12 @@
 
 </table>
 
-<ul>
-<li><a href="{% url 'add' %}">追加</a></li>
-<li><a href="{% url 'index' %}">メニューに戻る</a></li>
-</ul>
+
+
+		<a href="{% url 'add' %}" class="btn-border-right">追加</a>
+		<a href="{% url 'index' %}" class="btn-border">戻る</a>
+	
+
 
 
 {% endblock%} 

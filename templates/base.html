@@ -58,12 +58,18 @@ $(document).ready(function() {
 
 <body>
 
-<!--- <div class="container">
- <nav class="nav">
-       <div class="navbar-brand">MyPage</div>
- </nav>
- </div>
- --->
+<nav>
+	<ul>
+		<li class=”current”>
+		<li><a href="{% url 'report_list' %}">日報一覧</a></li>
+		<li><a href="{% url 'write' %}">日報登録</a></li>
+		<li><a href="{% url 'list' %}">プロジェクト一覧</a></li>
+		<li><a href="{% url 'show_cost' %}">Cost</a></li>
+		<li><a href="{% url 'list_wage' %}">単価設定</a></li>
+		<li><a href="{% url 'register' %}">社員の登録</a></li>
+		<li><a href="{% url 'logout' %}">ログアウト</a></li>
+	</ul>
+</nav>
  
 <div class="container mt-3">
         {% block content %}{% endblock %}
