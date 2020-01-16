@@ -12,9 +12,8 @@
   <thead class="thead-dark">
     <tr>
       <th>ID</th>
-      <th>shokui</th>
-      <th>tanka</th>
-      <th>Detail</th>
+      <th>職位名</th>
+      <th>単価</th>
       <th>変更</th>
       <th>削除</th>
     </tr>
@@ -23,8 +22,8 @@
 {% for status in object_list%}
   <tr>
    <td scope="row">{{ status.id }}</td>
-   <td><a href = {{status.status_url}} >{{ status }}</a></td>
-   <td><a href="{% url 'wage_detail' status.id %}">Detail</a></td>
+   <td scope="row">{{ status.name }}</td>
+   <td scope="row">{{ status.wage }}</td>
    <td><a href="{% url 'wage_edit_para' status.id %}">変更</a></td>
    <td><a href="{% url 'wage_delete_para' status.id %}">削除</a></td>
   </tr>
@@ -32,7 +31,7 @@
 </tbody>
 </table>
 <ul>
-<li><a href="{% url 'add_wage' %}">追加</a></li>
-<li><a href="{% url 'index' %}">Return</a></li>
+<li><a href="{% url 'add_wage' %}">職位を追加する</a></li>
+<li><a href="{% url 'index' %}">メニューに戻る</a></li>
 </ul>
 {% endblock%} 

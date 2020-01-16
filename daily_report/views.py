@@ -21,7 +21,8 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.shortcuts import get_object_or_404, redirect
 
-from daily_report.forms import Project, ProjectBuy, ProjectForm, StatusIdForm, DateInput
+from daily_report.forms import Project, ProjectBuy, ProjectForm, StatusIdForm,StatusForm, DateInput
+
 from . forms import ProjectForm, ProjectIDForm
 
 from django.template.context_processors import request
@@ -338,8 +339,7 @@ class ProjectDetailViewWithParameter(LoginRequiredMixin, DetailView):
     template_name = 'daily_report/project_detail.html'
     success_url = '../list'
     
-    
-    
+           
 class WageList(LoginRequiredMixin, ListView):
     model = Status
     template_name = "status_list.html"  
@@ -356,12 +356,12 @@ class WageList(LoginRequiredMixin, ListView):
 
 class WageAddView(LoginRequiredMixin, CreateView):
     model = Status
-    fields = ('name', 'wage')
+    #fields = ('name', 'wage')
     template_name = 'daily_report/wage_add.html'
     #form_class = forms.ProfileForm
    # success_url = 'daily_report/wage_add.html'
     
-    #form_class = ProjectForm
+    form_class = StatusForm
     #template_name = 'daily_report/project_add.html'  
     success_url = reverse_lazy('list_wage')
     
@@ -374,6 +374,12 @@ class WageAddView(LoginRequiredMixin, CreateView):
             return super().form_valid(form)
         if self.request.POST.get('next', '') == 'back':
             return render(self.request, 'daily_report/wage_add.html', {'form':form})
+        
+
+        
+        
+        
+               
         
         
 class WageEditViewWithParameter(LoginRequiredMixin, UpdateView):

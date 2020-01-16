@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'daily_report.apps.DailyReportConfig',
-    #'widget_tweaks',
 ]
 
 MIDDLEWARE = [

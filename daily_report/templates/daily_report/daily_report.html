@@ -107,7 +107,12 @@
              }
            });
       </script>
-          
+			<p hidden>are you sure?<p>
+			<input type="button" id="confirm" value="confirm" class="def">
+			<input type="button" id="revise" value=revise" hidden >
+			<input type="submit" id = "submit" hidden/>
+          </form>
+          <a href="{% url 'index' %}">メニューに戻る</a>
           
 <script>
         $('#confirm').click(function() {
