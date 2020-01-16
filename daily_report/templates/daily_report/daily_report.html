@@ -1,10 +1,27 @@
+{% load staticfiles %}
+<html>
+<head>
+<link rel="stylesheet" href="{% static 'for_dailyreport.css'%}">
+    <meta charset="utf-8" />
+    <title>index</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<nav>
+	<ul>
+		<li><a href="{% url 'report_list' %}">日報一覧</a></li>
+		<li><a href="{% url 'write' %}">日報登録</a></li>
+		<li><a href="{% url 'list' %}">プロジェクト一覧</a></li>
+		<li><a href="{% url 'show_cost' %}">Cost</a></li>
+		<li><a href="{% url 'list_wage' %}">単価設定</a></li>
+		<li><a href="{% url 'register' %}">社員の登録</a></li>
+		<li><a href="{% url 'logout' %}">ログアウト</a></li>
+	</ul>
+</nav>
+
 
 <form method="post" action="{% url 'write' %}" >{% csrf_token %}
 <div id = "comment" hidden>以下の内容で保存します</div>
-<div id = "forms">
-	<div id = date>
-	{{form.as_p}}
-	</div>
 {% if messages %}
 	<ul class="messages">
 		{% for message in messages %}
@@ -12,33 +29,46 @@
 		{% endfor %}
 	</ul>
 {% endif %}
+<div id = "forms">
+	<div id = date>
+	{{form.as_p}}
+	</div>
 <div id="form_set">
 		{{ formset.management_form }}
 		{{ activityformset.management_form }}
 		{% for activity_form in formset %}
             <table class='no_error'>
+            <hr>
             {{ activity_form}}
-            <hr id="section_line">
+            
             </table>
        {% endfor %}
 </div>
 <hr>
 </div>
-<input type="button" value="Add More" id="add_more">
-<input type="button" value="Decline" id="decline" >
 <div id="empty_form" style="display:none">
 <hr>
 <table class='no_error'>
+<hr>
 	 {{ formset.empty_form.as_table }}
 </table>
-</div>  
-	<div id = review_area></div>
-			<input type="button" id="confirm" value="confirm" class="def">
-			<input type="button" id="revise" value=revise" hidden >
-			<input type="submit" id = "submit" hidden/>
+</div>
+<div id = "review_area">
+<div id = "date_review">
+</div>
+<br>  
+<table class="review">
+</table>
+</div>
+<br>
+			<input type="button" value="フォームの追加" id="add_more">
+			<input type="button" value="フォームの削除" id="decline" >
+			<input type="button" id="confirm" value="確認" class="def">
+			<input type="button" id="revise" value="修正" style = "display:none" >
+			<input type="submit" id = "submit" value = "確定" style = "display:none">
           </form>
           <a href="{% url 'index' %}">index</a>	
-	
+</html>	
 	
 	
 	
@@ -59,9 +89,7 @@
           });
 				var i = 0;
 				$('#' + str).children().remove();
-				$('#' + str).append(option);
-	
-	
+				$('#' + str).append(option);	
            });
       </script>
 
@@ -93,33 +121,30 @@
   					var str1 = "id_activity_set-" + i + "-start_time";
   					var str2 = "id_activity_set-" + i + "-end_time";
   					var str3 = "id_activity_set-" + i + "-DELETE";
-  					
-  					start_array.push($('#' + str1).val());
-  					end_array.push($('#' + str2).val());
-					if(start_array[i].charAt(1)==":")
-  						start_array[i]= '0' + start_array[i]; 
-  					if(end_array[i].charAt(1)==":")
-  						end_array[i]= '0' + end_array[i]; 
-  					if(start_array[i] >= end_array[i]){
-  						alert("the start_time is ahead of the end_time");
-  						console.log(start_array[i]);
-  						console.log(end_array[i]);
-  						return false;
-  					}
-  					console.log($('#' + str3).prop('checked'));
-  					if(! $('#' + str3).prop('checked') ){  						
-  						all_del = false;
+  					if(! $('#' + str3).prop('checked') ){
+  						all_del = false; 
+  						start_array.push($('#' + str1).val());
+  						end_array.push($('#' + str2).val());
+						if(start_array[i].charAt(1)==":")
+  							start_array[i]= '0' + start_array[i]; 
+  						if(end_array[i].charAt(1)==":")
+  							end_array[i]= '0' + end_array[i]; 
+  						if(start_array[i] >= end_array[i]){
+  							alert("開始時刻が終了時刻よりも後ろにあります");
+  							console.log(start_array[i]);
+  							console.log(end_array[i]);
+  							return false;
   						}
+  					}
   				}
-  				
   				if(all_del){
-  					alert("there is no report to register");
+  					alert("登録する内容がありません");
   					return false;
 				}  				
 				for(var i = 0; i < num - 1; i++ ){
 					for( var  j = i + 1; j < num; j++){
 						if(start_array[i] <= end_array[j] && end_array[i] >= start_array[j]){
-							alert("overlap of the time");					
+							alert("活動の時間が重複しています");					
 							return false;
 						}else{
 							//do nothing
@@ -127,13 +152,13 @@
 					}		
 				}				
 				/*----type2----*/
-				$('[id = add_more]').hide();
-				$('[id = decline]').hide();
-				$('[id = confirm]').hide();
-				$(submit).show();
-				$('[id = revise]').show();
+				$('[id = add_more]').css('display', 'none');
+				$('[id = decline]').css('display', 'none');
+				$('[id = confirm]').css('display', 'none');
+				$(submit).css('display', 'inline-block');
+				$('[id = revise]').css('display', 'inline-block');
 				str0 = $('#id_date').val();
-				var text = "date" + str0 +"br" +"<hr>";
+				var text =	"<tr><th>開始時刻</th><th>終了時刻</th><th>プロジェクト</th><th>備考</th></tr>";
 				for(var i=0; i<form_idx; i++){
 					var str1 = "#id_activity_set-" + i + "-start_time";
   					var str2 = "#id_activity_set-" + i + "-end_time";
@@ -145,32 +170,36 @@
   					str3 = $("option:selected",str3).text();
   					str4 = $(str4).val();
   					if(! $(str5).prop('checked') ) 					
-  						text = text + "start time: " + str1 + "br" + "end time: " + str2 + "br" + "project: " + str3 + "br" + "memo:" + str4 + "<hr>";
-  					console.log(text);
+  						text = text + '<tr>' + '<td>' + str1 +'</td>'+ '<td>' + str2 + '</td>' + '<td>' + str3 + '</td>' + '<td>' + str4 + '</td>' + '</tr>';
 				}
-				$('[id="review_area"]').show();
-				console.log("call");
-				$('[id="review_area"]').empty();
-				$('[id="review_area"]').append(text.replace(/br/g, '<br>'));
-				$('[id = form_set]').hide();
-				$('[id = date]').hide();
-				$('[id = comment]').show();
 				
-				/*----type2----*/
+				console.log("call");
+				$('[class="review"]').empty();
+				$('[id="date_review"]').empty();
+				var date = $(id_date).val();
+				$('[id="date_review"]').append("<pre><font size ='5'> 登録日:" + date  + "      " + "提出者:" + "{{user}}" + "</font><pre>");
+				//$('[id="review_area"]').append(text.replace(/th/g, '<th>'));
+				$('[class="review"]').append(text);
+				$('[id = "review_area"]').css('display', 'block');
+				console.log(text);
+				$('[id = form_set]').css('display', 'none');
+				$('[id = date]').css('display', 'none');
+				$('[id = comment]').css('display', 'block');
+
            });
 </script>
           
 <script>
         $('#revise').click(function() {
-        		$('[id = add_more]').show();
-				$('[id = decline]').show();
-				$('[id = confirm]').show();
-				$(submit).hide();
-				$('[id = revise]').hide();
-				$('[id="review_area"]').hide();
-				$('[id = form_set]').show();
-				$('[id = date]').show();
-				$('[id = comment]').hide();
+        		$('[id = add_more]').css('display', 'inline-block');
+				$('[id = decline]').css('display', 'inline-block');
+				$('[id = confirm]').css('display', 'inline-block');
+				$(submit).css('display', 'none');
+				$('[id = revise]').css('display', 'none');
+				$('[id="review_area"]').css('display', 'none');
+				$('[id = form_set]').css('display', 'block');
+				$('[id = date]').css('display', 'block');
+				$('[id = comment]').css('display', 'none');
         	}
         	);
 </script>          

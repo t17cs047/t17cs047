@@ -23,9 +23,6 @@ class UserCreateForm(UserCreationForm):
 
 
 class ProfileForm(forms.ModelForm):
-    employee = forms.ModelMultipleChoiceField(queryset = Employee.objects.all(),
-                                         required = False,
-                                         widget = forms.CheckboxSelectMultiple)    
     class Meta:
         model = Employee
         fields = (
