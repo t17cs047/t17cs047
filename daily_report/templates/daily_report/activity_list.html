@@ -1,16 +1,35 @@
-{% extends "base.html" %}
+{% load staticfiles %}
+<html>
+<head>
+<link rel="stylesheet" href="{% static 'for_dailyreport.css'%}">
+    <meta charset="utf-8" />
+    <title>index</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
 
-{% block title %} 個別リスト{% endblock %}
+<nav>
+	<ul>
+		<li><a href="{% url 'report_list' %}">日報一覧</a></li>
+		<li><a href="{% url 'write' %}">日報登録</a></li>
+		<li><a href="{% url 'list' %}">プロジェクト一覧</a></li>
+		<li><a href="{% url 'show_cost' %}">Cost</a></li>
+		<li><a href="{% url 'list_wage' %}">単価設定</a></li>
+		<li><a href="{% url 'register' %}">社員の登録</a></li>
+		<li><a href="{% url 'logout' %}">ログアウト</a></li>
+	</ul>
+</nav>
+
+{% block title %} 活動リスト{% endblock %}
 
 {% block main %}
-<p >if you want to delete all activities, please delete the daily report</p>
+<p >日報中のすべての活動を削除する際は日報ごと削除をしてください</p>
 <table id ="myTable">
-  <thead class="thead-dark">
     <tr>
       <th>開始日時</th>
       <th>終了日時</th>
       <th>プロジェクト</th>
       <th>備考</th>
+      <th>delete</th>
     </tr>
   </thead>
   <tbody>
@@ -20,7 +39,7 @@
    <td>{{ activity.end_time}}</td>
    <td>{{ activity.project }}</td>
    <td>{{ activity.memo }}</td>
-   <td id=nums><a href="{% url 'delete_activity' activity.id %}">delete</a></td>
+   <td id=nums><a href="{% url 'delete_activity' activity.id %}" class = "nolink">delete</a></td>
   </tr>
 {% endfor%}
 </tbody>
@@ -31,11 +50,12 @@
      jQuery(function(){
           var num = $('[id = nums]').length;
           if( num == 1){
-          		$('p').show();
-          		$('[id=nums]').hide();
+          		$('p').css('display', 'block');
+          		//$('[id=nums]').css('visibility', 'hidden');
+          		$('[class=nolink]').css('pointer-events', 'none');
           	}else{
-          		$('[id=nums]').show();
-          		$('p').hide();
+          		$('[id=nums]').css('display', 'block');
+          		$('p').css('visibility', 'hidden');
           		}
      });
   </script>

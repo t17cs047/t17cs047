@@ -1,7 +1,8 @@
 from django.urls import path
 from . import views
 from daily_report.views import WageAddView, WageList, AggregateView, ProjectList,ProjectDeleteViewWithParameter, ProjectAddView, ProjectEditViewWithParameter, ProjectDetailViewWithParameter, ActivityDeleteView, ReportDeleteView, NotUniqueView
-from django.db.models.aggregates import Aggregate
+
+from django.contrib.admin.views.decorators import staff_member_required
 
 appname = 'daily_report'
 urlpatterns = [
@@ -29,6 +30,6 @@ urlpatterns = [
         path('wage_detail/<int:pk>', views.WageDetailViewWithParameter.as_view(), name='wage_detail'),
         path('add_wage', WageAddView.as_view(), name='add_wage'),
         
-        path('show_cost', AggregateView.as_view(), name='show_cost'),
+        path('show_cost', staff_member_required(AggregateView.as_view()), name='show_cost'),
   
     ]
