@@ -4,8 +4,7 @@
 
 {% block main %}
 <form action="{% url 'add_wage' %}" method="post">
- <table class ="table">
-  <thead class="thead-dark">
+ <table class ="delete">
   {{ form.as_table}}
   {% csrf_token %}
    </table>	

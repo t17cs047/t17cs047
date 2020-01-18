@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %} Delete {% endblock %}
+{% block title %} Confim {% endblock %}
 
 {% block main %}
 
@@ -23,7 +23,9 @@
 	</tr>
 	<tr>
 		<th>Employee</th>
-		<td>{{ form.employee.value }}</td>
+		<td>{% for employee in employees %}
+		{{ employee.name }}
+		{% endfor %}</td>
 	</tr>
 	<tr>
 		<th>個数</th>

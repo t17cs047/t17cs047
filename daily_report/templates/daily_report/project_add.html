@@ -9,6 +9,8 @@
 
 
 <form action="{% url 'add' %}" method="post">
+
+
  <table class = "another">
   {{ form.as_table}}
   {% csrf_token %}

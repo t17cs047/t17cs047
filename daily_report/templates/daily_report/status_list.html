@@ -8,8 +8,7 @@
 {{ form }}
 <input type="submit"/>
 </form>
-<table id ="myTable">
-  <thead class="thead-dark">
+<table class ="list">  
     <tr>
       <th>ID</th>
       <th>職位名</th>
@@ -17,7 +16,6 @@
       <th>変更</th>
       <th>削除</th>
     </tr>
-  </thead>
   <tbody>
 {% for status in object_list%}
   <tr>

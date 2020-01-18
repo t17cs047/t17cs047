@@ -19,7 +19,9 @@
 		</tr>
 		<tr>
 			<th>employee</th>
-			<td>{{project.employee}}</td>
+			<td>{% for employee in project.employee.all %}
+			{{ employee.name }}
+			{% endfor %}</td>
 		</tr>
 		<tr>
 			<th>order_amount</th>

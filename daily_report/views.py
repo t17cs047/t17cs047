@@ -295,8 +295,12 @@ class ProjectAddView(LoginRequiredMixin,FormView):
     success_url = reverse_lazy('list')
     
     def form_valid(self, form):
+        selected_employees = self.request.POST.getlist("employee")
+        employee_list=[]
+        for employee in selected_employees:
+            employee_list.append(Employee.objects.get(pk=employee))
         if self.request.POST.get('next', '') == 'confirm':
-            return render(self.request, 'daily_report/project_show.html', {'form':form})
+            return render(self.request, 'daily_report/project_show.html', {'form':form, 'employees':employee_list})
         if self.request.POST.get('next', '') == 'create':
             form.save()
             #form.save_m2m()

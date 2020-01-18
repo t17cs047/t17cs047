@@ -5,17 +5,30 @@
 {% block main %}
 <form action="{% url 'add_wage' %}" method="post">
 {% csrf_token %}
-<dl>
+
 <dt>内容を確認してください</dt>
 <dt></dt>
-<dt>職位名</dt><dd>{{form.name.value }}</dd>
-<dt>単価</dt><dd>{{ form.wage.value }}</dd>
-</dl>
-<form action="{% url 'add_wage' %}" method="post">
+
+<table class ="another">
+    
+  <tbody>
+    <tr>
+		<th>名前</th>
+		<td>{{form.name.value }}</td>
+	</tr>
+	<tr>
+		<th>Employee</th>
+		<td>{{form.wage.value }}</td>
+	</tr>
+ 
+	<form action="{% url 'add' %}" method="post">
 						{% csrf_token %}
    							{% for field in form %}
                         {{field.as_hidden}}
                     {% endfor %}
+    
+ </table>
+
 <button type="submit" class="sell-submit" name="next" value="create">作成</button>
 <button type="submit" class="sell-submit" name="next" value="back">職位の追加画面に戻る</button>
 </form>
