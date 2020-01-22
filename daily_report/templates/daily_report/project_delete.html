@@ -5,30 +5,32 @@
 {% block main %}
 
 <div class="title">
-  <h1>Project Delete</h1>
+  <h1>削除確認</h1>
 </div>
+
+<a href="{% url 'list' %}" class="circle_spread_btn">←</a>
 
 <form action="{% url 'delete_para' project.id %}" method="post">
 {% csrf_token %}
 
-<dt>Do you want to delete this record? Check the table below. </dt>
-<dt></dt>
+<div class="delete_text">
+<h5>このプロジェクトを削除しますか？</h5>
+</div>
 
-<table class = "another">
-	<tbody>
+	<table class = "delete">
+		<tbody>
 		<tr>
 			<th>ID</th>
 			<td>{{project.id}}</td>
 		</tr>
 		<tr>
-			<th>名前</th>
-			<td>{{ project.name }}</td>
+			<th>name</th>
+			<td>{{project.name}}</td>
 		</tr>
-	</tbody>
-</table>
-
-<input type="submit" class="btn-border-right" value = "delete"/>
+		</tbody>
+	</table>
+	
+	<input type="submit" class="button03" value = "delete"/>
 </form>
-<a href="{% url 'list' %}"class="btn-border">Return</a>
 
 {% endblock %}

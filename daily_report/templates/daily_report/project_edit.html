@@ -8,6 +8,8 @@
   <h1>Project Edit</h1>
 </div>
 
+<a href="{% url 'list' %}" class="circle_spread_btn">←</a>
+
 <form action="{% url 'edit_para' project.id %}" method="post">
 {% csrf_token %}
 
@@ -16,7 +18,7 @@
 {{ form.as_table}}
 </table>
 
-<input class="btn-border-right" type="submit"/>
+<input class="button03" type="submit"/>
 </form>
 
 <a href= "{% url 'list' %}"class="btn-border">Return</a>

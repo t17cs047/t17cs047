@@ -7,15 +7,17 @@
 
   <h1>Project Add</h1>
 
+<a href="{% url 'list' %}" class="circle_spread_btn">←</a>
 
 <form action="{% url 'add' %}" method="post">
+
+
  <table class = "another">
   {{ form.as_table}}
   {% csrf_token %}
  </table>	
   
   </table>
-<button type="submit" class="btn-border-right" name="next" value="confirm">確認画面へ</button>
-	<a href= "{% url 'list' %}" class="btn-border">プロジェクトリストに戻る</a>
-
+<button type="submit" class="button03" name="next" value="confirm">確認画面へ</button>
+	
 {% endblock %} 
