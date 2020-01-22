@@ -4,10 +4,10 @@ body {
 }
 
 h1 {
-  color: #6c3524;/*文字色*/
+  color: #5B5B5B;/*文字色*/
   padding: 0.5em 0;/*上下の余白*/
-  border-top: solid 3px #99FFCC;/*上線*/
-  border-bottom: solid 3px #99FFCC;/*下線*/
+  border-top: solid 3px #59b1eb;/*上線*/
+  border-bottom: solid 3px #59b1eb;/*下線*/
 }
 
 nav ul{
@@ -27,7 +27,7 @@ nav a{
 	display: block;
 	width: 100%;
 	text-decoration: none;
-	color: #6c3524;
+	color: #111111;
 	padding-bottom: 5px;
 }
 
@@ -37,48 +37,91 @@ nav li.current{
 
 nav li:hover{
 	color: #E7DA66;
-	border-bottom: 3px solid #99FFCC;	
+	border-bottom: 3px solid #E7DA66;
 }
 
 /* ここから下がボタンのCSS　*/
-.btn-border {
+
+.button03{
+     display:block;
+     width: 250px;
+     height:70px;
+     line-height: 70px;
+     margin: 0 auto;
+     color: #FFF;
+     text-decoration: none;
+     text-align: center;
+     background-color: #59b1eb; /*ボタン色*/
+     border-bottom: solid 6px #28d; /*下線色*/
+     border-radius: 5px; /*角丸*/
+     position: relative;
+     top: 10px;
+}
+.button03:hover{
+     background-color: #59b1eb;/*ボタン色*/
+     border-bottom: solid 6px #28d; /*下線色*/
+}
+.button03:active {
+     margin-top: 6px;
+     border-bottom: none;
+     -webkit-transform: translateY(6px);　/*下移動*/
+     transform: translateY(6px);
+}
+
+/* ---add--- */
+
+.cp_link {
   display: inline-block;
-  padding: 0.3em 1em;
+  background-color: #59b1eb;
+  color: #FFF;
+  width: 130px;
+  padding: 0.5em;
   text-decoration: none;
-  color: #67c5ff;
-  border: solid 2px #67c5ff;
-  border-radius: 3px;
-  transition: .4s;
-  float: left;
+  border-radius: 4px;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
+  -webkit-tap-highlight-color: transparent;
+  transition: .2s ease-out;
+  font-size: 20px;
+  text-align: center;
   position: relative;
-  top: 30px;
-  left: 50px;
-  
+  left: 20px;
+}
+.cp_link:hover {
+	 cursor: pointer;
+	 text-decoration: none;
+	 transform: translateY(-4px);
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.12), 0 3px 10px 0 rgba(0,0,0,0.12), 0 4px 7px -2px rgba(0,0,0,0.2);
 }
 
-.btn-border:hover {
-  background: #67c5ff;
-  color: white;
+/* --- Return --- */
+
+.circle_spread_btn {
+	display: inline-block;
+	position: relative;
+	left: 10px;
+	width: 50px;
+	height: 50px;
+	line-height: 50px;
+	font-size:20px;
+	text-align: center;
+	text-decoration: none;
+	color: #fff;
+	background: #59b1eb;
+	border-radius: 50%;
+	box-shadow: 0 2px 2px 0 rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
+  -webkit-tap-highlight-color: transparent;
+  transition: .2s ease-out;
+}
+.circle_spread_btn:hover {
+	 cursor: pointer;
+	 text-decoration: none;
+	 transform: translateY(-4px);
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.12), 0 3px 10px 0 rgba(0,0,0,0.12), 0 4px 7px -2px rgba(0,0,0,0.2);
+	 
 }
 
-.btn-border-right {
-  display: inline-block;
-  padding: 0.3em 1em;
-  text-decoration: none;
-  color: #67c5ff;
-  border: solid 2px #67c5ff;
-  border-radius: 3px;
-  transition: .4s;
-  float: right;
-  position: relative;
-  top: 30px;
-  right: 50px;
-}
 
-.btn-border-right:hover {
-  background: #67c5ff;
-  color: white;
-}
+
 
 /* 一覧の表 レイアウト */
 
@@ -87,6 +130,8 @@ nav li:hover{
 }
 
 table.list{
+	position: relative;
+	top: 10px;
   table-layout: fixed;	
   width: 100%;
   border-collapse:separate;
@@ -141,6 +186,7 @@ table.list tr:last-child td:last-child {
 table.another{
   table-layout: fixed;	
   width: 60%;
+  margin: 0 auto;
   border-collapse:separate;
   border-spacing: 0;
 }
@@ -190,9 +236,18 @@ table.another tr:last-child td:last-child {
 
 /*削除用の表*/
 
+.delete_text{
+	text-align: center;
+}
+
+h5{
+	font-size: 25px;
+}
+
 table.delete{
   table-layout: fixed;	
   width: 40%;
+   margin: 0 auto;
   border-collapse:separate;
   border-spacing: 0;
 }

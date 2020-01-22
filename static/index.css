@@ -27,8 +27,8 @@ nav li:hover{
 h1 {
   color: #5B5B5B;/*文字色*/
   padding: 0.5em 0;/*上下の余白*/
-  border-top: solid 3px #67c5ff;/*上線*/
-  border-bottom: solid 3px #67c5ff;/*下線*/
+  border-top: solid 3px #59b1eb;/*上線*/
+  border-bottom: solid 3px #59b1eb;/*下線*/
 }
 
 body{
@@ -39,67 +39,15 @@ body{
   background: #ffffff;
 }
 
-*, *:before, *:after {
-	-webkit-box-sizing: border-box;
-	        box-sizing: border-box;
-}
-.cp_navi {
-	position: relative;
-	overflow: hidden;
-	width: 500px;
-	height:400px;
-}
-.cp_navi #cp_sidenav a {
-	font-size: 20px;
-	position: absolute;
-	left: -200px;
-	width: 300px;
-	height: 54px;
-	padding: 12px 15px;
-	transition: 0.3s;
-	text-decoration: none;
-	color: #ffffff;
-	border-radius: 0 5px 5px 0;
-}
-.cp_navi #cp_sidenav a:hover {
-	left: 30px;
-}
-.cp_navi #report_list {
-	top: 20px;
-	background-color: #6c3524;
-}
-.cp_navi #write {
-	top: 80px;
-	background-color: #6c3524;
-}
-.cp_navi #list {
-	top: 140px;
-	background-color: #6c3524;
-}
-.cp_navi #show_cost {
-	top: 200px;
-	background-color: #6c3524;
-}
-
-.cp_navi #list_wage {
-	top: 260px;
-	background-color: #6c3524;
-}
-
-.cp_navi #register {
-	top: 320px;
-	background-color: #6c3524;
-}
-
-
 /* ボタン */
 
 .button1{
   display: inline-block;
   width: 420px;
   height: 300px;
-  position:relative;
-  left:20px;
+  position:absolute;
+  top:155px;
+  left:27px;
   line-height: 200px;
   text-decoration: none;
   line-height: 54px;
@@ -137,9 +85,9 @@ div.write{
   display: inline-block;
   width: 420px;
   height: 100px;
-  position:relative;
-  top:120;
-  left:-400;
+  position:absolute;
+  top:475px;
+  left:27px;
   line-height: 200px;
   text-decoration: none;
   line-height: 54px;
@@ -177,9 +125,9 @@ div.report_list{
   display: inline-block;
   width: 510px;
   height: 150px;
-  position:relative;
-  top:-150px;
-  left:460px;
+  position:absolute;
+  left:470px;
+  top:305px;
   line-height: 200px;
   text-decoration: none;
   line-height: 54px;
@@ -217,9 +165,9 @@ div.list{
   display: inline-block;
   width: 150px;
   height: 100px;
-  position:relative;
-  top:-30px;
-  left: -50px;
+  position:absolute;
+  top:475px;
+  left:470px;
   line-height: 200px;
   text-decoration: none;
   line-height: 54px;
@@ -257,9 +205,9 @@ div.show_cost{
   display: inline-block;
   width: 150px;
   height: 100px;
-  position:relative;
-  top:-30px;
-  left: -25px;
+  position:absolute;
+  top:475px;
+  left:650px;
   line-height: 200px;
   text-decoration: none;
   line-height: 54px;
@@ -297,9 +245,9 @@ div.list_wage{
   display: inline-block;
   width: 150px;
   height: 100px;
-  position:relative;
-  top:-30px;
-  left: 0px;
+  position:absolute;
+  top:475px;
+  left:830px;
   line-height: 200px;
   text-decoration: none;
   line-height: 54px;
@@ -415,8 +363,8 @@ div.register{
 
 .cp_loading13 {
 position: absolute;
-top:40%;
-right:150px;
+top:280px;
+left:750px;
 -webkit-transform: translate(-50%,-50%);
 transform: translate(-50%,-50%);
 }
@@ -487,7 +435,7 @@ opacity: 0;
 /* --- */
 .loading span {
 position: absolute;
-top:30%;
+top:200px;
 left:600px;
   font-size: 50px;
   display: inline-block;

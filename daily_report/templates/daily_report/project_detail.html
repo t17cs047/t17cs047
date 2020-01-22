@@ -8,6 +8,8 @@
   <h1>Project Detail</h1>
 </div>
 
+<a href="{% url 'list' %}" class="circle_spread_btn">←</a>
+
 <form action="{% url 'detail' project.id %}" method="post">
 {% csrf_token %}
 
@@ -52,6 +54,6 @@
 	</table>
 
 
-<a href= "{% url 'list' %}"class="btn-border">Return</a>
+<a href= "{% url 'list' %}"class="button03">OK</a>
 
 {% endblock %}

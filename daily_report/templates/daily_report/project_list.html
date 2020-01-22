@@ -5,11 +5,13 @@
 {% block main %}
 
 <div class="title">
-  <h1>Project List</h1>
+  <h1>プロジェクト一覧</h1>
 </div>
 
 <form action="{% url 'list'%}" method="post">
 
+<a href="{% url 'index' %}" class="circle_spread_btn">←</a>
+<a href="{% url 'add' %}" class="cp_link">追加</a>
 
 <table class ="list">
 
@@ -37,13 +39,5 @@
 </tbody>
 
 </table>
-
-
-
-		<a href="{% url 'add' %}" class="btn-border-right">追加</a>
-		<a href="{% url 'index' %}" class="btn-border">戻る</a>
-	
-
-
 
 {% endblock%} 

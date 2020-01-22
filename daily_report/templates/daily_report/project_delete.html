@@ -8,10 +8,14 @@
   <h1>削除確認</h1>
 </div>
 
+<a href="{% url 'list' %}" class="circle_spread_btn">←</a>
+
 <form action="{% url 'delete_para' project.id %}" method="post">
 {% csrf_token %}
 
+<div class="delete_text">
 <h5>このプロジェクトを削除しますか？</h5>
+</div>
 
 	<table class = "delete">
 		<tbody>
@@ -26,10 +30,7 @@
 		</tbody>
 	</table>
 	
-	<input type="submit" class="btn-border-right" value = "delete"/>
+	<input type="submit" class="button03" value = "delete"/>
 </form>
-
-
-<a href="{% url 'list' %}"class="btn-border">Return</a>
 
 {% endblock %}
