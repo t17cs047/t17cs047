@@ -38,8 +38,8 @@
   <tr>
    <td><a href = {% url 'activity_list' report.id %}>{{ report.date }}</td>
    <td>{{ report.user }}</td>
-   <td ><a href="{% url 'report_edit' report.id %}">変更</a></td>
-   <td ><a href="{% url 'report_delete' report.id %}">delete</a></td>  
+   <td ><a id ="ch" href="{% url 'report_edit' report.id %}">変更</a></td>
+   <td ><a id = "del" href="{% url 'report_delete' report.id %}">delete</a></td>  
    </td>
   </tr>
 {% endfor%}

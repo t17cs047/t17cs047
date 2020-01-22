@@ -95,7 +95,8 @@ class AggregateView(LoginRequiredMixin, TemplateView):
         sum = 0;
         employees = project.employee.all()
         for employee in employees:
-            daily_reports = DailyReport.objects.filter(user = employee.user, date__lte = project.end_date)
+            daily_reports = DailyReport.objects.filter(user = employee.user, date__lte = project.end_date, date__gte = project.start_date)
+            #dte__gteの追加
             for daily_report in daily_reports:
                 activities = Activity.objects.filter(daily_report = daily_report)
                 for activity in activities:

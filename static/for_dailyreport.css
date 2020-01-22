@@ -131,3 +131,82 @@ h1 {
   border-top: solid 3px #67c5ff;/*上線*/
   border-bottom: solid 3px #67c5ff;/*下線*/
 }
+
+
+.myTable{
+  width: 100%;
+  border-collapse:separate;
+  border-spacing: 0;
+}
+
+.myTable th:first-child{
+  border-radius: 5px 0 0 0;
+}
+
+.myTable th:last-child{
+  border-radius: 0 5px 0 0;
+  border-right: 1px solid #3c6690;
+}
+
+.myTable th{
+  text-align: center;
+  color:white;
+  background: linear-gradient(#829ebc,#225588);
+  border-left: 1px solid #3c6690;
+  border-top: 1px solid #3c6690;
+  border-bottom: 1px solid #3c6690;
+  box-shadow: 0px 1px 1px rgba(255,255,255,0.3) inset;
+  width: 20%;
+  padding: 10px 0;
+}
+
+.myTable td{
+  text-align: center;
+  border-left: 1px solid #a8b7c5;
+  border-bottom: 1px solid #a8b7c5;
+  border-top:none;
+  box-shadow: 0px -3px 5px 1px #eee inset;
+  width: 20%;
+  padding: 10px 0;
+}
+
+.myTable td:last-child{
+  border-right: 1px solid #a8b7c5;
+}
+
+.myTable tr:last-child td:first-child {
+  border-radius: 0 0 0 5px;
+}
+
+.myTable tr:last-child td:last-child {
+  border-radius: 0 0 5px 0;
+}
+
+#nolink {
+    color: #fff;
+    background: #5876a3;
+    padding: 5px 30px;
+    display: inline-block;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+
+#del {
+    color: #fff;
+    background: #5876a3;
+    padding: 5px 30px;
+    display: inline-block;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+
+#ch {
+    color: #fff;
+    background: #5876a3;
+    padding: 5px 30px;
+    display: inline-block;
+    border-radius: 5px;
+    text-decoration: none;
+}
