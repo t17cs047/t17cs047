@@ -40,8 +40,6 @@ from decimal import Decimal, ROUND_HALF_UP
 def add_daily_report(request):
     form = DailyReportCreateForm(request.POST or None)
     context = {'form': form}
-    print("call1")
-
     if request.method == 'POST' and form.is_valid():
         post = form.save(commit=False)
         post.user = request.user
@@ -50,7 +48,6 @@ def add_daily_report(request):
         
         if formset.is_valid() and formset.has_changed():
             try:
-                print("valid")
                 post.save() 
                 detail = formset.save(commit = False)
                 for inform in detail:
@@ -63,7 +60,6 @@ def add_daily_report(request):
                 return redirect("not_unique")
         
         else:
-            print("GET")
             context['formset'] = formset
             for form in context['formset']:
                 form.fields['project'].queryset =  Project.objects.filter(employee = employee)
@@ -75,7 +71,6 @@ def add_daily_report(request):
         context['formset'] = ActivityFormset()
         for form in context['formset']:
             form.fields['project'].queryset =  Project.objects.filter(employee = employee)
-        print(Project.objects.filter(employee = employee)) 
         
     return render(request, 'daily_report/daily_report.html', context)
 
@@ -96,7 +91,8 @@ class AggregateView(LoginRequiredMixin, TemplateView):
         sum = 0;
         employees = project.employee.all()
         for employee in employees:
-            daily_reports = DailyReport.objects.filter(user = employee.user, date__lte = project.end_date)
+            #add date__gte 1/22
+            daily_reports = DailyReport.objects.filter(user = employee.user, date__lte = project.end_date, date__gte = project.start_date)
             for daily_report in daily_reports:
                 activities = Activity.objects.filter(daily_report = daily_report)
                 for activity in activities:
@@ -172,7 +168,6 @@ class ReportMixin(object):
         except:
             return redirect("not_unique")
         # 処理後は詳細ページを表示
-        print("valid1")
         return redirect("report_list")
 
 

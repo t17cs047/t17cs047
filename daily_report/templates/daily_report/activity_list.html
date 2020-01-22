@@ -23,7 +23,7 @@
 
 {% block main %}
 <p >日報中のすべての活動を削除する際は日報ごと削除をしてください</p>
-<table id ="myTable">
+<table class ="myTable">
     <tr>
       <th>開始日時</th>
       <th>終了日時</th>
@@ -35,11 +35,13 @@
   <tbody>
 {% for activity in object_list%}
   <tr>
+  <div id = "counter">
    <td>{{ activity.start_time}}</td>
    <td>{{ activity.end_time}}</td>
    <td>{{ activity.project }}</td>
    <td>{{ activity.memo }}</td>
-   <td id=nums><a href="{% url 'delete_activity' activity.id %}" class = "nolink">delete</a></td>
+   <td ><a id = "nolink" href="{% url 'delete_activity' activity.id %}">delete</a></td>
+   </div>
   </tr>
 {% endfor%}
 </tbody>
@@ -48,11 +50,11 @@
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script>
      jQuery(function(){
-          var num = $('[id = nums]').length;
+          var num = $('[id = counter]').length;
           if( num == 1){
           		$('p').css('display', 'block');
           		//$('[id=nums]').css('visibility', 'hidden');
-          		$('[class=nolink]').css('pointer-events', 'none');
+          		$('#nolink').css('display','none');
           	}else{
           		$('[id=nums]').css('display', 'block');
           		$('p').css('visibility', 'hidden');

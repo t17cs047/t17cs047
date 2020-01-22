@@ -27,12 +27,10 @@
 <table id ="myTable">
   <thead class="thead-dark">
     <tr>
-
       <th>日付</th>
       <th>記入者</th>
       <th>変更</th>
       <th>削除</th>
-
     </tr>
   </thead>
   <tbody>
@@ -40,8 +38,9 @@
   <tr>
    <td><a href = {% url 'activity_list' report.id %}>{{ report.date }}</td>
    <td>{{ report.user }}</td>
-   <td ><a href="{% url 'report_edit' report.id %}">変更</a></td>
-   <td ><a href="{% url 'report_delete' report.id %}">削除</a></td>  
+
+   <td ><a id ="ch" href="{% url 'report_edit' report.id %}">変更</a></td>
+   <td ><a id = "del" href="{% url 'report_delete' report.id %}">delete</a></td>  
    </td>
   </tr>
 {% endfor%}
