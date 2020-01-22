@@ -97,9 +97,7 @@
         $('#decline').click(function() {
              var form_idx = $('#id_activity_set-TOTAL_FORMS').val();
              if(form_idx > 1){
-             		console.log(form_idx);
              		var num = form_idx - 1;
-             		console.log(num);
            	  	var str = $('.no_error').eq(form_idx);
              		$('.no_error').eq(form_idx - 1).remove();
              		$('hr').eq(form_idx - 1).remove();	      
@@ -111,7 +109,6 @@
           
 <script>
         $('#confirm').click(function() {
-        		console.log(confirm);
         		var form_idx = $('#id_activity_set-TOTAL_FORMS').val();			
 				var num = $('#id_activity_set-TOTAL_FORMS').val();
   				var start_array = [];
@@ -131,8 +128,6 @@
   							end_array[i]= '0' + end_array[i]; 
   						if(start_array[i] >= end_array[i]){
   							alert("開始時刻が終了時刻よりも後ろにあります");
-  							console.log(start_array[i]);
-  							console.log(end_array[i]);
   							return false;
   						}
   					}
@@ -173,7 +168,6 @@
   						text = text + '<tr>' + '<td>' + str1 +'</td>'+ '<td>' + str2 + '</td>' + '<td>' + str3 + '</td>' + '<td>' + str4 + '</td>' + '</tr>';
 				}
 				
-				console.log("call");
 				$('[class="review"]').empty();
 				$('[id="date_review"]').empty();
 				var date = $(id_date).val();
@@ -181,7 +175,7 @@
 				//$('[id="review_area"]').append(text.replace(/th/g, '<th>'));
 				$('[class="review"]').append(text);
 				$('[id = "review_area"]').css('display', 'block');
-				console.log(text);
+			
 				$('[id = form_set]').css('display', 'none');
 				$('[id = date]').css('display', 'none');
 				$('[id = comment]').css('display', 'block');
