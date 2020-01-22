@@ -3,30 +3,66 @@
 {% block title %} Delete {% endblock %}
 
 {% block main %}
+
+<div class="title">
+  <h1>Project Confirm</h1>
+</div>
+
 <form action="{% url 'add' %}" method="post">
 {% csrf_token %}
-<dl>
+
 <dt>内容を確認してください</dt>
 <dt></dt>
-<dt>名前</dt><dd>{{form.name.value }}</dd>
-<dt>Employee</dt>
-{% for employee in employees %}
-	<dd>{{ employee.name }}</dd>
-{% endfor %}
-<dt>個数</dt><dd>{{ form.order_amount.value }}</dd>
-<dt>Budget</dt><dd>{{ form.budget.value }}</dd>
-<dt>開始</dt><dd>{{ form.start_date.value }}</dd>
-<dt>終了</dt><dd>{{ form.end_date.value }}</dd>
-<dt>クライアント</dt><dd>{{ form.client.value }}</dd>
-<dt>Outsourcing cost</dt><dd>{{ form.outsourcing_cost.value }}</dd>
-</dl>
-<form action="{% url 'add' %}" method="post">
+
+<table class ="another">
+    
+  <tbody>
+    <tr>
+		<th>名前</th>
+		<td>{{form.name.value }}</dd>
+	</tr>
+	<tr>
+		<th>Employee</th>
+		<td>{{ form.employee.value }}</td>
+	</tr>
+	<tr>
+		<th>個数</th>
+		<td>{{ form.order_amount.value }}</td>
+	</tr>
+	<tr>
+		<th>Budget</th>
+		<td>{{ form.budget.value }}</td>
+	</tr>
+	<tr>
+		<th>開始</th>
+		<td>{{ form.start_date.value }}</td>
+	</tr>
+	<tr>
+		<th>終了</th>
+		<td>{{ form.end_date.value }}</td>
+	</tr>
+	<tr>
+		<th>クライアント</th>
+		<td>{{ form.client.value }}</td>
+	</tr>
+	<tr>
+		<th>Outsourcing cost</th>
+		<td>{{ form.outsourcing_cost.value }}</td>
+	</tr>
+   </thead>
+   
+	 
+	<form action="{% url 'add' %}" method="post">
+
 						{% csrf_token %}
    							{% for field in form %}
                         {{field.as_hidden}}
                     {% endfor %}
-<button type="submit" class="sell-submit" name="next" value="create">作成</button>
-<button type="submit" class="sell-submit" name="next" value="back">Return</button>
+    
+ </table>
+ 
+<button type="submit" class="btn-border-right" name="next" value="create">作成</button>
+<button type="submit" class="btn-border" name="next" value="back">Return</button>
 </form>
 
 {% endblock %}

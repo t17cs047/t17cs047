@@ -1,0 +1,91 @@
+nav ul{
+	display: table;
+	margin: 0 auto;
+	padding: 0 ;
+	width: 80%;
+	text-align: center;
+}
+nav li{
+	display: table-cell;
+	min-width: 50px;
+}
+nav a{
+	display: block;
+	width: 100%;
+	text-decoration: none;
+	color: #000011;
+	padding-bottom: 5px;
+}
+nav li.current{
+	border-bottom: 3px solid #92D050;
+}
+nav li:hover{
+	color: #E7DA66;
+	border-bottom: 3px solid #F0E475;
+}
+
+h1 {
+  color: #5B5B5B;/*文字色*/
+  padding: 0.5em 0;/*上下の余白*/
+  border-top: solid 3px #67c5ff;/*上線*/
+  border-bottom: solid 3px #67c5ff;/*下線*/
+}
+
+body{
+  font-family: 'PT Sans', sans-serif;
+  display: table;
+  width: 100%;
+  background: #ffffff;
+}
+
+*, *:before, *:after {
+	-webkit-box-sizing: border-box;
+	        box-sizing: border-box;
+}
+.cp_navi {
+	position: relative;
+	overflow: hidden;
+	width: 500px;
+	height:400px;
+}
+.cp_navi #cp_sidenav a {
+	font-size: 20px;
+	position: absolute;
+	left: -200px;
+	width: 300px;
+	height: 54px;
+	padding: 12px 15px;
+	transition: 0.3s;
+	text-decoration: none;
+	color: #ffffff;
+	border-radius: 0 5px 5px 0;
+}
+.cp_navi #cp_sidenav a:hover {
+	left: 30px;
+}
+.cp_navi #report_list {
+	top: 20px;
+	background-color: #6c3524;
+}
+.cp_navi #write {
+	top: 80px;
+	background-color: #6c3524;
+}
+.cp_navi #list {
+	top: 140px;
+	background-color: #6c3524;
+}
+.cp_navi #show_cost {
+	top: 200px;
+	background-color: #6c3524;
+}
+
+.cp_navi #list_wage {
+	top: 260px;
+	background-color: #6c3524;
+}
+
+.cp_navi #register {
+	top: 320px;
+	background-color: #6c3524;
+}
