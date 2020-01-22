@@ -106,9 +106,11 @@
            });
       </script>
           
-          
 <script>
         $('#confirm').click(function() {
+        		if( ! $('#id_date').val() ){
+        			return false;
+        			}
         		var form_idx = $('#id_activity_set-TOTAL_FORMS').val();			
 				var num = $('#id_activity_set-TOTAL_FORMS').val();
   				var start_array = [];
@@ -127,7 +129,7 @@
   						if(end_array[i].charAt(1)==":")
   							end_array[i]= '0' + end_array[i]; 
   						if(start_array[i] >= end_array[i]){
-  							alert("開始時刻が終了時刻よりも後ろにあります");
+  							alert("開始時刻が終了時刻と同じか後ろにあります");
   							return false;
   						}
   					}
@@ -171,7 +173,7 @@
 				$('[class="review"]').empty();
 				$('[id="date_review"]').empty();
 				var date = $(id_date).val();
-				$('[id="date_review"]').append("<pre><font size ='5'> 登録日:" + date  + "      " + "提出者:" + "{{user}}" + "</font><pre>");
+				$('[id="date_review"]').append("<pre><font size ='5'> 登録日:" + date  + "      " + "提出者:" + "{{user_name}}" + "</font><pre>");
 				//$('[id="review_area"]').append(text.replace(/th/g, '<th>'));
 				$('[class="review"]').append(text);
 				$('[id = "review_area"]').css('display', 'block');

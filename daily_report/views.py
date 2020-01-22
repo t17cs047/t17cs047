@@ -40,10 +40,11 @@ from decimal import Decimal, ROUND_HALF_UP
 def add_daily_report(request):
     form = DailyReportCreateForm(request.POST or None)
     context = {'form': form}
+    me = Employee.objects.get(user = request.user)
     if request.method == 'POST' and form.is_valid():
         post = form.save(commit=False)
         post.user = request.user
-        employee = Employee.objects.get(user = request.user)   
+        #employee = Employee.objects.get(user = request.user)   
         formset = ActivityFormset(request.POST, instance=post)
         
         if formset.is_valid() and formset.has_changed():
@@ -62,16 +63,15 @@ def add_daily_report(request):
         else:
             context['formset'] = formset
             for form in context['formset']:
-                form.fields['project'].queryset =  Project.objects.filter(employee = employee)
-            context['user'] = request.user
-            messages.warning(request, "正確に入力してください")
-
+                form.fields['project'].queryset =  Project.objects.filter(employee = me)
+            #messages.warning(request, "正確に入力してください")
+            context['user_name'] = me.name
     else:
         employee = Employee.objects.get(user = request.user)    
         context['formset'] = ActivityFormset()
         for form in context['formset']:
             form.fields['project'].queryset =  Project.objects.filter(employee = employee)
-        
+        context['user_name'] = me.name
     return render(request, 'daily_report/daily_report.html', context)
 
 class ActivityDeleteView(LoginRequiredMixin, DeleteView):
@@ -235,6 +235,7 @@ class ReportUpdateView(LoginRequiredMixin, ReportMixin, FormsetMixin, UpdateView
         employee = Employee.objects.get(user = self.request.user)
         for form in context['formset']:
             form.fields['project'].queryset =  Project.objects.filter(employee = employee)
+        context['user_name'] = employee.name
         return context
     
     
