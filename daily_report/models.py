@@ -31,8 +31,6 @@ class Employee(models.Model):
     
     name = models.CharField(max_length = 100)
     status = models.ForeignKey(Status, on_delete = models.PROTECT )
-
-    #daily_report = models.ForeignKey(DailyReport, on_delete = models.PROTECT) いらない？
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -58,11 +56,11 @@ class Activity(models.Model):
     class Meta:
         db_table = "activity"
     
-    start_time = models.TimeField(verbose_name = "start時間", default = datetime.now)
-    end_time = models.TimeField(verbose_name = "時間", default = datetime.now)    
-    daily_report = models.ForeignKey(DailyReport,verbose_name='project', on_delete = models.CASCADE)
-    project = models.ForeignKey(Project, on_delete = models.PROTECT)
-    memo = models.CharField(max_length = 100)
+    start_time = models.TimeField(verbose_name = "開始時間", default = datetime.now)
+    end_time = models.TimeField(verbose_name = "終了時間", default = datetime.now)    
+    daily_report = models.ForeignKey(DailyReport, on_delete = models.CASCADE)
+    project = models.ForeignKey(Project, on_delete = models.PROTECT, verbose_name='プロジェクト')
+    memo = models.CharField(max_length = 100,  verbose_name='備考')
     time = models.IntegerField(default = 0)
     
 class SumTime():

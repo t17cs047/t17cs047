@@ -20,7 +20,9 @@ from django.views.generic import ListView
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.shortcuts import get_object_or_404, redirect
-from daily_report.forms import Project, ProjectBuy, ProjectForm, StatusIdForm,StatusForm
+
+from daily_report.forms import Project, ProjectBuy, ProjectForm, StatusIdForm,StatusForm, DateInput
+
 from . forms import ProjectForm, ProjectIDForm
 
 from django.template.context_processors import request
@@ -38,8 +40,6 @@ from decimal import Decimal, ROUND_HALF_UP
 def add_daily_report(request):
     form = DailyReportCreateForm(request.POST or None)
     context = {'form': form}
-    print("call1")
-
     if request.method == 'POST' and form.is_valid():
         post = form.save(commit=False)
         post.user = request.user
@@ -48,7 +48,6 @@ def add_daily_report(request):
         
         if formset.is_valid() and formset.has_changed():
             try:
-                print("valid")
                 post.save() 
                 detail = formset.save(commit = False)
                 for inform in detail:
@@ -61,27 +60,27 @@ def add_daily_report(request):
                 return redirect("not_unique")
         
         else:
-            print("GET")
             context['formset'] = formset
             for form in context['formset']:
                 form.fields['project'].queryset =  Project.objects.filter(employee = employee)
-            messages.warning(request, "fill in the forms correctly!")
+            context['user'] = request.user
+            messages.warning(request, "正確に入力してください")
 
     else:
         employee = Employee.objects.get(user = request.user)    
         context['formset'] = ActivityFormset()
         for form in context['formset']:
             form.fields['project'].queryset =  Project.objects.filter(employee = employee)
-        print(Project.objects.filter(employee = employee)) 
         
     return render(request, 'daily_report/daily_report.html', context)
 
-class ActivityDeleteView(DeleteView):
+class ActivityDeleteView(LoginRequiredMixin, DeleteView):
     model = Activity
     template_name = 'daily_report/activity_delete.html'
     success_url = '../report_list'
-    
-class AggregateView(TemplateView):
+
+ 
+class AggregateView(LoginRequiredMixin, TemplateView):
     model = Activity
     template_name = 'daily_report/show_cost.html'
     def post(self, request, *args, **kwargs):
@@ -92,7 +91,8 @@ class AggregateView(TemplateView):
         sum = 0;
         employees = project.employee.all()
         for employee in employees:
-            daily_reports = DailyReport.objects.filter(user = employee.user, date__lte = project.end_date)
+            #add date__gte 1/22
+            daily_reports = DailyReport.objects.filter(user = employee.user, date__lte = project.end_date, date__gte = project.start_date)
             for daily_report in daily_reports:
                 activities = Activity.objects.filter(daily_report = daily_report)
                 for activity in activities:
@@ -106,7 +106,7 @@ class AggregateView(TemplateView):
         context['form_id'] = ProjectIDForm()
         return context
     
-class ReportDeleteView(DeleteView):
+class ReportDeleteView(LoginRequiredMixin, DeleteView):
     model = DailyReport
     template_name = 'daily_report/report_delete.html'
     success_url = '../report_list'    
@@ -145,7 +145,6 @@ class OnlyYouMixin(UserPassesTestMixin):
 
 class ReportMixin(object):
     def form_valid(self, form, formset):
-
         # formset.saveでインスタンスを取得できるように、既存データに変更が無くても更新対象となるようにする
         for detail_form in formset.forms:
             if detail_form.cleaned_data:
@@ -169,7 +168,6 @@ class ReportMixin(object):
         except:
             return redirect("not_unique")
         # 処理後は詳細ページを表示
-        print("valid1")
         return redirect("report_list")
 
 
@@ -211,7 +209,6 @@ class FormsetMixin(object):
         if self.request.method in ('POST', 'PUT'):
             kwargs.update({
                 'data': self.request.POST,
-                'files': self.request.FILES,
             })
         return kwargs
 
@@ -219,7 +216,6 @@ class FormsetMixin(object):
         self.object = form.save()
         formset.instance = self.object
         formset.save()
-
         return redirect(self.object.get_absolute_url())
 
     def form_invalid(self, form, formset):
@@ -248,7 +244,6 @@ def register_user(request):
     user_form = UserCreateForm(request.POST or None)
     profile_form = ProfileForm(request.POST or None)
     if request.method == "POST" and user_form.is_valid() and profile_form.is_valid():
-
         # Userモデルの処理。ログインできるようis_activeをTrueにし保存
         user = user_form.save(commit=False)
         user.is_active = True
@@ -296,9 +291,9 @@ class ProjectAddView(LoginRequiredMixin,FormView):
     
     def form_valid(self, form):
         selected_employees = self.request.POST.getlist("employee")
-        employee_list=[]
+        employee_list = []
         for employee in selected_employees:
-            employee_list.append(Employee.objects.get(pk=employee))
+            employee_list.append(Employee.objects.get(pk = employee))
         if self.request.POST.get('next', '') == 'confirm':
             return render(self.request, 'daily_report/project_show.html', {'form':form, 'employees':employee_list})
         if self.request.POST.get('next', '') == 'create':
