@@ -3,10 +3,19 @@
 {% block title %} Delete {% endblock %}
 
 {% block main %}
+
+<div class="title">
+  <h1>削除確認</h1>
+</div>
+
+<a href="{% url 'list_wage' %}" class="circle_spread_btn">←</a>
+
 <form action="{% url 'wage_delete_para' status.id %}" method="post">
 {% csrf_token %}
 
+<div class="delete_text">
 <h5>このプロジェクトを削除しますか？</h5>
+</div>
 
 	<table class = "delete">
 		<tbody>
@@ -15,14 +24,14 @@
 			<td>{{status.id}}</td>
 		</tr>
 		<tr>
-			<th>name</th>
+			<th>プロジェクト名</th>
 			<td>{{status.name}}</td>
 		</tr>
 		</tbody>
 	</table>
 
-<input type="submit" value = "削除する"/>
+<input type="submit" class="button03" value = "削除する"/>
 </form>
-<li><a href="{% url 'list_wage' %}">職位のリストに戻る</a></li>
+
 
 {% endblock %}

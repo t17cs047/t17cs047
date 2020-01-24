@@ -3,6 +3,13 @@
 {% block title %} Add {% endblock %}
 
 {% block main %}
+
+<div class="title">
+  <h1>職位追加</h1>
+ </div>
+ 
+ <a href="{% url 'list_wage' %}" class="circle_spread_btn">←</a>
+
 <form action="{% url 'add_wage' %}" method="post">
  <table class ="delete">
   {{ form.as_table}}
@@ -10,7 +17,6 @@
    </table>	
   
   </table>
-<button type="submit" class="sell-submit" name="next" value="confirm">確認画面へ</button>
-<li><a href= "{% url 'list_wage' %}">職位のリストに戻る</a></li>
+<button type="submit" class="button03" name="next" value="confirm">確認画面へ</button>
 
 {% endblock %} 
