@@ -45,11 +45,11 @@ class Project(models.Model):
     employee = models.ManyToManyField(Employee)
     order_amount = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(1000000000)])
     budget = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(1000000000)])
-    #outsourcing_budget = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(1000000000)])
+    outsourcing_budget = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(1000000000)])
     start_date = models.DateField(verbose_name = "日付", default = datetime.now)
     end_date = models.DateField(verbose_name = "日付", default = datetime.now)
     client = models.CharField(max_length = 30)
-    #outsourcing_cost = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(1000000000)]) 
+    outsourcing_cost = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(1000000000)]) 
     
     def __str__(self):
         return self.name
