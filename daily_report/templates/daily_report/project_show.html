@@ -5,14 +5,15 @@
 {% block main %}
 
 <div class="title">
-  <h1>Project Confirm</h1>
+  <h1>プロジェクト確認画面</h1>
 </div>
 
 <form action="{% url 'add' %}" method="post">
 {% csrf_token %}
 
-<dt>内容を確認してください</dt>
-<dt></dt>
+<div class="project_show">
+<p><span class="under_project">内容を確認してください</span></p>
+</div>
 
 <table class ="another">
     
@@ -22,18 +23,22 @@
 		<td>{{form.name.value }}</dd>
 	</tr>
 	<tr>
-		<th>Employee</th>
+		<th>メンバー社員</th>
 		<td>{% for employee in employees %}
 		{{ employee.name }}
 		{% endfor %}</td>
 	</tr>
 	<tr>
-		<th>個数</th>
+		<th>受注金額</th>
 		<td>{{ form.order_amount.value }}</td>
 	</tr>
 	<tr>
-		<th>Budget</th>
+		<th>予算</th>
 		<td>{{ form.budget.value }}</td>
+	</tr>
+	<tr>
+		<th>外注費予算</th>
+		<td>{{ form.outsourcing_budget.value }}</td>
 	</tr>
 	<tr>
 		<th>開始</th>
@@ -48,7 +53,7 @@
 		<td>{{ form.client.value }}</td>
 	</tr>
 	<tr>
-		<th>Outsourcing cost</th>
+		<th>外注費</th>
 		<td>{{ form.outsourcing_cost.value }}</td>
 	</tr>
    </thead>
@@ -63,8 +68,8 @@
     
  </table>
  
-<button type="submit" class="btn-border-right" name="next" value="create">作成</button>
-<button type="submit" class="btn-border" name="next" value="back">Return</button>
+<button type="submit" class="button03" name="next" value="create">作成</button>
+<button type="submit" class="circle_spread_btn00" name="next" value="back">←</button>
 </form>
 
 {% endblock %}

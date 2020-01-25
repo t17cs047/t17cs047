@@ -3,12 +3,21 @@
 {% block title %} Delete_Error {% endblock %}
 
 {% block main %}
+
+<div class="title">
+  <h1>削除確認</h1>
+</div>
+
 <form action="{% url 'wage_delete_error'%}" method="post">
 {% csrf_token %}
-<dl>
-<dt>この単価は削除できません</dt>
+
+<a href="{% url 'list_wage' %}" class="circle_spread_btn">←</a>
+
+<div class="delete_error">
+<p>この単価は削除できません</p>
+</div>
 
 </form>
-<li><a href="{% url 'list_wage' %}">Return</a></li>
+
 
 {% endblock %}
