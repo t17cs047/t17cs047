@@ -55,16 +55,16 @@ class ProjectForm(forms.ModelForm):
     budget = forms.IntegerField(
         label= '予算',
         )
-    outsourcing_budget = forms.IntegerField(
+    '''outsourcing_budget = forms.IntegerField(
         label= '外注費予算',
-        )
+        )'''
     client = forms.CharField(
         label='顧客名',
         widget = forms.TextInput()
         )
-    outsourcing_cost = forms.IntegerField(
+    '''outsourcing_cost = forms.IntegerField(
         label= '外注費',
-        )
+        )'''
     
     class Meta:
         model = Project
