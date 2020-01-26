@@ -100,6 +100,7 @@ class AggregateView(LoginRequiredMixin, TemplateView):
         aggr = Decimal(str(sum))
         calc = aggr.quantize(Decimal('0'), rounding = ROUND_HALF_UP)
         context['sum'] = calc
+        context['project']=project
         return self.render_to_response(context)
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

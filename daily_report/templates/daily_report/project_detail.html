@@ -5,7 +5,7 @@
 {% block main %}
 
 <div class="title">
-  <h1>Project Detail</h1>
+  <h1>プロジェクト詳細</h1>
 </div>
 
 <a href="{% url 'list' %}" class="circle_spread_btn">←</a>
@@ -16,39 +16,39 @@
 	<table class = "another">
 		<tbody>
 		<tr>
-			<th>name</th>
+			<th>プロジェクト名</th>
 			<td>{{project.name}}</td>
 		</tr>
 		<tr>
-			<th>employee</th>
+			<th>メンバー社員</th>
 			<td>{% for employee in project.employee.all %}
 			{{ employee.name }}
 			{% endfor %}</td>
 		</tr>
 
 		<tr>
-			<th>order_amount</th>
+			<th>受注金額</th>
 			<td>{{project.order_amount}}</td>
 		</tr>
 		<tr>
-			<th>budget</th>
+			<th>予算</th>
 			<td>{{project.budget}}</td>
 		</tr>
 		<tr>
-			<th>outsourcing_budget</th>
-			<td>{{project.outcoursing_budget}}</td>
+			<th>外注費予算</th>
+			<td>{{project.outsourcing_budget}}</td>
 			
 		</tr>
 		<tr>
-			<th>date</th>
+			<th>日付</th>
 			<td>{{project.start_date}}<p>~</p>{{project.end_date}}</td>
 		</tr>
 		<tr>
-			<th>client</th>
+			<th>顧客名</th>
 			<td>{{project.client}}</td>
 		</th>
 		<tr>
-			<th>outsourcing_cost</th>
+			<th>外注費</th>
 			<td>{{project.outsourcing_cost}}</td>
 		</tr>
 		</tbody>

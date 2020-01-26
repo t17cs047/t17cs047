@@ -3,22 +3,35 @@
 {% block title %} Show {% endblock %}
 
 {% block main %}
-<form action="{% url 'show_cost' %}" method="post">
-{% csrf_token %}
-{{ form_id }}
-<input type="submit"/>
-</form>
 
-{% if sum %}
-<table id ="myTable">
- <tr>
- 	<th>原価</th>
-	<td>{{sum}}</td>
-</tr>
-</table>
+<div class="title">
+  <h1>原価表示</h1>
+</div>
+
+<a href="{% url 'index' %}" class="circle_spread_btn">←</a>
+
+<div class="showcost">
+<form action="{% url 'show_cost' %}" method="post">
+		<p>原価を表示したいプロジェクトを選択してください</p>
+		{% csrf_token %}
+		{{ form_id }}
+
+	<input class="button03" type="submit"/>
+
+</div>
+
+
+
+
+{% if project %}
+
+	<div class="show">
+ 	<p>{{project}}の原価は<span class="under">{{sum}}</span>円です。</p>
+	</div>
+
 {% endif %}
 
-<ul>
-<li><a href="{% url 'index' %}">index</a></li>
-</ul>
+</form>
+
+
 {% endblock %}
