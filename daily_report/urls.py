@@ -28,7 +28,9 @@ urlpatterns = [
         path('wage_delete_error', staff_member_required(views.WageDeleteErrorView.as_view()), name='wage_delete_error'),
         path('wage_detail/<int:pk>', staff_member_required(views.WageDetailViewWithParameter.as_view()), name='wage_detail'),
         path('add_wage', staff_member_required(WageAddView.as_view()), name='add_wage'),
-        
+        path('worker_list', staff_member_required(views.EmployeeView.as_view()), name = 'worker_list'),
         path('show_cost', staff_member_required(AggregateView.as_view()), name='show_cost'),
+        path('edit_woker/<int:pk>', staff_member_required(views.EmployeeEditView.as_view()), name='edit_worker'),
+        path('delete_woker/<int:pk>', staff_member_required(views.EmployeeDeleteView.as_view()), name='delete_worker'),
   
     ]

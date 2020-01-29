@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %} Edit {% endblock %}
+
+{% block main %}
+
+<div class="title">
+  <h1>職位変更</h1>
+</div>
+
+<a href="{% url 'worker_list' %}" class="circle_spread_btn">←</a>
+
+<form action="{% url 'edit_worker' employee.id %}" method="post">
+{% csrf_token %}
+
+<table class ="another">
+{{ form.as_table}}
+</table>
+
+<input class="button03" type="submit"/>
+</form>
+
+<a href= "{% url 'worker_list' %}"class="btn-border">Return</a>
+
+{% endblock %}

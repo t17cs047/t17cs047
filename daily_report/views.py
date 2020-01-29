@@ -21,7 +21,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.shortcuts import get_object_or_404, redirect
 
-from daily_report.forms import Project, ProjectBuy, ProjectForm, StatusIdForm,StatusForm, DateInput
+from daily_report.forms import Project, ProjectBuy, ProjectForm, StatusIdForm, StatusForm, DateInput
 
 from . forms import ProjectForm, ProjectIDForm
 
@@ -88,19 +88,23 @@ class AggregateView(LoginRequiredMixin, TemplateView):
         project = Project.objects.get(pk=project_id)
         context = super().get_context_data(**kwargs)        
         context['form_id'] = ProjectIDForm()        
-        sum = 0;
         employees = project.employee.all()
+        sum =0
         for employee in employees:
             #add date__gte 1/22
             daily_reports = DailyReport.objects.filter(user = employee.user, date__lte = project.end_date, date__gte = project.start_date)
             for daily_report in daily_reports:
                 activities = Activity.objects.filter(daily_report = daily_report)
                 for activity in activities:
-                    sum = sum + activity.time * employee.status.wage / 60
+                    sum += activity.time * employee.status.wage / 60
+        
         aggr = Decimal(str(sum))
         calc = aggr.quantize(Decimal('0'), rounding = ROUND_HALF_UP)
+
         context['sum'] = calc
+
         context['project']=project
+
         return self.render_to_response(context)
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -250,12 +254,10 @@ def register_user(request):
         user = user_form.save(commit=False)
         user.is_active = True
         user.save()
-
-        # Profileモデルの処理。↑のUserモデルと紐づけましょう。
         profile = profile_form.save(commit=False)
         profile.user = user
         profile.save()
-        return redirect("index")
+        return redirect("worker_list")
 
     context = {
         "user_form": user_form,
@@ -415,4 +417,23 @@ class CostView(LoginRequiredMixin, ListView):
     template_name = 'daily_report/cost_show.html'
 
     success_url = 'index/'
-
+    
+    
+class EmployeeView(LoginRequiredMixin, ListView):
+    model = Employee    
+    template_name = "daily_report/worker_list.html"  
+    
+class EmployeeEditView(UpdateView):
+    model = Employee    
+    form_class = ProfileForm
+    template_name = 'daily_report/worker_edit.html'
+    success_url = reverse_lazy('worker_list')
+    
+class EmployeeDeleteView(DeleteView):
+    model = User
+    template_name = 'daily_report/worker_delete.html'
+    success_url = '../worker_list'
+    def get_context_data(self, **kwargs):
+       context = super().get_context_data(**kwargs)
+       context['employee'] = Employee.objects.get(pk = self.kwargs['pk'])
+       return context

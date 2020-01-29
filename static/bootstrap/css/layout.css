@@ -182,20 +182,17 @@ nav li:hover{
 }
 
 table.list{
-	position: relative;
-	top: 10px;
-  table-layout: fixed;	
   width: 100%;
   border-collapse:separate;
   border-spacing: 0;
 }
 
 table.list th:first-child{
-  border-radius: 5px 0 0 0 0;
+  border-radius: 5px 0 0 0;
 }
 
 table.list th:last-child{
-  border-radius: 0 5px 0 0 0;
+  border-radius: 0 5px 0 0 ;
   border-right: 1px solid #3c6690;
 }
 
@@ -226,11 +223,11 @@ table.list td:last-child{
 }
 
 table.list tr:last-child td:first-child {
-  border-radius: 0 0 0 0 5px;
+  border-radius: 0 0 0 5px;
 }
 
 table.list tr:last-child td:last-child {
-  border-radius: 0 0 5px 0 0;
+  border-radius: 0 0 5px 0;
 }
 
 /* 追加 変更 詳細 確認の表 */
@@ -450,3 +447,4 @@ texture:focus {
  .under_project {
   border-bottom: solid 3px #87CEFA;
 }
+

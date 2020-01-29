@@ -13,8 +13,11 @@
 <a href="{% url 'index' %}" class="circle_spread_btn">←</a>
 <a href="{% url 'add' %}" class="cp_link">追加</a>
 
-<table class ="list">
+<br/>
+<br/>
 
+<div>
+<table class ="list">
   <thead>
     <tr>
       <th>ID</th>
@@ -25,7 +28,7 @@
     </tr>
   </thead>
   
-  <tbody>
+<tbody>
 
 {% for project in object_list%}
   <tr>
@@ -39,5 +42,7 @@
 </tbody>
 
 </table>
+
+</div>
 
 {% endblock%} 
