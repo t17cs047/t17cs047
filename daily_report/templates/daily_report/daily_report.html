@@ -20,6 +20,11 @@
 	</ul>
 </nav>
 
+<div class="title">
+  <h1>日報登録</h1>
+</div>
+
+<a href="{% url 'index' %}" class="circle_spread_btn">←</a>
 
 <form method="post" action="{% url 'write' %}" >{% csrf_token %}
 <div id = "comment" hidden>以下の内容で保存します</div>

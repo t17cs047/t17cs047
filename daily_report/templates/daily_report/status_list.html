@@ -3,11 +3,16 @@
 {% block title %} 個別リスト{% endblock %}
 
 {% block main %}
+
+<div class="title">
+  <h1>職位一覧</h1>
+</div>
+
 <form action="{% url 'list_wage'%}" method="post">
-{% csrf_token %}
-{{ form }}
-<input type="submit"/>
-</form>
+
+<a href="{% url 'index' %}" class="circle_spread_btn">←</a>
+<a href="{% url 'add_wage' %}" class="cp_link">追加</a>
+
 <table class ="list">  
     <tr>
       <th>ID</th>
@@ -22,14 +27,11 @@
    <td scope="row">{{ status.id }}</td>
    <td scope="row">{{ status.name }}</td>
    <td scope="row">{{ status.wage }}</td>
-   <td><a href="{% url 'wage_edit_para' status.id %}">変更</a></td>
-   <td><a href="{% url 'wage_delete_para' status.id %}">削除</a></td>
+   <td><a id = "ch" href="{% url 'wage_edit_para' status.id %}">変更</a></td>
+   <td><a id = "ch" href="{% url 'wage_delete_para' status.id %}">削除</a></td>
   </tr>
   {% endfor%}
 </tbody>
 </table>
-<ul>
-<li><a href="{% url 'add_wage' %}">職位を追加する</a></li>
-<li><a href="{% url 'index' %}">メニューに戻る</a></li>
-</ul>
+
 {% endblock%} 

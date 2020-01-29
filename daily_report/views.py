@@ -102,11 +102,9 @@ class AggregateView(LoginRequiredMixin, TemplateView):
         calc = aggr.quantize(Decimal('0'), rounding = ROUND_HALF_UP)
 
         context['sum'] = calc
-        
-        ####
-        context['project'] = project
-        
-        ######
+
+        context['project']=project
+
         return self.render_to_response(context)
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -385,7 +383,8 @@ class WageAddView(LoginRequiredMixin, CreateView):
         
 class WageEditViewWithParameter(LoginRequiredMixin, UpdateView):
     model = Status  
-    fields = ('name', 'wage')
+    form_class = StatusForm
+    #fields = ('name', 'wage')
     template_name = 'daily_report/wage_edit.html'
     success_url = reverse_lazy('list_wage')
     

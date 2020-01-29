@@ -6,13 +6,15 @@ from pip.cmdoptions import verbose
 
 from django.conf import settings
 
+from django.core.validators import MaxValueValidator, MinValueValidator
+
 # Create your models here.
 class Status(models.Model):
     class Meta:
         db_table = "status"
         
     name = models.CharField(max_length = 100,unique = True)
-    wage = models.IntegerField()
+    wage = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(1000000000)])
     
     def __str__(self):
         return self.name
@@ -41,13 +43,13 @@ class Project(models.Model):
         db_table = "project"
     name = models.CharField(max_length = 30, unique = True)
     employee = models.ManyToManyField(Employee)
-    order_amount = models.IntegerField()
-    budget = models.IntegerField()
-    outsourcing_budget = models.IntegerField()
+    order_amount = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(1000000000)])
+    budget = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(1000000000)])
+    outsourcing_budget = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(1000000000)])
     start_date = models.DateField(verbose_name = "日付", default = datetime.now)
     end_date = models.DateField(verbose_name = "日付", default = datetime.now)
     client = models.CharField(max_length = 30)
-    outsourcing_cost = models.IntegerField() 
+    outsourcing_cost = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(1000000000)]) 
     
     def __str__(self):
         return self.name

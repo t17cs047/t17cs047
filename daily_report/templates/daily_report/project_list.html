@@ -33,10 +33,10 @@
 {% for project in object_list%}
   <tr>
    <td scope="row">{{ project.id }}</td>
-   <td><a href = {{project.project_url}} >{{ project.name }}</a></td>
-   <td><a href="{% url 'detail' project.id %}">詳細</a></td>
-   <td><a href="{% url 'edit_para' project.id %}">変更</a></td>
-   <td><a href="{% url 'delete_para' project.id %}">削除</a></td>
+   <td>{{ project.name }}</td>
+   <td><a id = "ch" href="{% url 'detail' project.id %}">詳細</a></td>
+   <td><a id ="ch" href="{% url 'edit_para' project.id %}">変更</a></td>
+   <td><a id = "ch" href="{% url 'delete_para' project.id %}">削除</a></td>
   </tr>
   {% endfor%}
 </tbody>

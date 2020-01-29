@@ -3,12 +3,20 @@
 {% block title %} Delete_Error {% endblock %}
 
 {% block main %}
+
+<div class="title">
+  <h1>削除確認</h1>
+</div>
+
 <form action="{% url 'project_delete_error'%}" method="post">
 {% csrf_token %}
-<dl>
-<dt>このプロジェクトは開始しているので削除できません</dt>
+
+<a href="{% url 'list' %}" class="circle_spread_btn">←</a>
+
+<div class="delete_error">
+<p>このプロジェクトは開始しているので削除できません</p>
+</div>
 
 </form>
-<a href="{% url 'list' %}"class="btn-border">Return</a>
 
 {% endblock %}

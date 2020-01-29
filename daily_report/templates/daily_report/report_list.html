@@ -20,9 +20,13 @@
 	</ul>
 </nav>
 
+<div class="title">
+  <h1>日報一覧</h1>
+</div>
 
+<a href="{% url 'index' %}" class="circle_spread_btn">←</a>
 
-{% block title %} レポートリスト{% endblock %}
+<!---{% block title %} レポートリスト{% endblock %}--->
 
 {% block main %}
 <table class ="myTable">
@@ -41,12 +45,12 @@
    <td>{{ report.user }}</td>
 
    <td ><a id ="ch" href="{% url 'report_edit' report.id %}">変更</a></td>
-   <td ><a id = "del" href="{% url 'report_delete' report.id %}">delete</a></td>  
+   <td ><a id = "del" href="{% url 'report_delete' report.id %}">削除</a></td>  
    </td>
   </tr>
 {% endfor%}
 </tbody>
 </table>
 <br>
- <a href="{% url 'index' %}">メニューに戻る</a>
+
 {% endblock%} 
