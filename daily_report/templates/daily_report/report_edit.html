@@ -7,15 +7,22 @@
 
 <nav>
 	<ul>
+	<li class=”current”><a href="{% url 'index' %}">ホーム</a>
 		<li><a href="{% url 'report_list' %}">日報一覧</a></li>
 		<li><a href="{% url 'write' %}">日報登録</a></li>
 		<li><a href="{% url 'list' %}">プロジェクト一覧</a></li>
-		<li><a href="{% url 'show_cost' %}">Cost</a></li>
+		<li><a href="{% url 'show_cost' %}">原価表示</a></li>
 		<li><a href="{% url 'list_wage' %}">単価設定</a></li>
 		<li><a href="{% url 'register' %}">社員の登録</a></li>
 		<li><a href="{% url 'logout' %}">ログアウト</a></li>
 	</ul>
 </nav>
+
+<div class="title">
+  <h1>日報内容の変更</h1>
+</div>
+
+<a href="{% url 'report_list' %}" class="circle_spread_btn">←</a>
 
 <form method="post" action="{% url 'report_edit' dailyreport.id %}" >{% csrf_token %}
 <div id = "comment" hidden>以下の内容で保存します</div>
@@ -61,7 +68,6 @@
 			<input type="button" id="revise" value="修正" style = "display:none" >
 			<input type="submit" id = "submit" value = "確定" style = "display:none">
           </form>
-          <a href="{% url 'index' %}">index</a>	
 </html>	
 	
 	

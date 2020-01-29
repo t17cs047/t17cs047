@@ -3,18 +3,44 @@
 {% block title %} Delete {% endblock %}
 
 {% block main %}
+
+<div class="title">
+  <h1>活動リスト</h1>
+</div>
+
+<a href="{% url 'report_list' %}" class="circle_spread_btn">←</a>
+
 <form action="{% url 'delete_activity' activity.id %}" method="post">
 {% csrf_token %}
-<dl>
-<dt>Do you want to delete this record? Check the table below. </dt>
-<dt></dt>
-<dt>start_time</dt><dd>{{ activity.start_time }}</dd>
-<dt>end_time</dt><dd>{{ activity.end_time }}</dd>
-<dt>project</dt><dd>{{ activity.project }}</dd>
-<dt>memo</dt><dd>{{ activity.memo }}</dd>
-</dl>
-<input type="submit" value = "delete"/>
+
+<div class="delete_text">
+<h5>この日報を削除しますか？</h5>
+</div>
+
+	<table class = "delete">
+		<tbody>
+		<tr>
+			<th>開始時間</th>
+			<td>{{activity.start_time}}</td>
+		</tr>
+		<tr>
+			<th>終了時間</th>
+			<td>{{activity.end_time}}</td>
+		</tr>
+		<tr>
+			<th>プロジェクト名</th>
+			<td>{{activity.project}}</td>
+		</tr>
+		<tr>
+			<th>メモ</th>
+			<td>{{activity.memo}}</td>
+		</tr>
+		</tbody>
+	</table>
+	
+	<input type="submit" class="button03" value = "削除する"/>
 </form>
+
 
 {% endblock %}
 

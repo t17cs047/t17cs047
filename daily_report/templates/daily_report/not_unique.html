@@ -1,14 +1,37 @@
+{% load staticfiles %}
+
 <html>
 <head>
+<link rel="stylesheet" href="{% static 'for_dailyreport.css'%}">
     <meta charset="utf-8" />
     <title>index</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
+
+<nav>
+	<ul>
+		<li><a href="{% url 'index' %}">ホーム</a></li>
+		<li><a href="{% url 'report_list' %}">日報一覧</a></li>
+		<li><a href="{% url 'write' %}">日報登録</a></li>
+		<li><a href="{% url 'list' %}">プロジェクト一覧</a></li>
+		<li><a href="{% url 'show_cost' %}">原価表示</a></li>
+		<li><a href="{% url 'list_wage' %}">単価設定</a></li>
+		<li><a href="{% url 'register' %}">社員の登録</a></li>
+		<li><a href="{% url 'logout' %}">ログアウト</a></li>
+	</ul>
+</nav>
+
+<div class="title">
+  <h1>日報登録</h1>
+</div>
+
+<a href="{% url 'write' %}" class="circle_spread_btn">←</a>
+
+<div class="delete_error">
 <p>日報登録失敗</p>
 <p>指定された日付けには既に日報が存在します</p>
-
-	<input type ="button" onclick="location.href='{% url 'index' %}'" value = "Index">
+</div>
 
 </body>
 </html>

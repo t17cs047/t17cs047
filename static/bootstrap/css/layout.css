@@ -286,6 +286,16 @@ table.another tr:last-child td:last-child {
   border-radius: 0 0 5px 0 0;
 }
 
+#ch {
+    color: #fff;
+    background: #5876a3;
+    padding: 5px 30px;
+    display: inline-block;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+
 /*削除用の表*/
 
 .delete_text{
