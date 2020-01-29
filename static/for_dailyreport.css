@@ -356,3 +356,8 @@ table.delete tr:last-child td:last-child {
     padding: 0;
 
 }
+
+hr {
+	position:relative;
+	top: 10px
+}
