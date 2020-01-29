@@ -256,12 +256,10 @@ def register_user(request):
         user = user_form.save(commit=False)
         user.is_active = True
         user.save()
-
-        # Profileモデルの処理。↑のUserモデルと紐づけましょう。
         profile = profile_form.save(commit=False)
         profile.user = user
         profile.save()
-        return redirect("index")
+        return redirect("worker_list")
 
     context = {
         "user_form": user_form,
