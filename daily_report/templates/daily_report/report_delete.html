@@ -3,16 +3,34 @@
 {% block title %} Delete {% endblock %}
 
 {% block main %}
+
+<div class="title">
+  <h1>削除確認</h1>
+</div>
+
+<a href="{% url 'report_list' %}" class="circle_spread_btn">←</a>
+
 <form action="{% url 'report_delete' dailyreport.id %}" method="post">
 {% csrf_token %}
-<dl>
-<dt>Do you want to delete this record? Check the table below. </dt>
-<dt></dt>
-<dt>date</dt><dd>{{ dailyreport.date }}</dd>
-<dt>reporter</dt><dd>{{ dailyreport.user }}</dd>
 
-</dl>
-<input type="submit" value = "delete"/>
+<div class="delete_text">
+<h5>この日報を削除しますか？</h5>
+</div>
+
+	<table class = "delete">
+		<tbody>
+		<tr>
+			<th>日付</th>
+			<td>{{dailyreport.date}}</td>
+		</tr>
+		<tr>
+			<th>記入者</th>
+			<td>{{dailyreport.user}}</td>
+		</tr>
+		</tbody>
+	</table>
+	
+	<input type="submit" class="button03" value = "削除する"/>
 </form>
 
 {% endblock %}

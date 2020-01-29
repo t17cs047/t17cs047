@@ -9,17 +9,24 @@
 
 <nav>
 	<ul>
+	<li class=”current”><a href="{% url 'index' %}">ホーム</a>
 		<li><a href="{% url 'report_list' %}">日報一覧</a></li>
 		<li><a href="{% url 'write' %}">日報登録</a></li>
 		<li><a href="{% url 'list' %}">プロジェクト一覧</a></li>
-		<li><a href="{% url 'show_cost' %}">Cost</a></li>
+		<li><a href="{% url 'show_cost' %}">原価表示</a></li>
 		<li><a href="{% url 'list_wage' %}">単価設定</a></li>
 		<li><a href="{% url 'register' %}">社員の登録</a></li>
 		<li><a href="{% url 'logout' %}">ログアウト</a></li>
 	</ul>
 </nav>
 
-{% block title %} 活動リスト{% endblock %}
+<!---{% block title %} 活動リスト{% endblock %}--->
+
+<div class="title">
+  <h1>活動リスト</h1>
+</div>
+
+<a href="{% url 'report_list' %}" class="circle_spread_btn">←</a>
 
 {% block main %}
 <p >日報中のすべての活動を削除する際は日報ごと削除をしてください</p>
@@ -29,7 +36,7 @@
       <th>終了日時</th>
       <th>プロジェクト</th>
       <th>備考</th>
-      <th>delete</th>
+      <th>削除</th>
     </tr>
   </thead>
   <tbody>
@@ -40,7 +47,7 @@
    <td>{{ activity.end_time}}</td>
    <td>{{ activity.project }}</td>
    <td>{{ activity.memo }}</td>
-   <td ><a id = "nolink" href="{% url 'delete_activity' activity.id %}">delete</a></td>
+   <td ><a id = "nolink" href="{% url 'delete_activity' activity.id %}">削除</a></td>
    </div>
   </tr>
 {% endfor%}

@@ -27,8 +27,8 @@
    <td scope="row">{{ status.id }}</td>
    <td scope="row">{{ status.name }}</td>
    <td scope="row">{{ status.wage }}</td>
-   <td><a href="{% url 'wage_edit_para' status.id %}">変更</a></td>
-   <td><a href="{% url 'wage_delete_para' status.id %}">削除</a></td>
+   <td><a id = "ch" href="{% url 'wage_edit_para' status.id %}">変更</a></td>
+   <td><a id = "ch" href="{% url 'wage_delete_para' status.id %}">削除</a></td>
   </tr>
   {% endfor%}
 </tbody>

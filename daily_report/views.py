@@ -381,7 +381,8 @@ class WageAddView(LoginRequiredMixin, CreateView):
         
 class WageEditViewWithParameter(LoginRequiredMixin, UpdateView):
     model = Status  
-    fields = ('name', 'wage')
+    form_class = StatusForm
+    #fields = ('name', 'wage')
     template_name = 'daily_report/wage_edit.html'
     success_url = reverse_lazy('list_wage')
     
