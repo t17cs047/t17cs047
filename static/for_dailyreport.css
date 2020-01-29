@@ -1,4 +1,8 @@
 @charset "utf-8";
+*{
+	margin: 0px;
+	padding: 0px;
+}
 table{
   width: 100%;
   border-collapse:separate;
@@ -105,7 +109,7 @@ nav ul{
 	padding: 0 ;
 	width: 80%;
 	text-align: center;
-}
+	}
 nav li{
 	display: table-cell;
 	min-width: 50px;
@@ -134,7 +138,8 @@ h1 {
 
 
 .myTable{
-  width: 100%;
+  width:100%;
+  table-layout: fixed;
   border-collapse:separate;
   border-spacing: 0;
 }
@@ -209,4 +214,37 @@ h1 {
     display: inline-block;
     border-radius: 5px;
     text-decoration: none;
+}
+
+#submit{
+	color: #fff;
+    background: #FF8C00;
+    padding: 5px 30px;
+    display: inline-block;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+#add_more{
+	color: #FFFFFF;
+    background: #2E8B57;
+    padding: 5px 30px;
+    display: inline-block;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+#confirm {
+  display: inline-block;
+  padding: 0.3em 1em;
+  text-decoration: none;
+  color: #00BFFF;
+  border: solid 2px #67c5ff;
+  border-radius: 3px;
+  transition: .4s;
+}
+
+.confirm:hover {
+  background: #67c5ff;
+  color: white;
 }

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %} Delete {% endblock %}
+
+{% block main %}
+
+<div class="title">
+  <h1>削除確認</h1>
+</div>
+
+<a href="{% url 'worker_list' %}" class="circle_spread_btn">←</a>
+
+<form action="{% url 'delete_worker' user.id %}" method="post">
+{% csrf_token %}
+
+<div class="delete_text">
+<h5>この社員を削除しますか？</h5>
+</div>
+
+	<table class = "delete">
+		<tbody>
+		<tr>
+			<th>ユーザID</th>
+			<td>{{employee.user}}</td>
+		</tr>
+		<tr>
+			<th>name</th>
+			<td>{{employee.name}}</td>
+		</tr>
+		<tr>
+			<th>職位</th>
+			<td>{{employee.status}}</td>
+		</tr>
+		</tbody>
+	</table>
+	
+	<input type="submit" class="button03" value = "delete"/>
+</form>
+
+{% endblock %}
