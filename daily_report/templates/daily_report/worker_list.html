@@ -34,8 +34,8 @@
    <td scope="row">{{ worker.id }}</td>
    <td>{{worker.name}} </td>
 	<td>{{worker.status}}</td>
-	<td ><a href="{% url 'edit_worker' worker.id %}">変更</a></td>
-	<td ><a href="{% url 'delete_worker' worker.id %}">削除</a></td>
+	<td ><a id = "ch" href="{% url 'edit_worker' worker.id %}">変更</a></td>
+	<td ><a id = "ch" href="{% url 'delete_worker' worker.id %}">削除</a></td>
   </tr>
   {% endfor%}
 </tbody>
