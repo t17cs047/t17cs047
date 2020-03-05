@@ -74,12 +74,13 @@ def add_daily_report(request):
         context['user_name'] = me.name
     return render(request, 'daily_report/daily_report.html', context)
 
+"""
 class ActivityDeleteView(LoginRequiredMixin, DeleteView):
     model = Activity
     template_name = 'daily_report/activity_delete.html'
     success_url = '../report_list'
-
- 
+"""
+""" 
 class AggregateView(LoginRequiredMixin, TemplateView):
     model = Activity
     template_name = 'daily_report/show_cost.html'
@@ -110,11 +111,14 @@ class AggregateView(LoginRequiredMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         context['form_id'] = ProjectIDForm()
         return context
-    
+"""
+
+"""
 class ReportDeleteView(LoginRequiredMixin, DeleteView):
     model = DailyReport
     template_name = 'daily_report/report_delete.html'
     success_url = '../report_list'    
+"""
 
 class MyLoginView(LoginView):
     form_class = forms.LoginForm
@@ -123,6 +127,7 @@ class MyLoginView(LoginView):
 class MyLogoutView(LoginRequiredMixin, LogoutView):
     template_name = "../templates/registration/logout.html"
 
+"""
 class ListReportView(LoginRequiredMixin, ListView):
     model = DailyReport
     template_name = "daily_report/report_list.html"
@@ -135,19 +140,20 @@ class ActivityListView(LoginRequiredMixin, ListView):
     def get_queryset(self, **kwargs):
         report = get_object_or_404(DailyReport, pk=self.kwargs['pk'])
         return Activity.objects.filter(daily_report = report)
+"""
 
 """12/20"""
-
+"""
 class OnlyYouMixin(UserPassesTestMixin):
     raise_exception = True
 
     def test_func(self):
         user = self.request.user
         return user.pk == user.is_superuser
+"""
 
 
-
-
+"""
 class ReportMixin(object):
     def form_valid(self, form, formset):
         # formset.saveでインスタンスを取得できるように、既存データに変更が無くても更新対象となるようにする
@@ -174,9 +180,9 @@ class ReportMixin(object):
             return redirect("not_unique")
         # 処理後は詳細ページを表示
         return redirect("report_list")
+"""
 
-
-
+"""
 class FormsetMixin(object):
     object = None
 
@@ -225,10 +231,10 @@ class FormsetMixin(object):
 
     def form_invalid(self, form, formset):
         return self.render_to_response(self.get_context_data(form=form, formset=formset))
+"""
 
 
-
-
+""""
 class ReportUpdateView(LoginRequiredMixin, ReportMixin, FormsetMixin, UpdateView):
     is_update_view = True
     template_name = 'daily_report/report_edit.html'
@@ -242,7 +248,7 @@ class ReportUpdateView(LoginRequiredMixin, ReportMixin, FormsetMixin, UpdateView
             form.fields['project'].queryset =  Project.objects.filter(employee = employee)
         context['user_name'] = employee.name
         return context
-    
+"""    
     
     
 @staff_member_required    
@@ -270,9 +276,11 @@ def register_user(request):
 class IndexView(LoginRequiredMixin, TemplateView):
     template_name = "daily_report/index.html"
 
+"""
 class NotUniqueView(LoginRequiredMixin, TemplateView):
     template_name = "daily_report/not_unique.html"
-    
+"""
+"""
 class ProjectList(LoginRequiredMixin, ListView):
     model = Project
    
@@ -285,7 +293,7 @@ class ProjectList(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         context['form'] = ProjectBuy()
         return context
-    
+"""   
 
 class ProjectAddView(LoginRequiredMixin,FormView):  
     model = Project
@@ -309,7 +317,7 @@ class ProjectAddView(LoginRequiredMixin,FormView):
         
     
  
-    
+"""    
 class ProjectEditViewWithParameter(LoginRequiredMixin, UpdateView):
     model = Project    
     form_class = ProjectForm
@@ -337,7 +345,7 @@ class ProjectDetailViewWithParameter(LoginRequiredMixin, DetailView):
     model = Project    
     template_name = 'daily_report/project_detail.html'
     success_url = '../list'
-    
+"""   
            
 class WageList(LoginRequiredMixin, ListView):
     model = Status
@@ -373,14 +381,7 @@ class WageAddView(LoginRequiredMixin, CreateView):
             return super().form_valid(form)
         if self.request.POST.get('next', '') == 'back':
             return render(self.request, 'daily_report/wage_add.html', {'form':form})
-        
-
-        
-        
-        
                
-        
-        
 class WageEditViewWithParameter(LoginRequiredMixin, UpdateView):
     model = Status  
     form_class = StatusForm
@@ -410,14 +411,14 @@ class WageDetailViewWithParameter(LoginRequiredMixin, DetailView):
     template_name = 'daily_report/wage_detail.html'
     
 
-    
+"""    
 class CostView(LoginRequiredMixin, ListView):
     model = Project
     fields = ('name', 'cost')
     template_name = 'daily_report/cost_show.html'
 
     success_url = 'index/'
-    
+"""    
     
 class EmployeeView(LoginRequiredMixin, ListView):
     model = Employee    
