@@ -15,10 +15,7 @@
 <nav>
 	<ul>
 		<li><a href="{% url 'index' %}">ホーム</a></li>
-		<li><a href="{% url 'report_list' %}">日報一覧</a></li>
-		<li><a href="{% url 'write' %}">日報登録</a></li>
-		<li><a href="{% url 'list' %}">プロジェクト一覧</a></li>
-		<li><a href="{% url 'show_cost' %}">原価表示</a></li>
+
 		<li><a href="{% url 'list_wage' %}">単価設定</a></li>
 		<li><a href="{% url 'worker_list' %}">社員リスト</a></li>
 		<li><a href="{% url 'logout' %}">ログアウト</a></li>
@@ -46,15 +43,11 @@
 		<div class="cp_item"></div>
 		<div class="cp_item"></div>
 	</div>
+	
 
 	
-	
-	<a class="button1" href="{% url 'write' %}"><div class="write">日報登録</div></a>
-	<a class="button2" href="{% url 'report_list' %}"><div class="report_list">日報一覧</div></a>
-	<a class="button3" href="{% url 'list' %}"><div class="list">プロジェクト一覧</div></a>
-	<a class="button4" href="{% url 'show_cost' %}"><div class="show_cost">原価表示</div></a>
-	<a class="button5" href="{% url 'list_wage' %}"><div class="list_wage">単価設定</div></a>
-	<a class="button6" href="{% url 'worker_list' %}"><div class="register">社員リスト</div></a>
+	<a class="button1" href="{% url 'list_wage' %}"><div class="list_wage">単価設定</div></a>
+	<a class="button2" href="{% url 'worker_list' %}"><div class="register">社員リスト</div></a>
 
 </body>
 </html>
